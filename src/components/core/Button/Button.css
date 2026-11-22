@@ -1,0 +1,67 @@
+.lms-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-xs);
+  height: var(--control-height);
+  padding: var(--padding-md) var(--padding-lg);
+  border: var(--border-width-default) solid transparent;
+  border-radius: var(--button-radius);
+  font-size: var(--size-sm);
+  line-height: var(--leading-2);
+  font-weight: var(--label-md-weight);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--motion-duration-fast) var(--motion-easing),
+    border-color var(--motion-duration-fast) var(--motion-easing);
+}
+.lms-button__label { overflow: hidden; text-overflow: ellipsis; }
+.lms-button__icon { display: inline-flex; }
+.lms-button__icon svg,
+svg.lms-button__icon { width: var(--icon-size-md); height: var(--icon-size-md); }
+.lms-button--full { width: 100%; }
+
+/* filled / primary */
+.lms-button--filled-primary {
+  background: var(--button-filled-primary-background-default);
+  color: var(--button-filled-primary-text-icon);
+}
+.lms-button--filled-primary:hover:not(:disabled) { background: var(--button-filled-primary-background-hover); }
+
+/* filled / secondary */
+.lms-button--filled-secondary {
+  background: var(--button-filled-secondary-background-default);
+  color: var(--button-filled-secondary-text-icon);
+}
+.lms-button--filled-secondary:hover:not(:disabled) { background: var(--button-filled-secondary-background-hover); }
+
+/* outlined / primary */
+.lms-button--outlined-primary {
+  background: transparent;
+  border-color: var(--button-outlined-primary-border-default);
+  color: var(--button-outlined-primary-text);
+}
+.lms-button--outlined-primary:hover:not(:disabled) { background: var(--button-outlined-primary-background-hover); }
+
+/* outlined / secondary */
+.lms-button--outlined-secondary {
+  background: var(--background-primary);
+  border-color: var(--button-outlined-secondary-border-default);
+  color: var(--button-outlined-secondary-text-icon);
+}
+.lms-button--outlined-secondary:hover:not(:disabled) {
+  background: var(--button-outlined-secondary-background-hover);
+  border-color: var(--button-outlined-secondary-border-hover);
+}
+
+/* functional state: disabled (all types) */
+.lms-button:disabled {
+  background: var(--button-disabled-background);
+  border-color: transparent;
+  color: var(--button-disabled-text-icon);
+  cursor: not-allowed;
+}
+.lms-button--loading:disabled { cursor: progress; }
+.lms-button__spinner { animation: lms-spin 0.9s linear infinite; }
+@keyframes lms-spin { to { transform: rotate(360deg); } }
+.lms-button { text-decoration: none; }

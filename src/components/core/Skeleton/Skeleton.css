@@ -1,0 +1,11 @@
+.lms-skeleton {
+  display: block;
+  background: linear-gradient(90deg, var(--skeleton-background) 0%, var(--skeleton-highlight) 50%, var(--skeleton-background) 100%);
+  background-size: 200% 100%;
+  animation: lms-shimmer 1.4s ease-in-out infinite;
+}
+.lms-skeleton--text { height: var(--spacing-3); width: 100%; border-radius: var(--sm); }
+.lms-skeleton--block { height: var(--course-card-cover-height); width: 100%; border-radius: var(--md); }
+.lms-skeleton--circle { width: var(--spacing-10); height: var(--spacing-10); border-radius: var(--full); }
+@keyframes lms-shimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+@media (prefers-reduced-motion: reduce) { .lms-skeleton { animation: none; } }

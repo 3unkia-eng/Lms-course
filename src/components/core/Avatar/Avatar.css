@@ -1,0 +1,14 @@
+.lms-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  border-radius: var(--avatar-radius);
+  background: var(--avatar-background);
+  color: var(--avatar-text);
+  font-size: var(--size-xs);
+  line-height: var(--leading-1);
+  font-weight: var(--weight-medium);
+}
+.lms-avatar--sm { width: var(--spacing-8);  height: var(--spacing-8); }
+.lms-avatar--md { width: var(--spacing-10); height: var(--spacing-10); }

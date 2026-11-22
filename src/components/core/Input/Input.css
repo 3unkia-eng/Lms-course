@@ -1,0 +1,62 @@
+.lms-input { display: flex; flex-direction: column; gap: var(--gap-xs); min-width: 0; }
+.lms-input__label {
+  color: var(--input-text-label);
+  font-size: var(--size-sm);
+  line-height: var(--leading-2);
+  font-weight: var(--weight-medium);
+}
+.lms-input__field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  min-height: var(--control-height);
+  padding: 0 var(--padding-md);
+  border: var(--border-width-default) solid var(--input-border-default);
+  border-radius: var(--input-radius);
+  background: var(--input-background-default);
+  transition: border-color var(--motion-duration-fast) var(--motion-easing);
+}
+.lms-input__field:hover { border-color: var(--input-border-hover); }
+/* Figma focus: 2px Input/border/focus. Box-shadow keeps the layout still. */
+.lms-input__field:focus-within {
+  border-color: var(--input-border-focus);
+  box-shadow: 0 0 0 var(--border-width-default) var(--input-border-focus);
+}
+.lms-input__control {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: var(--padding-md) 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--input-text-value);
+  font-size: var(--size-sm);
+  line-height: var(--leading-2);
+}
+.lms-input__control::placeholder { color: var(--input-text-placeholder); }
+select.lms-input__control { appearance: none; cursor: pointer; padding-right: var(--spacing-6); }
+select.lms-input__control:invalid,
+select.lms-input__control option[value=""] { color: var(--input-text-placeholder); }
+textarea.lms-input__control { min-height: var(--control-multiline-height); resize: vertical; }
+.lms-input--multiline .lms-input__field { align-items: flex-start; }
+.lms-input__icon { display: inline-flex; color: var(--input-icon); flex: none; }
+.lms-input__icon svg,
+svg.lms-input__icon { width: var(--icon-size-md); height: var(--icon-size-md); }
+.lms-input__chevron { position: absolute; right: var(--padding-md); pointer-events: none; }
+.lms-input__helper { color: var(--input-text-helper); font-size: var(--size-xs); line-height: var(--leading-1); }
+
+/* functional state: error */
+.lms-input--error .lms-input__field,
+.lms-input--error .lms-input__field:hover { border-color: var(--input-border-error); }
+.lms-input--error .lms-input__field:focus-within { box-shadow: 0 0 0 var(--border-width-default) var(--input-border-error); }
+.lms-input--error .lms-input__helper { color: var(--input-text-error); }
+
+/* functional state: disabled */
+.lms-input--disabled .lms-input__field,
+.lms-input--disabled .lms-input__field:hover {
+  border-color: var(--input-border-default);
+  background: var(--input-background-disabled);
+}
+.lms-input--disabled .lms-input__control { color: var(--input-text-disabled); cursor: not-allowed; }
+.lms-input__control[readonly] { cursor: text; }
