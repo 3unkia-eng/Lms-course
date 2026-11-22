@@ -1,0 +1,63 @@
+.lms-session-row {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-md);
+  min-height: calc(var(--spacing-16) + var(--spacing-0-5));
+  padding: var(--padding-md) var(--padding-lg);
+  border: var(--border-width-default) solid var(--session-row-border);
+  border-radius: var(--session-row-radius);
+  background: var(--session-row-background);
+}
+.lms-session-row--selected { border-color: var(--border-brand); }
+.lms-session-row__handle { width: var(--icon-size-sm); height: var(--icon-size-sm); color: var(--session-row-icon); flex: none; }
+.lms-session-row__index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: var(--spacing-8);
+  height: var(--spacing-8);
+  border-radius: var(--md);
+  background: var(--session-row-index-background);
+  color: var(--session-row-index-text);
+  font-size: var(--size-sm);
+  line-height: var(--leading-2);
+  font-weight: var(--weight-semibold);
+}
+.lms-session-row__text { display: flex; flex-direction: column; gap: var(--gap-2xs); flex: 1 1 auto; min-width: 0; }
+.lms-session-row__title {
+  color: var(--session-row-title-text);
+  font-size: var(--size-sm);
+  line-height: var(--leading-2);
+  font-weight: var(--weight-semibold);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lms-session-row__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  color: var(--session-row-meta-text);
+  font-size: var(--size-xs);
+  line-height: var(--leading-1);
+}
+.lms-session-row__meta svg { width: var(--icon-size-sm); height: var(--icon-size-sm); color: var(--session-row-icon); }
+.lms-session-row__actions { display: flex; align-items: center; gap: var(--gap-2xs); flex: none; }
+/* Move buttons appear on keyboard focus/hover so the row stays close to Figma */
+.lms-session-row__move { opacity: 0; }
+.lms-session-row:hover .lms-session-row__move,
+.lms-session-row:focus-within .lms-session-row__move { opacity: 1; }
+@media (hover: none) { .lms-session-row__move { opacity: 1; } }
+
+/* Narrow screens: actions move to their own line so the title keeps its width */
+@media (max-width: 767px) {
+  .lms-session-row { flex-wrap: wrap; row-gap: var(--gap-xs); padding: var(--padding-md); }
+  .lms-session-row__actions {
+    flex-basis: 100%;
+    justify-content: flex-end;
+    padding-top: var(--padding-xs);
+    border-top: var(--border-width-default) solid var(--session-row-border);
+  }
+  .lms-session-row__move { opacity: 1; }
+}

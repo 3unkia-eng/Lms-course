@@ -1,0 +1,53 @@
+.lms-course-card {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: var(--border-width-default) solid var(--course-card-border);
+  border-radius: var(--course-card-radius);
+  background: var(--course-card-background);
+  color: inherit;
+  text-decoration: none;
+  min-width: 0;
+}
+.lms-course-card--link { transition: border-color var(--motion-duration-fast) var(--motion-easing); }
+.lms-course-card--link:hover { border-color: var(--border-primary-hover); }
+.lms-course-card--link:hover .lms-course-card__title { color: var(--text-brand); }
+.lms-course-card__body { display: flex; flex-direction: column; gap: var(--gap-md); padding: var(--padding-lg); }
+.lms-course-card__top { display: flex; align-items: center; justify-content: space-between; }
+.lms-course-card__more { width: var(--icon-size-sm); height: var(--icon-size-sm); color: var(--course-card-meta-icon); }
+.lms-course-card__title {
+  color: var(--course-card-title-text);
+  font-size: var(--size-base);
+  line-height: var(--leading-3);
+  font-weight: var(--weight-semibold);
+}
+.lms-course-card__meta { display: flex; flex-wrap: wrap; gap: var(--gap-lg); }
+.lms-course-card__meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-xs);
+  color: var(--course-card-meta-text);
+  font-size: var(--size-xs);
+  line-height: var(--leading-1);
+}
+.lms-course-card__meta-item svg { width: var(--icon-size-sm); height: var(--icon-size-sm); color: var(--course-card-meta-icon); }
+
+/* Cover */
+.lms-course-cover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--course-card-cover-background);
+  color: var(--course-card-cover-icon);
+  flex: none;
+}
+.lms-course-cover--card { height: var(--course-card-cover-height); }
+.lms-course-cover--preview {
+  width: var(--course-cover-preview-width);
+  height: var(--course-cover-preview-height);
+  border-radius: var(--md);
+}
+.lms-course-cover__icon { width: var(--icon-size-lg); height: var(--icon-size-lg); }
+.lms-course-cover--preview .lms-course-cover__icon { width: var(--icon-size-xl); height: var(--icon-size-xl); }
+.lms-course-cover__image { width: 100%; height: 100%; object-fit: cover; }

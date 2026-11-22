@@ -1,0 +1,37 @@
+.lms-action-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-md);
+  margin-top: auto;
+  padding-top: var(--layout-section-gap);
+}
+.lms-action-bar__start { display: flex; gap: var(--gap-md); }
+.lms-action-bar__note {
+  flex: 1 1 auto;
+  text-align: right;
+  color: var(--text-secondary);
+  font-size: var(--size-xs);
+  line-height: var(--leading-1);
+}
+.lms-action-bar__end { display: flex; gap: var(--gap-md); margin-left: auto; }
+.lms-action-bar__note + .lms-action-bar__end { margin-left: 0; }
+
+/* Mobile: full-width sticky bar at the bottom (UX doc section 8) */
+@media (max-width: 1023px) {
+  .lms-action-bar {
+    position: sticky;
+    bottom: 0;
+    z-index: var(--layer-sticky);
+    flex-wrap: wrap;
+    margin: auto calc(var(--layout-content-padding-mobile) * -1) 0;
+    padding: var(--padding-md) var(--layout-content-padding-mobile);
+    border-top: var(--border-width-default) solid var(--border-secondary);
+    background: var(--surface-primary-default);
+  }
+  .lms-action-bar--hide-start .lms-action-bar__start { display: none; }
+  .lms-action-bar__note { flex-basis: 100%; order: -1; text-align: left; }
+  .lms-action-bar__start,
+  .lms-action-bar__end { flex: 1 1 0; margin-left: 0; }
+  .lms-action-bar__end > *,
+  .lms-action-bar__start > * { flex: 1 1 0; }
+}

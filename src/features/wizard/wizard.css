@@ -1,0 +1,11 @@
+.save-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-2xs);
+  color: var(--text-secondary);
+  font-size: var(--size-xs);
+  line-height: var(--leading-1);
+}
+.save-indicator > span { display: inline-flex; }
+.save-indicator svg { width: var(--icon-size-sm); height: var(--icon-size-sm); }
+.save-indicator__spin { animation: lms-spin 0.9s linear infinite; }

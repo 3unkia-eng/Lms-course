@@ -1,0 +1,25 @@
+.lms-toggle {
+  position: relative;
+  flex: none;
+  width: var(--spacing-10);
+  height: var(--spacing-6);
+  padding: var(--padding-xs);
+  border: 0;
+  border-radius: var(--toggle-radius);
+  background: var(--toggle-track-off);
+  cursor: pointer;
+  transition: background-color var(--motion-duration-base) var(--motion-easing);
+}
+.lms-toggle--on { background: var(--toggle-track-on); }
+.lms-toggle__thumb {
+  display: block;
+  width: var(--spacing-4);
+  height: var(--spacing-4);
+  border-radius: var(--toggle-radius);
+  background: var(--toggle-thumb);
+  transition: transform var(--motion-duration-base) var(--motion-easing);
+}
+.lms-toggle--on .lms-toggle__thumb { transform: translateX(var(--spacing-4)); }
+/* Proposal: Disabled state (missing in Figma 1.4.0) */
+.lms-toggle:disabled { background: var(--surface-secondary-default); cursor: not-allowed; }
+.lms-toggle:disabled .lms-toggle__thumb { background: var(--text-disabled); }

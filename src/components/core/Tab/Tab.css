@@ -1,0 +1,16 @@
+.lms-tabs { display: flex; gap: var(--gap-xs); overflow-x: auto; scrollbar-width: none; }
+.lms-tab {
+  height: var(--control-height-sm);
+  padding: var(--padding-sm) var(--padding-md);
+  border: 0;
+  border-radius: var(--tab-radius);
+  background: transparent;
+  color: var(--tab-text-default);
+  font-size: var(--size-sm);
+  line-height: var(--leading-2);
+  font-weight: var(--weight-medium);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.lms-tab:hover:not(.lms-tab--active) { background: var(--surface-primary-hover); }
+.lms-tab--active { background: var(--tab-background-active); color: var(--tab-text-active); }
