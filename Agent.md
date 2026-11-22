@@ -61,6 +61,7 @@ vercel.json              ← Vercel build, SPA rewrite, cache and security heade
 .env.example             ← how Environment Variables work (no secrets in code)
 Design.md                ← tokens, spacing, type, responsive and dark-mode rules
 tokens/tokens.json       ← token snapshot exported from Figma (W3C format, reference only)
+public/docs/             ← GENERATED live design-system docs, served at /docs/ (replace, never hand-edit)
 scripts/
   check-hardcoded.mjs    ← token lint
   check-token-source.mjs ← tokens.css must equal the Figma snapshot (tokens/tokens.json)
