@@ -1,0 +1,17 @@
+.toast-region {
+  position: fixed;
+  right: var(--padding-xl);
+  /* Floats above the footer action bar so it never covers the primary action */
+  bottom: calc(var(--control-height) + var(--padding-xl) * 2);
+  z-index: var(--layer-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+@media (max-width: 1023px) {
+  .toast-region {
+    left: var(--padding-lg);
+    right: var(--padding-lg);
+    bottom: calc(var(--control-height) + var(--padding-lg) * 3);
+  }
+}

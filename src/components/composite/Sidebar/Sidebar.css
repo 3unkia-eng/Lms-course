@@ -1,0 +1,64 @@
+.lms-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-xl);
+  width: var(--layout-sidebar-width);
+  height: 100%;
+  padding: var(--padding-xl) var(--padding-lg);
+  border-right: var(--border-width-default) solid var(--sidebar-border);
+  background: var(--sidebar-background);
+}
+.lms-sidebar__logo { display: flex; align-items: center; gap: var(--gap-sm); padding: 0 var(--padding-sm); }
+.lms-sidebar__logo-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-8);
+  height: var(--spacing-8);
+  border-radius: var(--md);
+  background: var(--sidebar-logo-background);
+  color: var(--sidebar-logo-icon);
+}
+.lms-sidebar__logo-mark svg { width: var(--icon-size-md); height: var(--icon-size-md); }
+.lms-sidebar__logo-text {
+  color: var(--text-primary);
+  font-size: var(--size-base);
+  line-height: var(--leading-3);
+  font-weight: var(--weight-semibold);
+}
+.lms-sidebar__nav { display: flex; flex-direction: column; gap: var(--gap-xs); flex: 1 1 auto; }
+.lms-sidebar__section {
+  padding: 0;
+  color: var(--sidebar-section-text);
+  font-size: var(--size-xs);
+  line-height: var(--leading-1);
+  font-weight: var(--weight-medium);
+  text-transform: uppercase;
+}
+.lms-sidebar__list { display: flex; flex-direction: column; gap: var(--gap-2xs); }
+.lms-sidebar__user {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  padding: var(--padding-md);
+  border-radius: var(--md);
+  background: var(--sidebar-user-background);
+}
+.lms-sidebar__user-text { display: flex; flex-direction: column; flex: 1 1 auto; min-width: 0; }
+.lms-sidebar__user-name {
+  color: var(--sidebar-user-name-text);
+  font-size: var(--size-sm);
+  line-height: var(--leading-2);
+  font-weight: var(--weight-semibold);
+}
+.lms-sidebar__user-role { color: var(--sidebar-user-role-text); font-size: var(--size-xs); line-height: var(--leading-1); }
+.lms-sidebar__settings {
+  display: inline-flex;
+  padding: var(--padding-xs);
+  border: 0;
+  border-radius: var(--sm);
+  background: none;
+  color: var(--sidebar-user-icon);
+  cursor: pointer;
+}
+.lms-sidebar__settings svg { width: var(--icon-size-md); height: var(--icon-size-md); }
