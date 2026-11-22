@@ -1,0 +1,81 @@
+/*
+ * Prototype token extension (LMS design system 1.4.0 + proposals).
+ *
+ * Every value here is built from existing tokens in tokens.css. These are
+ * PROPOSALS for gaps in Figma (layout, icon size, overlay, motion, elevation).
+ * They follow the Figma naming formula and must be reviewed by the design
+ * system owner before they move to Figma. Do not use primitives in UI code;
+ * use these or the semantic/component tokens instead.
+ *
+ * The only raw values allowed are border widths (1px/2px) and motion timing,
+ * which have no Figma tokens yet (agent.md, hard rule 1).
+ */
+:root,
+[data-theme],
+[data-brand],
+[data-neutral],
+[data-radius],
+[data-font] {
+  /* Border width (agent.md exception: no token yet) */
+  --border-width-default: 1px;
+  --border-width-focus: 2px;
+  --focus-ring-offset: var(--spacing-0-5);
+
+  /* Icon size (agent.md exception: 16 / 20; larger sizes from spacing) */
+  --icon-size-sm: var(--spacing-4);
+  --icon-size-md: var(--spacing-5);
+  --icon-size-lg: var(--spacing-8);
+  --icon-size-xl: var(--spacing-10);
+
+  /* Control sizes (Figma: Button 44, Input field 46, Icon button 46) */
+  --control-height: var(--spacing-11);
+  --control-height-sm: var(--spacing-9);
+  --control-multiline-height: var(--spacing-28);
+
+  /* Layout (Figma frame 1440: Sidebar 264, content padding 24, aside 360) */
+  --layout-sidebar-width: calc(var(--spacing-64) + var(--spacing-2));
+  --layout-aside-width: calc(var(--spacing-80) + var(--spacing-10));
+  --layout-dialog-width: calc(var(--spacing-96) + var(--spacing-8));
+  --layout-success-width: calc(var(--spacing-96) + var(--spacing-44));
+  --layout-card-min-width: calc(var(--spacing-72) + var(--spacing-4));
+  --layout-mobile-header-height: var(--spacing-16);
+  --layout-content-padding: var(--padding-xl);
+  --layout-content-padding-mobile: var(--padding-lg);
+
+  /* Course card cover (Figma: 122 high) and preview cover (200 x 128) */
+  --course-card-cover-height: calc(var(--spacing-28) + var(--spacing-2-5));
+  --course-cover-preview-width: var(--spacing-52);
+  --course-cover-preview-height: var(--spacing-32);
+
+  /* Overlay scrim. Figma: Background/overlay (raw RGBA per mode). */
+  --background-overlay: color-mix(in srgb, var(--neutral-950) 48%, transparent);
+
+  /* Elevation for floating layers (Toast, Dialog). Proposal. */
+  --shadow-overlay: 0 var(--spacing-2) var(--spacing-6) color-mix(in srgb, var(--neutral-950) 16%, transparent);
+
+  /* Skeleton shimmer surface */
+  --skeleton-background: var(--surface-secondary-default);
+  --skeleton-highlight: var(--surface-tertiary-default);
+
+  /* Motion (no Figma tokens yet) */
+  --motion-duration-fast: 120ms;
+  --motion-duration-base: 200ms;
+  --motion-easing: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Stacking */
+  --layer-sticky: 10;
+  --layer-overlay: 100;
+  --layer-toast: 200;
+}
+
+[data-theme="dark"] {
+  --background-overlay: color-mix(in srgb, var(--neutral-950) 72%, transparent);
+  --shadow-overlay: 0 var(--spacing-2) var(--spacing-6) color-mix(in srgb, var(--neutral-950) 60%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-duration-fast: 0ms;
+    --motion-duration-base: 0ms;
+  }
+}
