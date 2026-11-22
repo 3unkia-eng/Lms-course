@@ -7,7 +7,7 @@
 
 A **coded prototype** of the LMS flow "Create & publish a course", built from the Figma file
 [Foundation](https://www.figma.com/design/fkI3mGHWAToov6nhyWUZx5/Foundation) (page `LMS DASHBOARD`).
-It runs locally and on GitHub Pages and is meant for **usability testing with real users**.
+It runs locally, on Vercel (main live URL) and on GitHub Pages (backup mirror), and is meant for **usability testing with real users**.
 It is **not production code**: there is no backend, no auth and no real upload. Data lives in memory and `localStorage`.
 
 Flow (Figma frame `📱 Create & publish a course`, 250:1945):
@@ -47,7 +47,7 @@ npm install          # once
 npm run dev          # local prototype at http://localhost:5173
 npm run build        # type-check + production build into dist/
 npm run preview      # serve dist/ locally
-npm run lint:tokens  # fails on any hardcoded color or px value in src/
+npm run lint:tokens  # fails on any hardcoded color or px value in src/, or if tokens.css drifts from the Figma snapshot
 npm run sync:tokens -- <path/to/tokens.css>   # copy a new token export in
 ```
 
@@ -57,10 +57,13 @@ Run `npm run lint:tokens` and `npm run build` before every commit. Both must pas
 
 ```
 Agent.md                 ← you are here (rules for agents)
+vercel.json              ← Vercel build, SPA rewrite, cache and security headers
+.env.example             ← how Environment Variables work (no secrets in code)
 Design.md                ← tokens, spacing, type, responsive and dark-mode rules
 tokens/tokens.json       ← token snapshot exported from Figma (W3C format, reference only)
 scripts/
   check-hardcoded.mjs    ← token lint
+  check-token-source.mjs ← tokens.css must equal the Figma snapshot (tokens/tokens.json)
   sync-tokens.mjs        ← copies a new tokens.css export into src/styles
 src/
   main.tsx               ← imports the CSS layers in order, mounts <App/>
@@ -178,3 +181,18 @@ URL presets for test scripts: `?scenario=offline`, `loading`, `load-error`, `ses
 - Not in Figma yet but needed by the flow: Button Loading, Toggle Disabled, Dialog, ActionBar, course cover image.
 - Dark mode `Background/primary` is pure black, so inputs and outlined buttons are darker than the card surface. This follows the tokens; a token review is suggested (Design.md §8).
 - Drag-and-drop reorder is replaced by Move up / Move down buttons.
+
+## 10. Deploy and environments
+
+| Where | URL | Updates when | Config |
+|---|---|---|---|
+| Vercel (primary) | the project's `*.vercel.app` URL | every push to `main` (Production); every PR gets its own Preview URL | `vercel.json` |
+| GitHub Pages (backup mirror) | https://3unkia-eng.github.io/Lms-course/ | every push to `main` | `.github/workflows/pages.yml` |
+
+- `base: './'` in `vite.config.ts` plus `HashRouter` make the same build work on both hosts. Do not change one without the other.
+- `vercel.json` runs `npm run lint:tokens && npm run build`, so a hardcoded value or a hand-edited token fails the Vercel deploy too. The rewrite to `index.html` keeps deep links working if the app ever moves to `BrowserRouter`.
+- **Secrets never go in code.** Add them in Vercel → Project → Settings → Environment Variables. Only `VITE_*` variables reach the browser, and they are public. See `.env.example`.
+- Always pull `main` before you start a task, and never push straight to `main`: a merge to `main` is a production deploy.
+- Rollback: Vercel → Deployments → pick the last good one → Promote to Production (instant). Or `git revert` the bad commit on a branch and merge.
+- Backups: the code lives in three places (GitHub, Vercel's immutable deployments, GitHub Pages). Design tokens live in Figma (version history) and in `tokens/tokens.json`. Participant data is only in each browser's `localStorage`, so there is nothing server-side to back up.
+

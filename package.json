@@ -8,7 +8,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "lint:tokens": "node scripts/check-hardcoded.mjs",
+    "lint:tokens": "node scripts/check-hardcoded.mjs && node scripts/check-token-source.mjs",
     "sync:tokens": "node scripts/sync-tokens.mjs"
   },
   "dependencies": {
@@ -23,5 +23,8 @@
     "@vitejs/plugin-react": "^4.7.0",
     "typescript": "~5.8.3",
     "vite": "^6.4.6"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }
