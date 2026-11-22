@@ -94,6 +94,20 @@ export function PrototypeProvider({ children }: { children: ReactNode }) {
   }, [settings]);
 
   const set = useCallback((patch: Partial<PrototypeSettings>) => setSettings((s) => ({ ...s, ...patch })), []);
+
+  // Real network loss drives the same offline state as the panel toggle, so the
+  // offline banner and "Back online" toast also show on a live deploy.
+  useEffect(() => {
+    const goOffline = () => set({ offline: true });
+    const goOnline = () => set({ offline: false });
+    if (!navigator.onLine) goOffline();
+    window.addEventListener('offline', goOffline);
+    window.addEventListener('online', goOnline);
+    return () => {
+      window.removeEventListener('offline', goOffline);
+      window.removeEventListener('online', goOnline);
+    };
+  }, [set]);
   const resetSettings = useCallback(() => setSettings((s) => ({ ...DEFAULTS, theme: s.theme })), []);
   const value = useMemo(() => ({ settings, set, resetSettings }), [settings, set, resetSettings]);
   return <PrototypeContext.Provider value={value}>{children}</PrototypeContext.Provider>;
