@@ -1,0 +1,27 @@
+{
+  "name": "lms-course-prototype",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Coded React prototype of the LMS 'Create & publish a course' flow, for usability testing.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "lint:tokens": "node scripts/check-hardcoded.mjs",
+    "sync:tokens": "node scripts/sync-tokens.mjs"
+  },
+  "dependencies": {
+    "lucide-react": "^0.511.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router-dom": "^7.18.6"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "typescript": "~5.8.3",
+    "vite": "^6.4.6"
+  }
+}
