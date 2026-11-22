@@ -36,6 +36,10 @@ Suggested tasks: (1) Create a course called "Introduction to UI Design" and publ
 - `src/styles/tokens.css` is generated from Figma. Update it with `npm run sync:tokens -- path/to/tokens.css`.
 - `npm run lint:tokens` fails if any hardcoded color or px value sneaks into `src/`.
 
+## Design system docs
+
+The live design-system documentation is a single static page in `public/docs/` (with `agent.md`, `tokens.css` and `tokens.json` next to it). It is served at `/docs/` on Vercel and GitHub Pages. To update it, replace `public/docs/index.html` with the newly generated `lms-design-system.html` and open a PR.
+
 ## Deploy
 
 Every push to `main` deploys automatically to Vercel (Production) and to GitHub Pages (backup). Every pull request gets its own Vercel Preview URL to review before merging.
