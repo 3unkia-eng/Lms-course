@@ -16,15 +16,17 @@ export interface CourseCardProps {
   to?: string;
   /** 'students' shows the Footer row; 'duration' (preview) hides it */
   meta?: 'students' | 'duration';
+  /** On the Courses list: only Figma or uploaded images, no generated covers */
+  list?: boolean;
 }
 
-export function CourseCard({ course, to, meta = 'students' }: CourseCardProps) {
+export function CourseCard({ course, to, meta = 'students', list = false }: CourseCardProps) {
   const sessions = course.sessions.length;
   const title = course.title || 'Untitled course';
   const body = (
     <>
       <div className="lms-course-card__cover">
-        <CourseCover course={course} />
+        <CourseCover course={course} list={list} />
         <Badge status={course.status} dot className="lms-course-card__badge">{STATUS_LABEL[course.status]}</Badge>
       </div>
       <div className="lms-course-card__body">
