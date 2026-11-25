@@ -427,7 +427,7 @@
   --legend-item-primary-swatch-background: var(--background-brand);
   --legend-item-secondary-swatch-background: var(--surface-brand-subtle-default);
   --legend-item-label-text: var(--text-secondary);
-  --progress-bar-track-background: var(--surface-secondary-default);
+  --progress-bar-track-background: var(--surface-secondary-hover);
   --progress-bar-indicator-background: var(--background-brand);
   --progress-bar-label-text: var(--text-secondary);
   --gauge-track-border: var(--surface-brand-subtle-default);

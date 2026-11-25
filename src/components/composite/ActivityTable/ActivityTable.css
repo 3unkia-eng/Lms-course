@@ -6,8 +6,9 @@
   border-collapse: separate;
   border-spacing: 0;
   table-layout: fixed;
-  font-size: var(--size-sm);
-  line-height: var(--leading-2);
+  font-size: var(--size-xs);
+  line-height: var(--leading-1);
+  font-weight: var(--weight-medium);
 }
 .lms-activity__table th {
   padding: var(--padding-sm);
@@ -20,12 +21,8 @@
 }
 .lms-activity__table th:first-child { border-radius: var(--table-header-radius) 0 0 var(--table-header-radius); }
 .lms-activity__table th:last-child { border-radius: 0 var(--table-header-radius) var(--table-header-radius) 0; }
-/* Figma column widths: Course 150, Progress 120, Last active 96, Status 96 (Learner fills), cells on gap/lg.
-   Each cell here carries padding sm on both sides, so a column is its Figma width + gap/lg. */
-.lms-activity__table th:nth-child(2) { width: calc(var(--spacing-36) + var(--spacing-1-5) + var(--gap-lg)); }
-.lms-activity__table th:nth-child(3) { width: calc(var(--spacing-28) + var(--spacing-2) + var(--gap-lg)); }
-.lms-activity__table th:nth-child(4),
-.lms-activity__table th:nth-child(5) { width: calc(var(--spacing-10) * 2 + var(--spacing-4) + var(--gap-lg)); }
+/* Figma 659:6198: four equal columns (Learner, Course, Progress, Status) on gap/lg. */
+.lms-activity__table td:nth-child(4) { text-align: center; }
 .lms-activity__table td {
   padding: var(--padding-sm);
   border-bottom: var(--border-width-default) solid var(--table-row-border);
@@ -36,12 +33,4 @@
   text-overflow: ellipsis;
 }
 .lms-activity__learner { display: inline-flex; align-items: center; gap: var(--gap-sm); font-weight: var(--weight-medium); }
-.lms-activity__table td.lms-activity__meta { color: var(--table-row-meta-text); font-size: var(--size-xs); text-align: center; }
 
-/* Narrower desktops (1280–1439): Course 140, Progress 96, Last active 80, Status 96, so Learner keeps room for names. */
-@media (max-width: 1439px) {
-  .lms-activity__table th:nth-child(2) { width: calc(var(--spacing-36) - var(--spacing-1) + var(--gap-lg)); }
-  .lms-activity__table th:nth-child(3),
-  .lms-activity__table th:nth-child(5) { width: calc(var(--space-12) * 2 + var(--gap-lg)); }
-  .lms-activity__table th:nth-child(4) { width: calc(var(--space-80) / 4 + var(--gap-lg)); }
-}

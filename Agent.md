@@ -107,7 +107,7 @@ src/
 | `EmptyState` | Core | 263:1947 | `tone="error"` for load errors |
 | `Alert` | Core | 263:2027 | info / success / warning / error |
 | `Toast` | Core | 263:2057 | success / error / warning / info, action, close |
-| `ProgressBar` | Core | 398:2011 | track + indicator + fixed % label; `role="progressbar"` |
+| `ProgressBar` | Core | 398:2011 | track (`surface/secondary/hover`) + indicator + fixed % label; `role="progressbar"` |
 | `HeatmapCell` | Core | 398:2026 | `level` 0–4, `size` md/sm; aria-hidden, the parent table gives the level as text |
 | `Gauge` | Core | 398:2015 | full ring, `value` 0–100 + `caption`; `role="img"` with the value in its label |
 | `Dialog` | Core (structural) | – | proposal; native `<dialog>` |
@@ -115,7 +115,7 @@ src/
 | `Topbar` | Composite | 248:1857 | title is the page `<h1>` |
 | `Stepper` | Composite | 248:2023 | `current` 1–4 |
 | `CourseCard` + `CourseCover` | Composite | 144:160 | cover image: on the Courses list only the upload or the Figma cover (`src/assets/course-covers/<course id>.webp`), else the icon; in the create-course flow (cover step, preview, published) also the 3D covers `<title slug>.webp` / `default.webp`, status badge with dot (draft/published/archived), category, meta ("9h 10m"), footer; whole card is one link |
-| `ActivityTable` | Composite | 659:6120 | Card + table header + rows (Avatar, ProgressBar, Badge); `fitHeight` (code-only) shows only the rows that fit when the page fixes its height |
+| `ActivityTable` | Composite | 659:6120 | Card + table header + rows, 4 equal columns Learner / Course / Progress / Status (Avatar, ProgressBar, Badge), xs medium text; `fitHeight` (code-only) shows only the rows that fit when the page fixes its height |
 | `SessionRow` | Composite | 248:2052 | Move up/down = keyboard alternative to drag |
 | `ActionBar` | Composite | – | proposal: footer actions on desktop, sticky bar on mobile |
 | `AppShell` | Layout | – | Sidebar + Topbar / mobile header, offline banner, session-expired dialog |
