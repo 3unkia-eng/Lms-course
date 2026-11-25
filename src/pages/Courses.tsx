@@ -4,6 +4,8 @@ import { useSearchParams } from 'react-router-dom';
 import { ActionBar, AppShell, CourseCard } from '../components/composite';
 import { Button, Card, EmptyState, Tabs } from '../components/core';
 import { useStore } from '../data/store';
+import { seedCourses } from '../data/seed';
+import type { Course } from '../data/types';
 import { CourseGridError, CourseGridSkeleton } from '../features/courses/CourseGridStates';
 import { useCourseList } from '../features/courses/useCourseList';
 import { courseLink, useStartCourse } from './Dashboard';
@@ -12,6 +14,15 @@ import './pages.css';
 type Tab = 'all' | 'published' | 'draft';
 
 /** 02 · Courses (Figma 250:2185) + Loading / Empty drafts / Load error states */
+/** The six Figma courses (Step 02 · Courses, 250:2185) always come first, in Figma order; the user's own courses follow, newest first. */
+const FIGMA_ORDER = seedCourses().map((c) => c.id);
+function byFigmaOrder(a: Course, b: Course) {
+  const ia = FIGMA_ORDER.indexOf(a.id);
+  const ib = FIGMA_ORDER.indexOf(b.id);
+  if (ia >= 0 || ib >= 0) return (ia < 0 ? Infinity : ia) - (ib < 0 ? Infinity : ib);
+  return b.updatedAt - a.updatedAt;
+}
+
 export default function Courses() {
   const { courses } = useStore();
   const { state, retry } = useCourseList();
@@ -28,7 +39,7 @@ export default function Courses() {
   const list = courses
     .filter((c) => tab === 'all' || c.status === tab)
     .filter((c) => !q || c.title.toLowerCase().includes(q))
-    .sort((a, b) => b.updatedAt - a.updatedAt);
+    .sort(byFigmaOrder);
 
   const setTab = (t: Tab) => {
     const next = new URLSearchParams(params);
@@ -101,7 +112,7 @@ export default function Courses() {
         {state === 'ready' && list.length === 0 && <Card>{empty()}</Card>}
         {state === 'ready' && list.length > 0 && (
           <div className="course-grid">
-            {list.map((c) => <CourseCard key={c.id} course={c} to={courseLink(c)} list />)}
+            {list.map((c) => <CourseCard key={c.id} course={c} to={courseLink(c)} />)}
           </div>
         )}
       </div>
