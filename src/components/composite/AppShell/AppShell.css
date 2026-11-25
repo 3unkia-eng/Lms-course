@@ -1,4 +1,4 @@
-.app-shell { display: flex; min-height: 100vh; background: var(--background-secondary); }
+.app-shell { display: flex; min-height: 100vh; background: var(--background-primary); }
 .app-shell__sidebar {
   position: sticky;
   top: 0;

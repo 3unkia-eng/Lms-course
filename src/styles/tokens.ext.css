@@ -57,8 +57,16 @@
   --layout-content-padding: var(--layout-page-gutter);
   --layout-content-padding-mobile: var(--padding-lg);
 
-  /* Course card cover (Figma: 122 high) and preview cover (200 x 128) */
-  --course-card-cover-height: calc(var(--spacing-28) + var(--spacing-2-5));
+  /* Course card cover (Figma Course card › Cover: 218 high) and preview cover (200 x 128) */
+  --course-card-cover-height: calc(var(--space-52) + var(--spacing-2-5));
+
+  /* Figma surface/brand/soft/default (Stat Card › icon box, brand/50) is not in the token snapshot yet:
+     aliased to background/brand/subtle (brand/50 | dark brand/950) until the next token sync. */
+  --surface-brand-soft-default: var(--background-brand-subtle);
+
+  /* Badge › Archived (Figma Course card › status, Archived): surface/tertiary + text/secondary. Proposal. */
+  --badge-archived-background: var(--surface-tertiary-default);
+  --badge-archived-text: var(--text-secondary);
   --course-cover-preview-width: var(--space-52);
   --course-cover-preview-height: var(--space-32);
 

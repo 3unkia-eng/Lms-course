@@ -1,12 +1,13 @@
 import { useRef, useState } from 'react';
-import { BookOpen, Clock, Globe, GraduationCap, Info, Rocket } from 'lucide-react';
+import { Info } from 'lucide-react';
+import { BookOpen, Clock, Globe, GraduationCap, Rocket } from '../components/icons';
 import { useNavigate } from 'react-router-dom';
 import { ActionBar, CourseCard, CourseCover, SessionRow } from '../components/composite';
 import { Badge, Button, Card, Checkbox } from '../components/core';
 import { wait } from '../data/prototype';
 import { useStore } from '../data/store';
 import type { Course } from '../data/types';
-import { formatMinutes, publishChecklist, totalMinutes } from '../data/rules';
+import { STATUS_LABEL, formatMinutes, publishChecklist, totalMinutes } from '../data/rules';
 import { useToast } from '../app/toast';
 import { useWizard } from '../features/wizard/useWizard';
 import { WizardFrame } from '../features/wizard/WizardFrame';
@@ -19,7 +20,7 @@ export function CourseHeader({ course }: { course: Course }) {
       <div className="course-header">
         <CourseCover course={course} size="preview" />
         <div className="course-header__info">
-          <Badge status={course.status}>{course.status === 'draft' ? 'Draft' : 'Published'}</Badge>
+          <Badge status={course.status}>{STATUS_LABEL[course.status]}</Badge>
           <h2 className="course-header__title">{course.title || 'Untitled course'}</h2>
           {course.description && <p className="course-header__description clamp-2">{course.description}</p>}
           <ul className="meta-list" aria-label="Course facts">
@@ -101,7 +102,7 @@ export default function Preview() {
       </ul>
       <div className="status-row">
         <span>Current status</span>
-        <Badge status={course.status}>{course.status === 'draft' ? 'Draft' : 'Published'}</Badge>
+        <Badge status={course.status}>{STATUS_LABEL[course.status]}</Badge>
       </div>
       <div className="publish-actions only-desktop">
         {reason && (

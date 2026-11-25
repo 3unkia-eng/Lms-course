@@ -1,4 +1,5 @@
-import { FilePlus2, Plus, SearchX, Send } from 'lucide-react';
+import { FilePlus2, SearchX, Send } from 'lucide-react';
+import { Plus } from '../components/icons';
 import { useSearchParams } from 'react-router-dom';
 import { ActionBar, AppShell, CourseCard } from '../components/composite';
 import { Button, Card, EmptyState, Tabs } from '../components/core';

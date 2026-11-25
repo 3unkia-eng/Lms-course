@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { CheckCircle2, CloudOff, Loader2 } from 'lucide-react';
+import { CloudOff, Loader2 } from 'lucide-react';
+import { CheckCircle2 } from '../../components/icons';
 import type { Course, WizardStep } from '../../data/types';
 import { STEPS } from '../../data/types';
 import { useStore } from '../../data/store';

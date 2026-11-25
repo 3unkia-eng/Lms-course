@@ -1,5 +1,6 @@
 import { useEffect, useState, type ReactNode } from 'react';
-import { ChevronLeft, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
+import { ChevronLeft } from '../../icons';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { usePrototype } from '../../../data/prototype';
 import { useToast } from '../../../app/toast';

@@ -1,4 +1,4 @@
-import { BarChart3, BookOpen, Banknote, GraduationCap, LayoutGrid, MessageCircle, Settings, Users } from 'lucide-react';
+import { BarChart3, ChevronRight, BookOpen, Banknote, GraduationCap, LayoutGrid, MessageCircle, Users } from '../../icons';
 import type { ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Avatar, NavItem } from '../../core';
@@ -55,8 +55,9 @@ export function Sidebar({ userName = 'Sanaz Kiani', userRole = 'Instructor', onN
           <span className="lms-sidebar__user-name">{userName}</span>
           <span className="lms-sidebar__user-role">{userRole}</span>
         </div>
-        <button type="button" className="lms-sidebar__settings" aria-label="Account settings">
-          <Settings aria-hidden />
+        {/* Figma User › "Open profile" (icon/arrow-right-01). Settings live in the profile. */}
+        <button type="button" className="lms-sidebar__settings" aria-label="Open profile">
+          <ChevronRight aria-hidden />
         </button>
       </div>
     </aside>

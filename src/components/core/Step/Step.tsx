@@ -1,4 +1,4 @@
-import { Check } from 'lucide-react';
+import { Check } from '../../icons';
 import { cx } from '../../../lib/cx';
 import './Step.css';
 

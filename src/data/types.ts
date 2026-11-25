@@ -1,4 +1,4 @@
-export type CourseStatus = 'draft' | 'published';
+export type CourseStatus = 'draft' | 'published' | 'archived';
 export type SessionType = 'video' | 'article' | 'quiz' | 'live';
 export type CoverIcon = 'layers' | 'lightbulb' | 'play' | 'type' | 'palette' | 'sparkles' | 'book';
 export type WizardStep = 'basic' | 'details' | 'sessions' | 'preview';
@@ -41,7 +41,7 @@ export interface Course {
   publishedAt?: number;
 }
 
-export const CATEGORIES = ['Design', 'Development', 'Business', 'Marketing', 'Photography'];
+export const CATEGORIES = ['Design', 'Research', 'Animation', 'Development', 'Business', 'Marketing', 'Photography'];
 export const LEVELS = ['Beginner', 'Intermediate', 'Advanced'];
 export const LANGUAGES = ['English', 'Persian', 'German', 'French', 'Spanish'];
 export const SESSION_TYPES: { value: SessionType; label: string }[] = [

@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from 'react';
-import { Bell, Search } from 'lucide-react';
+import { Bell, Search } from '../../icons';
 import { useNavigate } from 'react-router-dom';
 import { Avatar, IconButton, Input } from '../../core';
 import './Topbar.css';
@@ -39,10 +39,10 @@ export function Topbar({ title, subtitle, showSearch = true, status }: TopbarPro
             navigate(`/courses?q=${encodeURIComponent(q)}`);
           }}
         >
-          <Input label="Search courses" hideLabel type="search" value={q} onChange={setQ} placeholder="Search courses..." leadingIcon={<Search />} />
+          <Input label="Search courses" hideLabel type="search" value={q} onChange={setQ} placeholder="Search courses…" leadingIcon={<Search />} />
         </form>
       )}
-      <IconButton label="Notifications" icon={<Bell />} indicator />
+      <IconButton label="Notifications" icon={<Bell />} />
       <Avatar name="Sanaz Kiani" />
     </header>
   );

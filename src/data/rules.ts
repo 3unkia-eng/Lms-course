@@ -1,4 +1,4 @@
-import type { Course } from './types';
+import type { Course, CourseStatus } from './types';
 
 /** Business rules from the UX strategy doc (section 10, acceptance criteria). */
 export const TITLE_MIN = 5;
@@ -85,6 +85,16 @@ export function slugify(s: string) {
 export function formatPrice(c: Course) {
   return c.isFree ? 'Free' : `$${Number(c.price || 0).toFixed(2)}`;
 }
+
+/** Course card duration, Figma format: "9h 10m", "5h 05m", "45m". */
+export function formatDuration(min: number) {
+  const h = Math.floor(min / 60);
+  const m = min % 60;
+  if (!h) return `${m}m`;
+  return `${h}h ${String(m).padStart(2, '0')}m`;
+}
+
+export const STATUS_LABEL: Record<CourseStatus, string> = { draft: 'Draft', published: 'Published', archived: 'Archived' };
 
 export function formatMinutes(min: number) {
   if (min < 60) return `${min} min`;

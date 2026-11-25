@@ -35,7 +35,7 @@ Behavior and copy come from the UX strategy doc (`/ux-strategy/course-flow-ux-st
 | UI | React 19 + TypeScript (strict) | Typed component API (props = Figma properties) |
 | Routing | React Router 7, `HashRouter` | Works on GitHub Pages with no server rewrites |
 | Styles | Plain CSS per component + CSS variables from `tokens.css` | Tokens are the single source of truth; dark mode by attribute |
-| Icons | `lucide-react` | Same outline style and names as the Figma Icons page |
+| Icons | `src/components/icons` (generated from the Figma Icons page, Hugeicons stroke) + `lucide-react` only for icons Figma does not have yet | Import from `components/icons` first; the names match the old lucide names |
 | State | React context + `useReducer`, persisted to `localStorage` | Participants can reload without losing a draft |
 
 No CSS framework, no CSS-in-JS, no UI kit. Do not add one.
@@ -114,7 +114,7 @@ src/
 | `Sidebar` | Composite | 497:7995 | `activeItem` = Figma `Active item` (defaults to route); desktop only; drawer below 1024 |
 | `Topbar` | Composite | 248:1857 | title is the page `<h1>` |
 | `Stepper` | Composite | 248:2023 | `current` 1–4 |
-| `CourseCard` + `CourseCover` | Composite | 144:160 | cover (badge + icon), category, meta, footer; whole card is one link |
+| `CourseCard` + `CourseCover` | Composite | 144:160 | cover image (upload, else the Figma cover in `src/assets/course-covers/<course id>.webp`, else icon), status badge with dot (draft/published/archived), category, meta ("9h 10m"), footer; whole card is one link |
 | `ActivityTable` | Composite | 659:6120 | Card + table header + rows (Avatar, ProgressBar, Badge); `fitHeight` (code-only) shows only the rows that fit when the page fixes its height |
 | `SessionRow` | Composite | 248:2052 | Move up/down = keyboard alternative to drag |
 | `ActionBar` | Composite | – | proposal: footer actions on desktop, sticky bar on mobile |
@@ -135,10 +135,12 @@ src/
 
 ### Dashboard first view
 
-The Dashboard must show everything without scrolling on desktop (checked at 1280 × 800, 1366 × 768, 1440 × 900 and 1440 × 1024).
-Courses are not listed on the Dashboard; they live on the Courses page (sidebar). From 1280 wide, `.dashboard-grid`
-fills the viewport under the stats and the charts, heatmap and table size themselves with container query units
-(`pages.css`). Below a minimum row height (232) the page scrolls instead of shrinking text. Do not add sections under the grid.
+The Dashboard follows Figma 250:1946 exactly: at 1440 × 1024 every size matches the frame and nothing scrolls.
+Courses are not listed on the Dashboard; they live on the Courses page (sidebar). Never remove or hide content to make
+it fit (all 4 stats, both charts, the heatmap with its scale and every table row stay). From 1280 wide the two rows share
+the height under the stats in the Figma ratio (366 : 331) and the plot, ring (max 220) and heatmap cells (max 32) size
+themselves with container query units (`pages.css`). Under 960 tall the spacing tightens; below about 860 tall
+(1280 × 800, 1366 × 768) the page scrolls a little instead of squashing the charts. Do not add sections under the grid.
 
 ## 6. States and edge cases (where they live)
 
@@ -190,7 +192,8 @@ URL presets for test scripts: `?scenario=offline`, `loading`, `load-error`, `ses
 ## 9. Known gaps (do not copy these patterns)
 
 - Proposed tokens in `tokens.ext.css` (layout sizes, icon sizes, overlay, elevation, motion) are not in Figma yet.
-- Not in Figma yet but needed by the flow: Button Loading, Toggle Disabled, Dialog, ActionBar, course cover image.
+- Not in Figma yet but needed by the flow: Button Loading, Toggle Disabled, Dialog, ActionBar.
+- `--surface-brand-soft-default` (Stat Card icon box) and `--badge-archived-*` are used in Figma but not in the token snapshot yet; they are aliased in `tokens.ext.css` until the next token sync.
 - Dark mode `Background/primary` is pure black, so inputs and outlined buttons are darker than the card surface. This follows the tokens; a token review is suggested (Design.md §8).
 - Drag-and-drop reorder is replaced by Move up / Move down buttons.
 

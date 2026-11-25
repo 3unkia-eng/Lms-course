@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
-import { Clock, ListVideo, Plus } from 'lucide-react';
+import { ListVideo } from 'lucide-react';
+import { Clock, Plus, ChevronLeft } from '../components/icons';
 import { ActionBar, SessionRow } from '../components/composite';
 import { Button, Card, EmptyState, Input, Toggle } from '../components/core';
 import { useStore } from '../data/store';
@@ -146,7 +147,7 @@ export default function AddSessions() {
               </div>
               <Toggle label="Free preview" describedBy="preview-hint" checked={draft.freePreview} onChange={(v) => setDraft({ ...draft, freePreview: v })} />
             </div>
-            <Button type="submit" fullWidth appearance={count === 0 ? 'filled' : 'outlined'}>
+            <Button type="submit" fullWidth>
               {editing ? 'Save changes' : 'Save session'}
             </Button>
             {editing && (
@@ -159,7 +160,7 @@ export default function AddSessions() {
       </div>
 
       <ActionBar
-        start={<Button appearance="outlined" intent="neutral" onClick={() => goTo('details')} className="only-desktop">Back</Button>}
+        start={<Button appearance="outlined" intent="neutral" leadingIcon={<ChevronLeft />} onClick={() => goTo('details')} className="only-desktop">Back</Button>}
         note={count === 0 ? 'Add at least 1 session to continue' : missing > 0 ? `${missing} more ${missing === 1 ? 'session' : 'sessions'} needed to publish` : undefined}
         end={
           <>

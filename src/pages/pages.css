@@ -14,6 +14,15 @@
   align-items: start;
 }
 .wizard-aside { display: flex; flex-direction: column; gap: var(--gap-xl); }
+/* Figma wizard screens (251:2464 …): the main card and the aside column fill the height down to the
+   footer, the last aside card stretches (no empty background under short cards). */
+@media (min-width: 1024px) {
+  .wizard-grid { flex: 1 1 auto; align-items: stretch; }
+  .wizard-grid > .lms-card, .wizard-grid > form > .lms-card { height: 100%; }
+  .wizard-grid > .wizard-aside > .lms-card:last-child { flex: 1 1 auto; }
+  .wizard-grid > .stack > .only-desktop:last-child { display: flex; flex-direction: column; flex: 1 1 auto; }
+  .wizard-grid > .stack > .only-desktop:last-child > .lms-card { flex: 1 1 auto; }
+}
 .field-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap-lg); }
 
 /* ---------- Section header ---------- */
@@ -24,57 +33,103 @@
 .toolbar { display: flex; align-items: center; gap: var(--gap-lg); }
 .toolbar > .lms-tabs { flex: 1 1 auto; }
 
-/* ---------- Stat card (Card instance + Content slot) ---------- */
-/* Compact (Dashboard first view): padding/lg, Label → Value on gap/xs, Value 24/32. */
-.stat { padding: var(--padding-lg); gap: var(--gap-xs); }
-.stat__value { font-size: var(--size-2xl); line-height: var(--leading-5); font-weight: var(--weight-bold); color: var(--stat-card-value-text); }
-.stat__caption { font-size: var(--size-xs); line-height: var(--leading-1); color: var(--stat-card-helper-text); }
-.stat .lms-card__content { gap: 0; }
+/* ---------- Stat card (Figma Stat Card 144:147) ----------
+   padding lg/xl, gap lg: top (Label sm/medium text/secondary + 40 Icon box surface/brand/soft, radius md),
+   Value 3xl/bold on leading-7, Trend xs: value semibold text/success + caption text/tertiary on gap/2xs. */
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-lg);
+  min-width: 0;
+  padding: var(--padding-lg) var(--padding-xl);
+  border: var(--border-width-default) solid var(--card-border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-primary-default);
+}
+.stat__top { display: flex; align-items: center; gap: var(--gap-sm); }
+.stat__label { flex: 1 1 auto; min-width: 0; font-size: var(--size-sm); line-height: var(--leading-2); font-weight: var(--weight-medium); color: var(--text-secondary); }
+.stat__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: var(--spacing-10);
+  height: var(--spacing-10);
+  border-radius: var(--radius-md);
+  background: var(--surface-brand-soft-default);
+  color: var(--icon-brand);
+}
+.stat__icon svg { width: var(--icon-size-md); height: var(--icon-size-md); }
+.stat__value { font-size: var(--size-3xl); line-height: var(--leading-7); font-weight: var(--weight-bold); color: var(--text-primary); }
+.stat__trend { display: flex; align-items: center; gap: var(--gap-2xs); font-size: var(--size-xs); line-height: var(--leading-1); white-space: nowrap; }
+.stat__trend-value { font-weight: var(--weight-semibold); color: var(--text-success); }
+.stat__trend-caption { color: var(--text-tertiary); }
 
-/* ---------- Dashboard: everything in the first view ----------
-   Row 1: Enrollment activity (2 cols) + Course completion. Row 2: Learner activity + Recent activity (2 cols).
-   From 1280 wide the grid fills the viewport under the stats; charts, heatmap and table grow or shrink
-   with it (container query units), down to a minimum row height, below which the page scrolls. */
-.dashboard-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap-xl); }
-.dashboard-grid .enrollment, .dashboard-grid .lms-activity { grid-column: span 2; }
-.dashboard-grid .lms-card { padding: var(--padding-lg); }
+/* ---------- Dashboard (Figma 250:1946) ----------
+   Content gap lg. Insights row: Enrollment activity (fill) + Course completion (360).
+   Activity row: Learner activity (360) + Recent activity (fill). Cards: padding lg/xl, header→content gap md.
+   At 1440 × 1024 the sizes are exactly Figma's and everything fits. From 1280 wide the rows share the
+   viewport height under the stats: on shorter screens the plot, ring and heatmap scale down (container
+   query units) instead of anything being removed; on taller ones they grow, ring and cells up to a cap. */
+.app-shell__content:has(> .dashboard-grid) { gap: var(--gap-lg); }
+.stats-grid { gap: var(--gap-lg); }
+.dashboard-grid { display: flex; flex-direction: column; gap: var(--gap-lg); }
+.dashboard-row { display: grid; gap: var(--gap-lg); }
+.dashboard-row--insights { grid-template-columns: minmax(0, 1fr) var(--layout-aside-width); }
+.dashboard-row--activity { grid-template-columns: var(--layout-aside-width) minmax(0, 1fr); }
+/* 1280–1439 wide: Learner activity gives the table room (1 : 3), so learner names are never cut. */
+@media (min-width: 1280px) and (max-width: 1439px) {
+  .dashboard-row--activity { grid-template-columns: minmax(0, 1fr) minmax(0, 3fr); }
+}
+.dashboard-grid .lms-card:not(.lms-activity) { padding: var(--padding-lg) var(--padding-xl); gap: var(--gap-md); }
+/* Figma Bar chart: Summary → Chart area on gap/md */
+.dashboard-grid .enrollment .lms-card__content { gap: var(--gap-md); }
+
 @media (min-width: 1280px) {
-  .dashboard-grid {
-    flex: 1 1 0;
-    grid-template-rows: repeat(2, minmax(calc(var(--space-64) - var(--spacing-6)), 1fr));
-  }
+  .dashboard-grid { flex: 1 1 0; }
+  /* Rows share the height under the stats in the Figma ratio, Insights 366 : Activity 331, so at
+     1440 × 1024 they are exactly Figma's size; each row never gets smaller than its content allows. */
+  .dashboard-row { grid-template-rows: 1fr; }
+  .dashboard-row--insights { flex: 366 1 0; }
+  .dashboard-row--activity { flex: 331 1 0; }
   .dashboard-grid .lms-card { min-height: 0; }
-  .dashboard-grid .lms-card__content { flex: 1 1 0; min-height: 0; }
+  .dashboard-grid .lms-card__content { flex: 1 1 auto; min-height: 0; }
 
-  /* Enrollment activity: the plot takes the free height. */
-  .dashboard-grid .enrollment .lms-card__header { flex-wrap: nowrap; }
-  .dashboard-grid .enrollment__total { white-space: nowrap; }
-  .dashboard-grid .bar-chart { flex: 1 1 0; min-height: 0; }
+  /* Enrollment activity: the plot takes the free height (about Figma's 144 at 1440 × 1024, never under 96). */
+  .dashboard-grid .bar-chart { flex: 1 1 auto; min-height: 0; }
   .dashboard-grid .bar-chart__body {
     flex: 1 1 0;
-    min-height: calc(var(--spacing-24) + var(--leading-1) + var(--gap-2xs));
+    min-height: calc(var(--space-12) * 2 + var(--padding-sm) + var(--gap-xs) + var(--leading-1));
     container-type: size;
-    --bar-chart-plot-height: calc(100cqh - var(--leading-1) - var(--gap-2xs));
+    --bar-chart-plot-height: calc(100cqh - var(--padding-sm) - var(--gap-xs) - var(--leading-1));
   }
 
   /* Course completion: the ring is as big as the card allows, up to its Figma size (220). */
-  .dashboard-grid .course-completion__body { container-type: size; min-height: var(--space-32); }
+  .dashboard-grid .course-completion__body { container-type: size; flex: 1 1 0; min-height: var(--space-32); }
   .dashboard-grid .course-completion .lms-gauge__arc {
     width: min(calc(var(--spacing-1) * 55), 100cqw, calc(100cqh - var(--leading-1) * 2 - var(--gap-sm) - var(--gap-lg)));
   }
 
-  /* Header asides wrap under the title when the column is narrow (1280). */
-  .dashboard-grid .lms-card__header { flex-wrap: wrap; }
-  .dashboard-grid .lms-card__title { white-space: nowrap; }
-
-  /* Learner activity: rows share the free height; cells 16–32 tall (Figma md = 24). */
-  .dashboard-grid .activity-heatmap { flex: 1 1 0; min-height: calc(var(--leading-1) * 8 + var(--gap-2xs) * 8); container-type: size; }
+  /* Learner activity: rows share the free height; cells 16–32 tall (Figma 24). */
+  .dashboard-grid .activity-heatmap { flex: 1 1 auto; min-height: 0; }
+  .dashboard-grid .activity-heatmap__grid { flex: 1 1 0; min-height: calc(var(--leading-1) * 8 + var(--gap-2xs) * 7); container-type: size; }
   .dashboard-grid .activity-heatmap__cell {
-    height: clamp(var(--leading-1), calc((100cqh - var(--leading-1) - var(--gap-2xs) * 8) / 7), var(--spacing-8));
+    height: clamp(var(--leading-1), calc((100cqh - var(--leading-1) - var(--gap-2xs) * 7) / 7), var(--spacing-8));
   }
+  /* Recent activity always shows all its rows. */
+}
 
-  /* Recent activity: as many full rows as fit (ActivityTable fitHeight). */
-  .dashboard-grid .lms-activity--fit .lms-activity__scroll { flex: 1 1 0; min-height: 0; overflow: hidden; }
+/* Shorter desktop screens (under 960 tall, e.g. 1440 × 900, 1536 × 864): same elements, tighter spacing, so the
+   whole dashboard fits the first view down to about 860 tall. Below that (1280 × 800, 1366 × 768) the page scrolls a
+   little rather than squashing the charts or hiding table rows. */
+@media (min-width: 1280px) and (max-height: 959px) {
+  .app-shell__content:has(> .dashboard-grid) { padding-block: var(--padding-lg); gap: var(--gap-md); }
+  .stats-grid, .dashboard-grid, .dashboard-row { gap: var(--gap-md); }
+  .stat { padding-block: var(--padding-md); gap: var(--gap-sm); }
+  .dashboard-grid .lms-card:not(.lms-activity) { padding-block: var(--padding-md); gap: var(--gap-sm); }
+  .dashboard-grid .lms-activity { padding: var(--padding-lg) var(--padding-xl); gap: var(--gap-sm); }
+  .dashboard-grid .bar-chart { padding: var(--padding-sm) var(--padding-md); gap: var(--gap-sm); }
+  .dashboard-grid .activity-heatmap { gap: var(--gap-sm); }
 }
 
 /* ---------- Tips list ---------- */
@@ -84,7 +139,7 @@
   display: flex;
   align-items: center;
   gap: var(--gap-sm);
-  padding: var(--padding-md) 0;
+  padding: var(--padding-lg) 0;
   color: var(--text-secondary);
   font-size: var(--size-sm);
   line-height: var(--leading-2);
@@ -178,6 +233,8 @@
 
 /* ---------- Publish success ---------- */
 .success { width: 100%; max-width: var(--layout-success-width); }
+/* Figma Publish success: content sits on the page background, no card chrome. */
+.success.lms-card { padding: 0; border: 0; background: none; }
 .success .lms-card__content { align-items: stretch; gap: var(--gap-lg); }
 .success__icon {
   display: inline-flex; align-items: center; justify-content: center; align-self: center;
@@ -215,8 +272,7 @@
 /* ---------- Responsive ---------- */
 @media (max-width: 1279px) {
   .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .dashboard-grid { grid-template-columns: minmax(0, 1fr); }
-  .dashboard-grid .enrollment, .dashboard-grid .lms-activity { grid-column: auto; }
+  .dashboard-row--insights, .dashboard-row--activity { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 1023px) {
   .wizard-grid { grid-template-columns: minmax(0, 1fr); }
@@ -226,6 +282,9 @@
   .toolbar > .lms-button { display: none; }
 }
 @media (max-width: 767px) {
+  .stat { padding: var(--padding-md) var(--padding-lg); gap: var(--gap-sm); }
+  .stat__value { font-size: var(--size-2xl); line-height: var(--leading-6); }
+  .dashboard-grid .lms-card:not(.lms-activity), .dashboard-grid .lms-activity { padding: var(--padding-lg); }
   .field-row { grid-template-columns: minmax(0, 1fr); }
   .course-header { flex-direction: column; align-items: stretch; }
   .course-header .lms-course-cover--preview { width: 100%; }

@@ -1,13 +1,12 @@
-/* Enrollment activity: Bar chart, Chart column and Legend item component tokens (design system 2.0.0). */
-.enrollment__value { font-weight: var(--weight-semibold); color: var(--text-primary); }
-.enrollment__controls { display: flex; align-items: center; gap: var(--gap-lg); flex: none; }
-/* Narrower than 1440: legend items stack (2 × 16 fits beside the 44 tall select, no extra height). */
-@media (max-width: 1439px) {
-  .enrollment__controls .bar-chart__legend { flex-direction: column; gap: var(--gap-2xs); }
-}
-.enrollment__range { width: auto; min-width: calc(var(--spacing-36) + var(--spacing-6)); }
+/* Enrollment activity (Figma 399:5674): Bar chart, Chart column and Legend item component tokens. */
+.enrollment__summary { display: flex; align-items: flex-end; gap: var(--gap-md); }
+.enrollment__total { display: flex; flex-direction: column; gap: var(--gap-2xs); flex: 1 1 auto; min-width: 0; }
+.enrollment__value { font-size: var(--size-2xl); line-height: var(--leading-6); font-weight: var(--weight-bold); color: var(--bar-chart-value-text); }
+.enrollment__caption { font-size: var(--size-xs); line-height: var(--leading-1); color: var(--bar-chart-caption-text); }
+/* Figma Period select: 168 wide */
+.enrollment__range { width: calc(var(--spacing-36) + var(--spacing-6)); flex: none; }
 
-/* Bar chart (container) */
+/* Bar chart › Chart area */
 .bar-chart {
   display: flex;
   flex-direction: column;
@@ -17,7 +16,7 @@
   border: var(--border-width-default) solid var(--bar-chart-container-border);
   border-radius: var(--bar-chart-container-radius);
 }
-.bar-chart__legend { display: flex; flex-wrap: wrap; gap: var(--gap-lg); }
+.bar-chart__legend { display: flex; flex-wrap: wrap; gap: var(--gap-md); margin: 0; padding: 0; list-style: none; }
 .legend-item {
   display: inline-flex;
   align-items: center;
@@ -34,21 +33,26 @@
 .legend-item__swatch--primary { background: var(--bar-chart-legend-primary-swatch-background); }
 .legend-item__swatch--secondary { background: var(--bar-chart-legend-secondary-swatch-background); }
 
-.bar-chart__body { display: flex; gap: var(--gap-xs); }
+/* Plot: Y axis (28 wide, labels centred on the gridlines) + Area (padding-top sm, Bars, X axis on gap/xs) */
+.bar-chart__body { display: flex; align-items: flex-start; gap: var(--gap-sm); }
 .bar-chart__axis {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  flex: none;
   width: var(--bar-chart-axis-width);
   height: calc(var(--bar-chart-plot-height) + var(--leading-1));
-  margin-top: calc(var(--leading-1) / -2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
   font-size: var(--size-xs);
   line-height: var(--leading-1);
   text-align: right;
   color: var(--bar-chart-axis-text);
   font-variant-numeric: tabular-nums;
 }
-.bar-chart__plot { position: relative; flex: 1 1 auto; min-width: 0; }
+.bar-chart__area { display: flex; flex-direction: column; gap: var(--gap-xs); flex: 1 1 auto; min-width: 0; padding-top: var(--padding-sm); }
+.bar-chart__plot { position: relative; height: var(--bar-chart-plot-height); }
 .bar-chart__grid {
   position: absolute;
   left: 0;
@@ -56,63 +60,84 @@
   height: 0;
   border-top: var(--border-width-default) dashed var(--bar-chart-grid-border);
 }
-.bar-chart__columns {
-  position: relative;
+.bar-chart__columns, .bar-chart__labels {
   display: flex;
-  justify-content: space-around;
-  gap: var(--gap-2xs);
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
+.bar-chart__columns { position: relative; height: 100%; }
 
-/* Chart column */
-.chart-column { display: flex; flex-direction: column; align-items: center; gap: var(--gap-2xs); flex: 1 1 0; min-width: 0; }
+/* Chart column (32 wide) */
+.chart-column { display: flex; width: var(--chart-column-width); height: 100%; }
 .chart-column__hit {
   display: flex;
   align-items: flex-end;
-  justify-content: center;
   width: 100%;
-  height: var(--bar-chart-plot-height);
+  height: 100%;
   padding: 0;
   border: 0;
   background: none;
   cursor: pointer;
 }
 .chart-column__hit:focus-visible { outline: var(--border-width-thick) solid var(--border-focus); outline-offset: var(--focus-ring-offset); border-radius: var(--chart-column-bar-radius); }
+.chart-column__bar-wrap { position: relative; display: flex; width: 100%; }
 .chart-column__stack {
-  position: relative;
   display: flex;
   flex-direction: column;
-  width: min(var(--chart-column-width), 100%);
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--chart-column-bar-radius);
 }
 .chart-column__bar { display: block; min-height: 0; }
-.chart-column__bar--secondary {
-  background: var(--chart-column-secondary-background-default);
-  border-radius: var(--chart-column-bar-radius) var(--chart-column-bar-radius) 0 0;
-}
+.chart-column__bar--secondary { background: var(--chart-column-secondary-background-default); }
+.chart-column.is-active .chart-column__bar--secondary,
 .chart-column__hit:hover .chart-column__bar--secondary { background: var(--chart-column-secondary-background-hover); }
 .chart-column__bar--primary { background: var(--chart-column-primary-background-default); }
-.chart-column__label { font-size: var(--size-xs); line-height: var(--leading-1); color: var(--bar-chart-axis-text); }
+.chart-column__label {
+  width: var(--chart-column-width);
+  text-align: center;
+  font-size: var(--size-xs);
+  line-height: var(--leading-1);
+  color: var(--bar-chart-axis-text);
+}
 
-/* Tooltip (Chart column/tooltip) */
+/* Tooltip (Figma Chart column › Tooltip): amber (Button/filled/warning background), centred above
+   the column, 8 px rotated square pointer at the bottom centre. */
 .chart-column__tooltip {
   position: absolute;
-  bottom: calc(100% + var(--gap-xs));
-  right: 0;
+  bottom: calc(100% + var(--gap-sm));
+  left: 50%;
+  transform: translateX(-50%);
   z-index: var(--layer-sticky);
   display: flex;
   flex-direction: column;
   gap: var(--chart-column-tooltip-gap);
   padding: var(--chart-column-tooltip-padding-vertical) var(--chart-column-tooltip-padding-horizontal);
   border-radius: var(--chart-column-tooltip-radius);
-  background: var(--chart-column-tooltip-background);
+  background: var(--button-filled-warning-background-default);
   color: var(--chart-column-tooltip-text);
   font-size: var(--size-xs);
   line-height: var(--leading-1);
+  font-weight: var(--weight-medium);
   white-space: nowrap;
   text-align: left;
   pointer-events: none;
 }
-.chart-column:nth-child(-n + 3) .chart-column__tooltip { right: auto; left: 0; }
 .chart-column__tooltip > span { display: inline-flex; align-items: center; gap: var(--chart-column-tooltip-gap); }
+.chart-column__pointer {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--chart-column-tooltip-swatch-size) / -2);
+  width: var(--chart-column-tooltip-swatch-size);
+  height: var(--chart-column-tooltip-swatch-size);
+  background: inherit;
+  transform: translateX(-50%) rotate(45deg);
+}
+/* First columns: keep the tooltip inside the card */
+.chart-column:first-child .chart-column__tooltip { left: 0; transform: none; }
+.chart-column:first-child .chart-column__pointer { left: calc(var(--chart-column-width) / 2); }
 .chart-column__swatch {
   width: var(--chart-column-tooltip-swatch-size);
   height: var(--chart-column-tooltip-swatch-size);
@@ -122,8 +147,8 @@
 .chart-column__swatch--secondary { background: var(--chart-column-secondary-background-default); }
 
 @media (max-width: 767px) {
-  .enrollment .lms-card__header { flex-wrap: wrap; }
-  .enrollment__controls { flex: 1 1 100%; justify-content: space-between; flex-wrap: wrap; }
-  .chart-column__label { font-size: var(--size-xs); }
-  .chart-column:nth-child(even) .chart-column__label { visibility: hidden; }
+  .enrollment__summary { flex-wrap: wrap; }
+  .chart-column { width: auto; flex: 1 1 0; padding: 0 var(--spacing-0-5); }
+  .chart-column__label { width: auto; flex: 1 1 0; }
+  .chart-column__label:nth-child(even) { visibility: hidden; }
 }

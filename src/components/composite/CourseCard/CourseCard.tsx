@@ -1,7 +1,7 @@
-import { Clock, MoreHorizontal, PlayCircle, Users } from 'lucide-react';
+import { Clock, MoreHorizontal, PlayCircle, Users } from '../../icons';
 import { Link } from 'react-router-dom';
 import type { Course } from '../../../data/types';
-import { formatMinutes, totalMinutes } from '../../../data/rules';
+import { STATUS_LABEL, formatDuration, totalMinutes } from '../../../data/rules';
 import { Badge } from '../../core';
 import { CourseCover } from './CourseCover';
 import './CourseCard.css';
@@ -25,7 +25,7 @@ export function CourseCard({ course, to, meta = 'students' }: CourseCardProps) {
     <>
       <div className="lms-course-card__cover">
         <CourseCover course={course} />
-        <Badge status={course.status} className="lms-course-card__badge">{course.status === 'draft' ? 'Draft' : 'Published'}</Badge>
+        <Badge status={course.status} dot className="lms-course-card__badge">{STATUS_LABEL[course.status]}</Badge>
       </div>
       <div className="lms-course-card__body">
         {course.category && <span className="lms-course-card__category">{course.category}</span>}
@@ -35,20 +35,20 @@ export function CourseCard({ course, to, meta = 'students' }: CourseCardProps) {
             <PlayCircle aria-hidden /> {sessions} {sessions === 1 ? 'session' : 'sessions'}
           </span>
           <span className="lms-course-card__meta-item">
-            <Clock aria-hidden /> {sessions ? formatMinutes(totalMinutes(course)) : '—'}
+            <Clock aria-hidden /> {sessions ? formatDuration(totalMinutes(course)) : '—'}
           </span>
         </div>
-        {meta === 'students' && (
-          <div className="lms-course-card__footer">
-            <span className="lms-course-card__meta-item">
-              <Users aria-hidden /> {course.students.toLocaleString('en-US')} students
-            </span>
-            {/* Figma Footer › Action: Icon button with the meatball icon. Decorative here:
-                the whole card is one link, so no nested button (agent.md). */}
-            <span className="lms-course-card__action" aria-hidden><MoreHorizontal /></span>
-          </div>
-        )}
       </div>
+      {meta === 'students' && (
+        <div className="lms-course-card__footer">
+          <span className="lms-course-card__meta-item">
+            <Users aria-hidden /> {course.students.toLocaleString('en-US')} students
+          </span>
+          {/* Figma Footer › Action: Icon button with the meatball icon. Decorative here:
+              the whole card is one link, so no nested button (agent.md). */}
+          <span className="lms-course-card__action" aria-hidden><MoreHorizontal /></span>
+        </div>
+      )}
     </>
   );
   return to ? (
