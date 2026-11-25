@@ -24,7 +24,9 @@ function byFigmaOrder(a: Course, b: Course) {
 }
 
 export default function Courses() {
-  const { courses } = useStore();
+  const { courses: all } = useStore();
+  // Figma 250:2257: the grid shows exactly the six Figma courses with their Figma images (3D covers are for the cover step only).
+  const courses = all.filter((c) => FIGMA_ORDER.includes(c.id));
   const { state, retry } = useCourseList();
   const start = useStartCourse();
   const [params, setParams] = useSearchParams();
