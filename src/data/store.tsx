@@ -6,9 +6,8 @@ import { blankCourse, seedCourses, uid } from './seed';
  * Course store. In-memory + localStorage so a test participant can reload
  * and keep their draft (UX doc F6). Prototype only: no backend.
  */
-const STORAGE_KEY = 'lms-prototype:courses:v2';
-/** Before 2026-11-25 (PR #9). Courses the participant created there are carried over once. */
-const LEGACY_KEY = 'lms-prototype:courses:v1';
+/** v3 (2026-11-25): everyone starts again from the six Figma courses (Step 02 · Courses, 250:2185). */
+const STORAGE_KEY = 'lms-prototype:courses:v3';
 
 type Action =
   | { type: 'set'; courses: Course[] }
@@ -33,14 +32,6 @@ function load(): Course[] {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) return JSON.parse(raw) as Course[];
-    const seed = seedCourses();
-    const legacy = localStorage.getItem(LEGACY_KEY);
-    if (legacy) {
-      const seedIds = new Set(seed.map((c) => c.id));
-      const own = (JSON.parse(legacy) as Course[]).filter((c) => !seedIds.has(c.id));
-      return [...own, ...seed];
-    }
-    return seed;
   } catch {
     /* storage blocked: fall back to seed */
   }
