@@ -1,4 +1,4 @@
-# agent.md — LMS Design System v2.1.0
+# agent.md — LMS Design System v2.2.0
 
 > Status: AI draft — awaiting review by the design system owner. Source of truth: Figma file Foundation (`fkI3mGHWAToov6nhyWUZx5`), page `LMS DASHBOARD` (239:1782). Snapshot 2026-11-25. Generated from the same data as `tokens.css` and the live docs site. Do not edit by hand; regenerate.
 
@@ -114,6 +114,8 @@ Modes are HTML attributes on any element: `data-theme="dark"`, `data-brand="red-
 | background/inverse | `--background-inverse` | #111827 | #f3f4f6 |
 | text/tertiary | `--text-tertiary` | #6b7280 | #9ca3af |
 | surface/disabled | `--surface-disabled` | #e5e7eb | #374151 |
+| background/brand/subtle | `--background-brand-subtle` | #eef2ff | #1e1b4b |
+| surface/brand/strong/default | `--surface-brand-strong-default` | #a5b4fc | #4f46e5 |
 
 ### 3.2 Spacing
 
@@ -185,7 +187,7 @@ Styles used by components: 20/32 semibold (page title), 16/24 semibold (card/cou
 | Checkbox/border/unchecked on Checkbox/background/unchecked | 1.47 | 2.04 |
 | Tab/text/active on Tab/background/active | 6.29 | 10.53 |
 | Tab/text/default on background/primary | 7.56 | 14.25 |
-| Nav item/foreground/default on Sidebar/background | 6.76 | 1.32 |
+| Nav item/foreground/default on Sidebar/background | 6.76 | 10.85 |
 | Nav item/foreground/active on Nav item/background/active | 6.29 | 8.9 |
 | Step/indicator/icon on Step/indicator/background/completed | 6.29 | 7.04 |
 | Step/indicator/text/current on Step/indicator/background/current | 5.1 | 5.73 |
@@ -212,6 +214,12 @@ Styles used by components: 20/32 semibold (page title), 16/24 semibold (card/cou
 | Table header/text on Table header/background | 17.04 | 11.42 |
 | Table row/title/text on Table row/background | 21.0 | 17.74 |
 | Table row/meta/text on Table row/background | 4.83 | 6.99 |
+| Heatmap cell/level 4/background on Card/background | 6.29 | 5.95 |
+| Heatmap cell/level 2/background on Card/background | 1.49 | 1.79 |
+| Bar chart/axis/text on Card/background | 4.83 | 6.99 |
+| Gauge/indicator/border on Gauge/track/border | 5.1 | 3.83 |
+| Gauge/value/text on Card/background | 21.0 | 17.74 |
+| Gauge/caption/text on Card/background | 4.83 | 6.99 |
 
 ## 5. Components
 
@@ -402,7 +410,7 @@ Main app navigation with logo, nav groups and the user row. Use for: Every app s
 - **type**: Name 16/24 Semi Bold · Section 12/16 Medium · Nav 14/20
 - **properties**: `User name` Text = Sanaz Kiani (string); `User role` Text = Instructor (string); `Active item` Variant = Dashboard (Dashboard / Courses / Students / Messages / Analytics / Earnings)
 - **anatomy**: Logo → Sidebar/logo/*; Navigation → Nav item/*; Spacer → —; User → Sidebar/user/*
-- **tokens** (light / dark): `--sidebar-background` #eef2ff/#eef2ff; `--sidebar-border` #e5e7eb/#1f2937; `--sidebar-logo-background` #4f46e5/#818cf8; `--sidebar-logo-icon` #ffffff/#000000; `--sidebar-user-background` #ffffff/#111827; `--sidebar-user-icon` #374151/#9ca3af; `--sidebar-user-name-text` #000000/#ffffff; `--sidebar-user-role-text` #4b5563/#d1d5db
+- **tokens** (light / dark): `--sidebar-background` #eef2ff/#1e1b4b; `--sidebar-border` #e5e7eb/#1f2937; `--sidebar-logo-background` #4f46e5/#818cf8; `--sidebar-logo-icon` #ffffff/#000000; `--sidebar-user-background` #ffffff/#111827; `--sidebar-user-icon` #374151/#9ca3af; `--sidebar-user-name-text` #000000/#ffffff; `--sidebar-user-role-text` #4b5563/#d1d5db
 - **must**: <nav aria-label="Main"> landmark. Settings icon in user row needs aria-label.
 - **never**: Don't detach to reorder items; edit the main component.
 - **limits**: Used on every app screen (meets the 3+ reuse rule). Sidebar background is surface/brand/soft/default; the active Nav item is white (surface/primary/default), the others have no fill. No collapsed/mobile variant yet.
@@ -515,22 +523,66 @@ Recent learner activity: who, which course, progress, last active and status. Us
 - **never**: Don't add a column to one row only.
 - **limits**: Below 768px the table scrolls horizontally inside the card.
 
+### Heatmap cell (Core, Figma 398:2026, 5 variants)
+
+One square of activity intensity, from Level 0 (none) to Level 4 (highest). Use for: Building block for activity heatmaps and their Less → More scale. Not for: Showing exact numbers or more than five steps (use a chart with an axis).
+
+- **size**: md 32×24 (fills its column in a heatmap) · sm 16×12 (scale swatch)
+- **padding**: none
+- **gap**: set by the parent (gap/2xs 4)
+- **radius**: Heatmap cell/radius → radius/xs = 4
+- **type**: none
+- **properties**: `Level` Variant = 0 (0 / 1 / 2 / 3 / 4)
+- **anatomy**: Container → Heatmap cell/level 0–4/background, Heatmap cell/radius
+- **tokens** (light / dark): `--heatmap-cell-level-0-background` #f3f4f6/#1f2937; `--heatmap-cell-level-1-background` #e0e7ff/#312e81; `--heatmap-cell-level-2-background` #c7d2fe/#3730a3; `--heatmap-cell-level-3-background` #a5b4fc/#4f46e5; `--heatmap-cell-level-4-background` #4f46e5/#818cf8; `--heatmap-cell-radius` 4px
+- **must**: Colour alone carries no meaning for screen readers: the parent table gives each cell its level as text ("Monday 6 PM: High"). The cell itself is aria-hidden. Neighbouring levels must stay distinguishable; the Less → More scale explains the order.
+- **never**: Don't add a sixth level or a custom colour; use the five Level variants.
+- **limits**: Dark mode runs the other way: level 1 is darkest (brand/900) and level 4 brightest (brand/400), so More always means more contrast with the card.
+
+### Activity heatmap (Composite, Figma 400:5995, 1 variant)
+
+When learners study: 7 days × 6 times of day, built from Heatmap cell, with a Less → More scale. Use for: Dashboard, card 'Learner activity' (Figma Card/Learner activity 399:5686), next to Recent activity. Not for: Exact counts or trends over months (use the Enrollment bar chart). Built from: Heatmap cell.
+
+- **size**: 312×244 inside a 360-wide Card (fills the card)
+- **padding**: none (Card padding/xl 24 around it)
+- **gap**: gap/2xs 4 between rows and cells · gap/lg 16 to the scale
+- **radius**: cells: Heatmap cell/radius
+- **type**: Day, time and scale labels 12/16 Regular, Bar chart/axis/text
+- **properties**: `Levels` Instances = 7 × 6 (Level 0–4 per cell)
+- **anatomy**: Rows ×7 → Bar chart/axis/text, Heatmap cell/*; X axis → Bar chart/axis/text; Scale → Heatmap cell/*, Bar chart/axis/text; Motion → 
+- **must**: Use a real <table>: days are row headers, times are column headers, each cell has its level as text. Add a caption such as 'Learner activity by day and time of day, last 4 weeks'. Respect prefers-reduced-motion: no entrance animation.
+- **never**: Don't drop the scale or the axis labels.
+- **limits**: Below 1280 px the card stacks above Recent activity and cells stretch to the card width. Used in one place, so in code it lives in features/dashboard (agent.md rule 5).
+
+### Gauge (Core, Figma 398:2015, 1 variant)
+
+A full ring that shows one percentage, with the value in the centre and a caption below. Use for: One headline rate on the dashboard, e.g. Course completion (Avg. completion rate). Not for: Comparing several values or showing a trend (use the bar chart).
+
+- **size**: ring 220×220, caption below (hug width)
+- **padding**: none
+- **gap**: gap/sm 10 between ring and caption
+- **radius**: none (stroke)
+- **type**: Value 30/36 Bold · Caption 12/16 Regular
+- **properties**: `Value` Text = 72% (0–100%); `Caption` Text = Avg. completion rate (string)
+- **anatomy**: Track → Gauge/track/border, Gauge/thickness; Indicator → Gauge/indicator/border, Gauge/thickness; Value → Gauge/value/text; Caption → Gauge/caption/text; Motion → 
+- **tokens** (light / dark): `--gauge-track-border` #e0e7ff/#312e81; `--gauge-indicator-border` #4f46e5/#818cf8; `--gauge-value-text` #000000/#ffffff; `--gauge-caption-text` #6b7280/#9ca3af; `--gauge-thickness` 24px
+- **must**: Expose the value as text (role="img" with aria-label "Average course completion rate: 72%"); the ring is decorative. The indicator needs 3:1 against the track and the card. Respect prefers-reduced-motion.
+- **never**: Don't show more than one value in a ring.
+- **limits**: Values are clamped to 0–100 and rounded to whole percent. Inside the Course completion card next to Enrollment activity; stacks below it under 1280 px.
+
 ### 3.5 Stroke, opacity, layout
 
 Stroke: `--border-width-default` 1px, `--border-width-thick` 2px. Opacity: `--opacity-50` 0.5. Layout: `--layout-section-gap` 40px, `--layout-page-gutter` 24px, `--layout-grid-gap` 16px.
 
 ## 6. Known issues (do not copy these patterns into new work)
 
-1. **2 component tokens alias deleted variables** (high). Button/outlined/brand/background/hover → deleted VariableID:118:519; Button/outlined/brand/background/pressed → deleted VariableID:471:1841. tokens.css uses the nearest live token until this is fixed: Button/outlined/brand/background/hover → surface/brand/subtle/default; Button/outlined/brand/background/pressed → surface/brand/subtle/hover. Fix proposed: Re-alias in Figma (e.g. outlined brand hover → surface/brand/subtle/default, pressed → surface/brand/subtle/hover).
-2. **4 component tokens skip the semantic layer** (medium). These alias colors/indigo/* directly, so the 'red brand' mode and dark mode do not change them: Sidebar/background, Gauge/track/border, Heatmap cell/level 2/background, Heatmap cell/level 3/background. Fix proposed: Alias semantic tokens instead (e.g. Sidebar/background → a brand-soft semantic token through brand/50 | brand/950).
-3. **Text contrast below 4.5:1** (medium). text/tertiary on background/secondary (light) = 4.39:1. Use text/tertiary only on white or card surfaces (background/primary, surface/primary/default). Fix proposed: Keep captions on white/card surfaces, or use text/secondary on gray and brand-soft surfaces.
-4. **Control borders below 3:1** (medium). border/primary/default on background/primary (light) = 1.47:1; border/primary/default on background/primary (dark) = 2.04:1. WCAG 1.4.11 asks 3:1 for the boundary of form controls. Fix proposed: Point border/primary/default one step darker (neutral/400 light, neutral/600 dark). Minor release.
-5. **Missing interactive states** (low). Added in 2.1.0: Icon button pressed/disabled, Checkbox and Toggle checked × default/hover/disabled, Tab hover, Input hover, Toast warning. Still missing: indeterminate on Checkbox; pressed on Tab and Nav item; Badge status names (draft/published → warning/success) and the Stepper axis are pending API renames. Fix proposed: Add as variants (functional states) one component at a time. Minor release each.
-6. **Code syntax typo on padding/none** (low). In Figma, padding/none has WEB code syntax var(--padding-xl). Generated CSS uses the name (--padding-none), so code is right, but Dev Mode shows the wrong variable. Fix proposed: Set the WEB code syntax of padding/none to var(--padding-none).
+1. **Text contrast below 4.5:1** (medium). text/tertiary on background/secondary (light) = 4.39:1. Use text/tertiary only on white or card surfaces (background/primary, surface/primary/default). Fix proposed: Keep captions on white/card surfaces, or use text/secondary on gray and brand-soft surfaces.
+2. **Control borders below 3:1** (medium). border/primary/default on background/primary (light) = 1.47:1; border/primary/default on background/primary (dark) = 2.04:1. WCAG 1.4.11 asks 3:1 for the boundary of form controls. Fix proposed: Point border/primary/default one step darker (neutral/400 light, neutral/600 dark). Minor release.
+3. **Missing interactive states** (low). Added in 2.1.0: Icon button pressed/disabled, Checkbox and Toggle checked × default/hover/disabled, Tab hover, Input hover, Toast warning. Still missing: indeterminate on Checkbox; pressed on Tab and Nav item; Badge status names (draft/published → warning/success) and the Stepper axis are pending API renames. Fix proposed: Add as variants (functional states) one component at a time. Minor release each.
 
 ## 7. Change process and versioning
 
 - Version format MAJOR.MINOR.PATCH, shared by Figma library and git tag.
 - PATCH: fix with no visual or API change (typo in token name inside Figma only, wrong binding). MINOR: backward-compatible addition (new variant, state, component, token). MAJOR: breaking change (rename/remove a CSS variable, remove a variant, change a public property such as Disabled, redesign).
 - Steps: 1 Request (problem, proposal, affected tokens/components) → 2 Impact & risk analysis (list dependents, choose version type, check contrast in both themes and brands) → 3 Change design and code together → 4 Owner review → 5 Changelog entry per component and system → 6 Publish Figma library + git tag + regenerate tokens.css, agent.md, docs site.
-- Current version: 2.1.0.
+- Current version: 2.2.0.

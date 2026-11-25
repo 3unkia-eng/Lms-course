@@ -6,7 +6,9 @@ import { useStore } from '../data/store';
 import type { Course } from '../data/types';
 import { CourseGridError, CourseGridSkeleton } from '../features/courses/CourseGridStates';
 import { useCourseList } from '../features/courses/useCourseList';
+import { CourseCompletion } from '../features/dashboard/CourseCompletion';
 import { EnrollmentChart } from '../features/dashboard/EnrollmentChart';
+import { LearnerActivity } from '../features/dashboard/LearnerActivity';
 import './pages.css';
 
 /** 01 · Dashboard (Figma 250:1946) + State · Dashboard · New instructor */
@@ -60,16 +62,24 @@ export default function Dashboard() {
         <Stat title="Earnings" value={isNew ? '—' : '$8,420'} caption={isNew ? 'No earnings yet' : '+12% vs last month'} />
       </section>
 
-      {!isNew && <EnrollmentChart />}
       {!isNew && (
-        <ActivityTable
-          rows={[
-            { learner: 'Sara Ahmadi', course: 'Design Systems 101', progress: 100, lastActive: 'Nov 23', status: 'completed' },
-            { learner: 'Omid Rezaei', course: 'UX Research Basics', progress: 64, lastActive: 'Nov 23', status: 'in-progress' },
-            { learner: 'Lena Park', course: 'Design Systems 101', progress: 0, lastActive: 'Nov 22', status: 'enrolled' },
-            { learner: 'Arash Karimi', course: 'UX Research Basics', progress: 88, lastActive: 'Nov 22', status: 'in-progress' },
-          ]}
-        />
+        <div className="insights-row">
+          <EnrollmentChart />
+          <CourseCompletion />
+        </div>
+      )}
+      {!isNew && (
+        <div className="activity-row">
+          <LearnerActivity />
+          <ActivityTable
+            rows={[
+              { learner: 'Sara Ahmadi', course: 'Design Systems 101', progress: 100, lastActive: 'Nov 23', status: 'completed' },
+              { learner: 'Omid Rezaei', course: 'UX Research Basics', progress: 64, lastActive: 'Nov 23', status: 'in-progress' },
+              { learner: 'Lena Park', course: 'Design Systems 101', progress: 0, lastActive: 'Nov 22', status: 'enrolled' },
+              { learner: 'Arash Karimi', course: 'UX Research Basics', progress: 88, lastActive: 'Nov 22', status: 'in-progress' },
+            ]}
+          />
+        </div>
       )}
 
       <section className="stack gap-lg" aria-labelledby="your-courses">

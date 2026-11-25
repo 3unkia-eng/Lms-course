@@ -15,3 +15,6 @@ export { Alert } from './Alert/Alert';
 export { Toast } from './Toast/Toast';
 export { Dialog } from './Dialog/Dialog';
 export { ProgressBar } from './ProgressBar/ProgressBar';
+export { HeatmapCell } from './HeatmapCell/HeatmapCell';
+export type { HeatmapLevel } from './HeatmapCell/HeatmapCell';
+export { Gauge } from './Gauge/Gauge';

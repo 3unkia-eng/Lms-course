@@ -229,6 +229,8 @@
   --background-inverse: var(--neutral-900);
   --text-tertiary: var(--neutral-500);
   --surface-disabled: var(--neutral-200);
+  --background-brand-subtle: var(--brand-50);
+  --surface-brand-strong-default: var(--brand-300);
   /* ✨ Semantic spacing · level: semantic · mode: default */
   --padding-none: var(--spacing-0);
   --gap-2xs: var(--spacing-1);
@@ -380,7 +382,7 @@
   --card-title-text: var(--text-primary);
   --card-description-text: var(--text-secondary);
   --card-radius: var(--radius-lg);
-  --sidebar-background: var(--colors-indigo-50);
+  --sidebar-background: var(--background-brand-subtle);
   --sidebar-border: var(--border-secondary);
   --sidebar-logo-background: var(--surface-brand-medium-default);
   --sidebar-logo-icon: var(--icon-inverse);
@@ -428,14 +430,14 @@
   --progress-bar-track-background: var(--surface-secondary-default);
   --progress-bar-indicator-background: var(--background-brand);
   --progress-bar-label-text: var(--text-secondary);
-  --gauge-track-border: var(--colors-indigo-100);
+  --gauge-track-border: var(--surface-brand-subtle-default);
   --gauge-indicator-border: var(--background-brand);
   --gauge-value-text: var(--text-primary);
   --gauge-caption-text: var(--text-tertiary);
   --heatmap-cell-level-0-background: var(--surface-secondary-default);
   --heatmap-cell-level-1-background: var(--surface-brand-subtle-default);
-  --heatmap-cell-level-2-background: var(--colors-indigo-200);
-  --heatmap-cell-level-3-background: var(--colors-indigo-300);
+  --heatmap-cell-level-2-background: var(--surface-brand-subtle-hover);
+  --heatmap-cell-level-3-background: var(--surface-brand-strong-default);
   --heatmap-cell-level-4-background: var(--background-brand);
   --table-header-background: var(--surface-brand-subtle-default);
   --table-header-text: var(--text-primary);
@@ -638,6 +640,8 @@
   --background-inverse: var(--neutral-100);
   --text-tertiary: var(--neutral-400);
   --surface-disabled: var(--neutral-700);
+  --background-brand-subtle: var(--brand-950);
+  --surface-brand-strong-default: var(--brand-600);
 }
 [data-radius="none-radius"] { /* ✨ Semantic radius · mode: none radius */
   --radius-xs: var(--radius-0);

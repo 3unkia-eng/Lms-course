@@ -108,6 +108,8 @@ src/
 | `Alert` | Core | 263:2027 | info / success / warning / error |
 | `Toast` | Core | 263:2057 | success / error / warning / info, action, close |
 | `ProgressBar` | Core | 398:2011 | track + indicator + fixed % label; `role="progressbar"` |
+| `HeatmapCell` | Core | 398:2026 | `level` 0–4, `size` md/sm; aria-hidden, the parent table gives the level as text |
+| `Gauge` | Core | 398:2015 | full ring, `value` 0–100 + `caption`; `role="img"` with the value in its label |
 | `Dialog` | Core (structural) | – | proposal; native `<dialog>` |
 | `Sidebar` | Composite | 497:7995 | `activeItem` = Figma `Active item` (defaults to route); desktop only; drawer below 1024 |
 | `Topbar` | Composite | 248:1857 | title is the page `<h1>` |

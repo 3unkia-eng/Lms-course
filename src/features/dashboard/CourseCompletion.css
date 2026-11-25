@@ -1,0 +1,10 @@
+/* Course completion card: Content slot centred on gap/lg; Legend item Shape=dot on gap/md. */
+.course-completion__body { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--gap-lg); flex: 1 1 auto; }
+.course-completion__legend { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--gap-md); margin: 0; padding: 0; list-style: none; }
+.legend-item__dot { width: var(--spacing-2); height: var(--spacing-2); border-radius: var(--radius-full); flex: none; }
+.legend-item__dot--primary { background: var(--legend-item-primary-swatch-background); }
+.legend-item__dot--secondary { background: var(--legend-item-secondary-swatch-background); }
+
+/* Dashboard row "Insights": Enrollment activity (752) beside Course completion (360). */
+.insights-row { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: var(--gap-xl); align-items: stretch; }
+@media (max-width: 1279px) { .insights-row { grid-template-columns: minmax(0, 1fr); } }
