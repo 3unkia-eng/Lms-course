@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 import { Card, HeatmapCell } from '../../components/core';
+import { useInView } from '../../lib/useInView';
 import type { HeatmapLevel } from '../../components/core';
 import './LearnerActivity.css';
 
@@ -7,8 +8,8 @@ import './LearnerActivity.css';
  * Learner activity (Figma Step 01 · Dashboard, Card/Learner activity 399:5686 with
  * the Activity heatmap composite 400:5995): when learners study, days × time of day,
  * built from Heatmap cell. One use only, so it lives in features/ (agent.md rule 5).
- * Entrance: cells grow and fade in column by column (Figma motion on 400:5995);
- * off under prefers-reduced-motion.
+ * Entrance: cells grow and fade in column by column (Figma motion on 400:5995) once the
+ * card scrolls into view; off under prefers-reduced-motion.
  */
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'] as const;
 const DAY_NAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -28,9 +29,10 @@ const LEVELS: HeatmapLevel[][] = [
 ];
 
 export function LearnerActivity() {
+  const [ref, inView] = useInView<HTMLDivElement>();
   return (
     <Card title="Learner activity" className="learner-activity" headingLevel={2}>
-      <div className="activity-heatmap">
+      <div ref={ref} className={`activity-heatmap${inView ? ' is-visible' : ''}`}>
         <table className="activity-heatmap__table">
           <caption className="visually-hidden">Learner activity by day and time of day, last 4 weeks</caption>
           <thead className="visually-hidden">
