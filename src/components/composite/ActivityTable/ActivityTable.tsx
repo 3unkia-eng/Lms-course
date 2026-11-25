@@ -4,8 +4,8 @@ import './ActivityTable.css';
 
 /**
  * Activity table (Composite · Figma 659:6120): Card + Table header + Table rows
- * (Avatar, course, Progress bar, last active, status Badge).
- * Columns: Learner (fill), Course, Progress, Last active, Status. Header and rows share widths.
+ * (Avatar, course, Progress bar, status Badge).
+ * Columns (Figma 659:6198): Learner, Course, Progress, Status, equal widths. Header and rows share widths.
  * `fitHeight` (code-only, layout behaviour): when the page gives the card a fixed height
  * (the table area has `overflow: hidden`), show only the rows that fit in full, never a cut row.
  */
@@ -13,7 +13,8 @@ export interface ActivityRow {
   learner: string;
   course: string;
   progress: number;
-  lastActive: string;
+  /** Kept for data; not shown since the Figma update (659:6198 has no Last active column) */
+  lastActive?: string;
   status: 'completed' | 'in-progress' | 'enrolled';
 }
 
@@ -54,7 +55,6 @@ export function ActivityTable({
               <th scope="col">Learner</th>
               <th scope="col">Course</th>
               <th scope="col">Progress</th>
-              <th scope="col">Last active</th>
               <th scope="col">Status</th>
             </tr>
           </thead>
@@ -64,7 +64,6 @@ export function ActivityTable({
                 <td><span className="lms-activity__learner"><Avatar name={r.learner} size="sm" />{r.learner}</span></td>
                 <td>{r.course}</td>
                 <td><ProgressBar value={r.progress} label={`${r.learner} progress`} /></td>
-                <td className="lms-activity__meta">{r.lastActive}</td>
                 <td><Badge status={STATUS[r.status].badge}>{STATUS[r.status].label}</Badge></td>
               </tr>
             ))}
