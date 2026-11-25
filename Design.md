@@ -1,6 +1,6 @@
 # Design.md — visual rules for the LMS prototype
 
-> Reference for every style in this repo. Source of truth: Figma file Foundation (`fkI3mGHWAToov6nhyWUZx5`), design system v2.1.0, live docs: https://lms-course-rho.vercel.app/docs/
+> Reference for every style in this repo. Source of truth: Figma file Foundation (`fkI3mGHWAToov6nhyWUZx5`), design system v2.2.0, live docs: https://lms-course-rho.vercel.app/docs/
 > Status: AI draft, awaiting owner review.
 
 ## 1. Token architecture

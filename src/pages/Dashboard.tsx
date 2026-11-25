@@ -6,6 +6,7 @@ import { useStore } from '../data/store';
 import type { Course } from '../data/types';
 import { CourseGridError, CourseGridSkeleton } from '../features/courses/CourseGridStates';
 import { useCourseList } from '../features/courses/useCourseList';
+import { CourseCompletion } from '../features/dashboard/CourseCompletion';
 import { EnrollmentChart } from '../features/dashboard/EnrollmentChart';
 import { LearnerActivity } from '../features/dashboard/LearnerActivity';
 import './pages.css';
@@ -61,7 +62,12 @@ export default function Dashboard() {
         <Stat title="Earnings" value={isNew ? '—' : '$8,420'} caption={isNew ? 'No earnings yet' : '+12% vs last month'} />
       </section>
 
-      {!isNew && <EnrollmentChart />}
+      {!isNew && (
+        <div className="insights-row">
+          <EnrollmentChart />
+          <CourseCompletion />
+        </div>
+      )}
       {!isNew && (
         <div className="activity-row">
           <LearnerActivity />
