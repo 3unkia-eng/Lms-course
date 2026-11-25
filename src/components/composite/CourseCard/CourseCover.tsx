@@ -34,12 +34,18 @@ export function displayCover(course: Course): string | undefined {
   return coverImage(course) ?? FIGMA_COVERS.default;
 }
 
+/** Courses list (Figma Step 02): only the upload or the course's own Figma image, never a generated cover. */
+export function listCover(course: Course): string | undefined {
+  return course.cover?.url ?? FIGMA_COVERS[course.id];
+}
+
 /**
- * Course cover (Figma Course card › Cover): the uploaded image wins, then the Figma cover for the
- * sample courses, otherwise the default illustration (the icon only if no image can load).
+ * Course cover (Figma Course card › Cover). In the create-course flow (cover step, preview, published)
+ * the upload wins, then the Figma or 3D cover for the course, then the default 3D cover.
+ * On the Courses list (`list`) only the upload or the Figma image is shown, otherwise the icon.
  */
-export function CourseCover({ course, size = 'card', className }: { course: Course; size?: 'card' | 'preview'; className?: string }) {
-  const src = displayCover(course);
+export function CourseCover({ course, size = 'card', list = false, className }: { course: Course; size?: 'card' | 'preview'; list?: boolean; className?: string }) {
+  const src = list ? listCover(course) : displayCover(course);
   const Icon = ICONS[course.coverIcon] ?? Layers;
   return (
     <div className={cx('lms-course-cover', `lms-course-cover--${size}`, className)}>

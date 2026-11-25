@@ -101,7 +101,7 @@ export default function Courses() {
         {state === 'ready' && list.length === 0 && <Card>{empty()}</Card>}
         {state === 'ready' && list.length > 0 && (
           <div className="course-grid">
-            {list.map((c) => <CourseCard key={c.id} course={c} to={courseLink(c)} />)}
+            {list.map((c) => <CourseCard key={c.id} course={c} to={courseLink(c)} list />)}
           </div>
         )}
       </div>
