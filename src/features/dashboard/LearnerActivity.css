@@ -18,17 +18,20 @@
 .activity-heatmap__time { text-align: center; }
 .activity-heatmap__scale { display: flex; align-items: center; gap: var(--gap-2xs); }
 
-/* Entrance: fill up column by column, rows offset (Figma: stagger 0.14 s per column, 0.07 s per row). */
-.activity-heatmap__cell {
-  transform-origin: center bottom;
-  animation: heatmap-fill 600ms var(--motion-easing) both;
-  animation-delay: calc(var(--hm-col) * 140ms + var(--hm-row) * 70ms);
+/* Entrance (Figma 400:5995): cells grow from 0.2 and fade in with a light spring, 0.14 s per column
+   and 0.07 s per row, about 3 s in all. Starts when the card is in view (.is-visible, set by useInView). */
+@media (prefers-reduced-motion: no-preference) {
+  .activity-heatmap__cell { transform-origin: center; opacity: 0; transform: scale(0.2); }
+  .activity-heatmap.is-visible .activity-heatmap__cell {
+    animation: heatmap-fill 1800ms cubic-bezier(0.34, 1.4, 0.64, 1) both;
+    animation-delay: calc(var(--hm-col) * 140ms + var(--hm-row) * 70ms);
+  }
 }
 @keyframes heatmap-fill {
   from { opacity: 0; transform: scale(0.2); }
+  40% { opacity: 1; }
   to { opacity: 1; transform: scale(1); }
 }
-@media (prefers-reduced-motion: reduce) { .activity-heatmap__cell { animation: none; } }
 
 /* Dashboard row: Learner activity beside Recent activity (Figma frame "Activity", 360 + 752). */
 .activity-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: var(--gap-xl); align-items: stretch; }
