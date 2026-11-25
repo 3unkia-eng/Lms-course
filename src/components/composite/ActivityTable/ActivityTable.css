@@ -1,0 +1,38 @@
+/* Activity table: Table header and Table row component tokens (design system 2.1.0). */
+.lms-activity__scroll { overflow-x: auto; }
+.lms-activity__table {
+  width: 100%;
+  min-width: calc(var(--spacing-36) * 4);
+  border-collapse: separate;
+  border-spacing: 0;
+  table-layout: fixed;
+  font-size: var(--size-sm);
+  line-height: var(--leading-2);
+}
+.lms-activity__table th {
+  padding: var(--padding-sm);
+  background: var(--table-header-background);
+  color: var(--table-header-text);
+  font-size: var(--size-xs);
+  line-height: var(--leading-1);
+  font-weight: var(--weight-semibold);
+  text-align: left;
+}
+.lms-activity__table th:first-child { border-radius: var(--table-header-radius) 0 0 var(--table-header-radius); }
+.lms-activity__table th:last-child { border-radius: 0 var(--table-header-radius) var(--table-header-radius) 0; }
+/* Figma column widths: Course 150, Progress 120, Last active 96, Status 96 (Learner fills). */
+.lms-activity__table th:nth-child(2) { width: calc(var(--spacing-36) + var(--spacing-1-5)); }
+.lms-activity__table th:nth-child(3) { width: calc(var(--spacing-28) + var(--spacing-2)); }
+.lms-activity__table th:nth-child(4),
+.lms-activity__table th:nth-child(5) { width: calc(var(--spacing-10) * 2 + var(--spacing-4)); }
+.lms-activity__table td {
+  padding: var(--padding-sm);
+  border-bottom: var(--border-width-default) solid var(--table-row-border);
+  background: var(--table-row-background);
+  color: var(--table-row-title-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.lms-activity__learner { display: inline-flex; align-items: center; gap: var(--gap-sm); font-weight: var(--weight-medium); }
+.lms-activity__table td.lms-activity__meta { color: var(--table-row-meta-text); font-size: var(--size-xs); }

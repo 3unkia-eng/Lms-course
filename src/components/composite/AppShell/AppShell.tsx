@@ -117,8 +117,8 @@ export function AppShell({
             </Button>
             <Button
               fullWidth
-              variant="outlined"
-              appearance="secondary"
+              appearance="outlined"
+              intent="neutral"
               onClick={() => {
                 set({ sessionExpired: false });
                 navigate('/');

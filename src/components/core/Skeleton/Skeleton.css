@@ -4,8 +4,8 @@
   background-size: 200% 100%;
   animation: lms-shimmer 1.4s ease-in-out infinite;
 }
-.lms-skeleton--text { height: var(--spacing-3); width: 100%; border-radius: var(--sm); }
-.lms-skeleton--block { height: var(--course-card-cover-height); width: 100%; border-radius: var(--md); }
-.lms-skeleton--circle { width: var(--spacing-10); height: var(--spacing-10); border-radius: var(--full); }
+.lms-skeleton--text { height: var(--spacing-3); width: 100%; border-radius: var(--radius-xs); }
+.lms-skeleton--block { height: var(--course-card-cover-height); width: 100%; border-radius: var(--radius-md); }
+.lms-skeleton--circle { width: var(--spacing-10); height: var(--spacing-10); border-radius: var(--radius-full); }
 @keyframes lms-shimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
 @media (prefers-reduced-motion: reduce) { .lms-skeleton { animation: none; } }

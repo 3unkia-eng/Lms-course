@@ -117,7 +117,7 @@ export default function Preview() {
         >
           {publishing ? 'Publishing…' : 'Publish course'}
         </Button>
-        <Button fullWidth variant="outlined" appearance="secondary" onClick={() => goTo('sessions')}>Back to edit</Button>
+        <Button fullWidth appearance="outlined" intent="neutral" onClick={() => goTo('sessions')}>Back to edit</Button>
       </div>
     </Card>
   );
@@ -136,7 +136,7 @@ export default function Preview() {
       <ActionBar
         className="only-mobile"
         note={reason}
-        start={<Button variant="outlined" appearance="secondary" onClick={() => goTo('sessions')}>Back</Button>}
+        start={<Button appearance="outlined" intent="neutral" onClick={() => goTo('sessions')}>Back</Button>}
         end={<Button loading={publishing} disabled={!canPublish} onClick={publish}>{publishing ? 'Publishing…' : 'Publish course'}</Button>}
       />
     </WizardFrame>

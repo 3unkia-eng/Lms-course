@@ -6,3 +6,4 @@ export { Stepper } from './Stepper/Stepper';
 export { CourseCard } from './CourseCard/CourseCard';
 export { CourseCover } from './CourseCard/CourseCover';
 export { SessionRow } from './SessionRow/SessionRow';
+export { ActivityTable } from './ActivityTable/ActivityTable';

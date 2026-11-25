@@ -11,7 +11,7 @@ export default function NotInPrototype({ title }: { title: string }) {
           icon={<Construction />}
           title={`${title} isn’t part of this prototype`}
           description="This test covers creating and publishing a course. Head back to your courses to continue."
-          action={<ButtonLink to="/courses" variant="outlined" appearance="secondary">Go to courses</ButtonLink>}
+          action={<ButtonLink to="/courses" appearance="outlined" intent="neutral">Go to courses</ButtonLink>}
         />
       </Card>
     </AppShell>

@@ -1,16 +1,16 @@
 .lms-stepper {
   padding: var(--padding-lg) var(--padding-xl);
-  border: var(--border-width-default) solid var(--stepper-border);
-  border-radius: var(--stepper-radius);
-  background: var(--stepper-background);
+  border: var(--border-width-default) solid var(--card-border);
+  border-radius: var(--card-radius);
+  background: var(--card-background);
   overflow-x: auto;
 }
 .lms-stepper__list { display: flex; align-items: center; gap: var(--gap-lg); }
 .lms-stepper__connector {
   flex: 1 1 var(--spacing-10);
   min-width: var(--spacing-6);
-  height: var(--border-width-focus);
-  border-radius: var(--full);
-  background: var(--stepper-connector-default);
+  height: var(--border-width-thick);
+  border-radius: var(--radius-full);
+  background: var(--step-connector-border-default);
 }
-.lms-stepper__connector--completed { background: var(--stepper-connector-completed); }
+.lms-stepper__connector--completed { background: var(--step-connector-border-completed); }

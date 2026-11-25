@@ -4,9 +4,9 @@ import { cx } from '../../../lib/cx';
 import { toneIcon } from '../Alert/Alert';
 import './Toast.css';
 
-/** Toast (Core · Figma 263:2057). Tone: success / error / info. Message, Action, Close. */
+/** Toast (Core · Figma 263:2057). Tone: success / error / warning / info. Message, Action, Close. */
 export interface ToastProps {
-  tone?: 'success' | 'error' | 'info';
+  tone?: 'success' | 'error' | 'warning' | 'info';
   message: ReactNode;
   actionLabel?: string;
   onAction?: () => void;
@@ -15,7 +15,7 @@ export interface ToastProps {
 
 export function Toast({ tone = 'info', message, actionLabel, onAction, onClose }: ToastProps) {
   return (
-    <div className={cx('lms-toast', `lms-toast--${tone}`)} role={tone === 'error' ? 'alert' : 'status'}>
+    <div className={cx('lms-toast', `lms-toast--${tone}`)} role={tone === 'error' || tone === 'warning' ? 'alert' : 'status'}>
       <span className="lms-toast__icon" aria-hidden>{toneIcon[tone]}</span>
       <p className="lms-toast__message">{message}</p>
       {actionLabel && onAction && (

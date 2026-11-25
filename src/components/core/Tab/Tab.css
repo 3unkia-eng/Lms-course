@@ -12,5 +12,6 @@
   white-space: nowrap;
   cursor: pointer;
 }
-.lms-tab:hover:not(.lms-tab--active) { background: var(--surface-primary-hover); }
+.lms-tab:hover:not(.lms-tab--active) { background: var(--tab-background-hover); color: var(--tab-text-hover); }
 .lms-tab--active { background: var(--tab-background-active); color: var(--tab-text-active); }
+.lms-tab:focus-visible { outline: var(--border-width-thick) solid var(--border-focus); outline-offset: var(--focus-ring-offset); }

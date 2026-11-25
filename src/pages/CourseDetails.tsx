@@ -102,8 +102,8 @@ export default function CourseDetails() {
                 )}
                 <div className="upload-preview__bar">
                   <span className="upload-preview__name truncate" title={course.cover.fileName}>{course.cover.fileName}</span>
-                  <Button variant="outlined" appearance="secondary" onClick={() => fileRef.current?.click()}>Replace</Button>
-                  <Button variant="outlined" appearance="secondary" onClick={() => update({ cover: null })}>Remove</Button>
+                  <Button appearance="outlined" intent="neutral" onClick={() => fileRef.current?.click()}>Replace</Button>
+                  <Button appearance="outlined" intent="neutral" onClick={() => update({ cover: null })}>Remove</Button>
                 </div>
               </div>
             ) : (
@@ -185,11 +185,11 @@ export default function CourseDetails() {
       </div>
 
       <ActionBar
-        start={<Button variant="outlined" appearance="secondary" onClick={() => goTo('basic')} className="only-desktop">Back</Button>}
+        start={<Button appearance="outlined" intent="neutral" onClick={() => goTo('basic')} className="only-desktop">Back</Button>}
         end={
           <>
             <Button
-              variant="outlined"
+              appearance="outlined"
               onClick={() => toast.show({ tone: settings.offline ? 'info' : 'success', message: settings.offline ? 'Saved on this device. It will sync when you’re online.' : 'Draft saved' })}
             >
               Save as draft

@@ -54,7 +54,7 @@ export default function Published() {
           }
         />
         <div className="success__actions">
-          <ButtonLink to="/courses?tab=published" variant="outlined" appearance="secondary" fullWidth>Back to courses</ButtonLink>
+          <ButtonLink to="/courses?tab=published" appearance="outlined" intent="neutral" fullWidth>Back to courses</ButtonLink>
           <Button leadingIcon={<Eye />} fullWidth onClick={() => navigate(`/courses/${course.id}`)}>View course</Button>
         </div>
       </Card>

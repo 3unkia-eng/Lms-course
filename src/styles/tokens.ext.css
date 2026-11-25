@@ -1,5 +1,5 @@
 /*
- * Prototype token extension (LMS design system 1.4.0 + proposals).
+ * Prototype token extension (LMS design system 2.1.0 + proposals).
  *
  * Every value here is built from existing tokens in tokens.css. These are
  * PROPOSALS for gaps in Figma (layout, icon size, overlay, motion, elevation).
@@ -7,8 +7,8 @@
  * system owner before they move to Figma. Do not use primitives in UI code;
  * use these or the semantic/component tokens instead.
  *
- * The only raw values allowed are border widths (1px/2px) and motion timing,
- * which have no Figma tokens yet (agent.md, hard rule 1).
+ * Border widths now come from Figma (border width/default|thick). The only raw
+ * values allowed are motion timing, which has no Figma token yet (agent.md, hard rule 1).
  */
 :root,
 [data-theme],
@@ -16,39 +16,51 @@
 [data-neutral],
 [data-radius],
 [data-font] {
-  /* Border width (agent.md exception: no token yet) */
-  --border-width-default: 1px;
-  --border-width-focus: 2px;
+  /* Layout scale. Figma 2.0.0 deleted the unused spacing primitives above 10 (and 5, 9).
+     The prototype still needs a few fixed sizes, so they are rebuilt here from spacing/1 (4px).
+     Use only for fixed sizes (layout widths, illustrations), never for padding or gap. */
+  --space-5: calc(var(--spacing-1) * 5);
+  --space-8: calc(var(--spacing-1) * 8);
+  --space-9: calc(var(--spacing-1) * 9);
+  --space-11: calc(var(--spacing-1) * 11);
+  --space-12: calc(var(--spacing-1) * 12);
+  --space-16: calc(var(--spacing-1) * 16);
+  --space-32: calc(var(--spacing-1) * 32);
+  --space-40: calc(var(--spacing-1) * 40);
+  --space-44: calc(var(--spacing-1) * 44);
+  --space-52: calc(var(--spacing-1) * 52);
+  --space-64: calc(var(--spacing-1) * 64);
+  --space-72: calc(var(--spacing-1) * 72);
+  --space-80: calc(var(--spacing-1) * 80);
+  --space-96: calc(var(--spacing-1) * 96);
+
   --focus-ring-offset: var(--spacing-0-5);
 
   /* Icon size (agent.md exception: 16 / 20; larger sizes from spacing) */
   --icon-size-sm: var(--spacing-4);
-  --icon-size-md: var(--spacing-5);
+  --icon-size-md: var(--space-5);
   --icon-size-lg: var(--spacing-8);
   --icon-size-xl: var(--spacing-10);
 
   /* Control sizes (Figma: Button 44, Input field 46, Icon button 46) */
-  --control-height: var(--spacing-11);
-  --control-height-sm: var(--spacing-9);
+  --control-height: var(--space-11);
+  --control-height-sm: var(--space-9);
   --control-multiline-height: var(--spacing-28);
 
   /* Layout (Figma frame 1440: Sidebar 264, content padding 24, aside 360) */
-  --layout-sidebar-width: calc(var(--spacing-64) + var(--spacing-2));
-  --layout-aside-width: calc(var(--spacing-80) + var(--spacing-10));
-  --layout-dialog-width: calc(var(--spacing-96) + var(--spacing-8));
-  --layout-success-width: calc(var(--spacing-96) + var(--spacing-44));
-  --layout-card-min-width: calc(var(--spacing-72) + var(--spacing-4));
-  --layout-mobile-header-height: var(--spacing-16);
-  --layout-content-padding: var(--padding-xl);
+  --layout-sidebar-width: calc(var(--space-64) + var(--spacing-2));
+  --layout-aside-width: calc(var(--space-80) + var(--spacing-10));
+  --layout-dialog-width: calc(var(--space-96) + var(--spacing-8));
+  --layout-success-width: calc(var(--space-96) + var(--space-44));
+  --layout-card-min-width: calc(var(--space-72) + var(--spacing-4));
+  --layout-mobile-header-height: var(--space-16);
+  --layout-content-padding: var(--layout-page-gutter);
   --layout-content-padding-mobile: var(--padding-lg);
 
   /* Course card cover (Figma: 122 high) and preview cover (200 x 128) */
   --course-card-cover-height: calc(var(--spacing-28) + var(--spacing-2-5));
-  --course-cover-preview-width: var(--spacing-52);
-  --course-cover-preview-height: var(--spacing-32);
-
-  /* Overlay scrim. Figma: Background/overlay (raw RGBA per mode). */
-  --background-overlay: color-mix(in srgb, var(--neutral-950) 48%, transparent);
+  --course-cover-preview-width: var(--space-52);
+  --course-cover-preview-height: var(--space-32);
 
   /* Elevation for floating layers (Toast, Dialog). Proposal. */
   --shadow-overlay: 0 var(--spacing-2) var(--spacing-6) color-mix(in srgb, var(--neutral-950) 16%, transparent);
@@ -69,7 +81,6 @@
 }
 
 [data-theme="dark"] {
-  --background-overlay: color-mix(in srgb, var(--neutral-950) 72%, transparent);
   --shadow-overlay: 0 var(--spacing-2) var(--spacing-6) color-mix(in srgb, var(--neutral-950) 60%, transparent);
 }
 

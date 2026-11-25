@@ -12,9 +12,20 @@
 .lms-course-card--link { transition: border-color var(--motion-duration-fast) var(--motion-easing); }
 .lms-course-card--link:hover { border-color: var(--border-primary-hover); }
 .lms-course-card--link:hover .lms-course-card__title { color: var(--text-brand); }
-.lms-course-card__body { display: flex; flex-direction: column; gap: var(--gap-md); padding: var(--padding-lg); }
-.lms-course-card__top { display: flex; align-items: center; justify-content: space-between; }
-.lms-course-card__more { width: var(--icon-size-sm); height: var(--icon-size-sm); color: var(--course-card-meta-icon); }
+.lms-course-card__cover { position: relative; border-bottom: var(--border-width-default) solid var(--course-card-border); }
+.lms-course-card__badge { position: absolute; top: var(--padding-md); left: var(--padding-md); }
+.lms-course-card__body { display: flex; flex-direction: column; gap: var(--gap-sm); padding: var(--padding-lg); }
+.lms-course-card__category { color: var(--course-card-category-text); font-size: var(--size-xs); line-height: var(--leading-1); font-weight: var(--weight-semibold); }
+.lms-course-card__footer { display: flex; align-items: center; justify-content: space-between; gap: var(--gap-md); }
+.lms-course-card__action {
+  display: inline-flex;
+  padding: var(--padding-sm);
+  border: var(--border-width-default) solid var(--icon-button-border-default);
+  border-radius: var(--icon-button-radius);
+  background: var(--icon-button-background-default);
+  color: var(--icon-button-icon);
+}
+.lms-course-card__action svg { width: var(--icon-size-sm); height: var(--icon-size-sm); }
 .lms-course-card__title {
   color: var(--course-card-title-text);
   font-size: var(--size-base);
@@ -46,7 +57,7 @@
 .lms-course-cover--preview {
   width: var(--course-cover-preview-width);
   height: var(--course-cover-preview-height);
-  border-radius: var(--md);
+  border-radius: var(--radius-md);
 }
 .lms-course-cover__icon { width: var(--icon-size-lg); height: var(--icon-size-lg); }
 .lms-course-cover--preview .lms-course-cover__icon { width: var(--icon-size-xl); height: var(--icon-size-xl); }

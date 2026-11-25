@@ -8,7 +8,7 @@
   text-align: left;
   flex: none;
 }
-.lms-step--interactive { cursor: pointer; border-radius: var(--sm); }
+.lms-step--interactive { cursor: pointer; border-radius: var(--radius-xs); }
 .lms-step--interactive:hover .lms-step__title { color: var(--text-brand); }
 .lms-step__indicator {
   display: inline-flex;
