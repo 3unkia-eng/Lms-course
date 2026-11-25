@@ -25,9 +25,57 @@
 .toolbar > .lms-tabs { flex: 1 1 auto; }
 
 /* ---------- Stat card (Card instance + Content slot) ---------- */
-.stat__value { font-size: var(--size-2xl); line-height: var(--leading-6); font-weight: var(--weight-bold); color: var(--stat-card-value-text); }
+/* Compact (Dashboard first view): padding/lg, Label → Value on gap/xs, Value 24/32. */
+.stat { padding: var(--padding-lg); gap: var(--gap-xs); }
+.stat__value { font-size: var(--size-2xl); line-height: var(--leading-5); font-weight: var(--weight-bold); color: var(--stat-card-value-text); }
 .stat__caption { font-size: var(--size-xs); line-height: var(--leading-1); color: var(--stat-card-helper-text); }
-.stat .lms-card__content { gap: var(--gap-2xs); }
+.stat .lms-card__content { gap: 0; }
+
+/* ---------- Dashboard: everything in the first view ----------
+   Row 1: Enrollment activity (2 cols) + Course completion. Row 2: Learner activity + Recent activity (2 cols).
+   From 1280 wide the grid fills the viewport under the stats; charts, heatmap and table grow or shrink
+   with it (container query units), down to a minimum row height, below which the page scrolls. */
+.dashboard-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap-xl); }
+.dashboard-grid .enrollment, .dashboard-grid .lms-activity { grid-column: span 2; }
+.dashboard-grid .lms-card { padding: var(--padding-lg); }
+@media (min-width: 1280px) {
+  .dashboard-grid {
+    flex: 1 1 0;
+    grid-template-rows: repeat(2, minmax(calc(var(--space-64) - var(--spacing-6)), 1fr));
+  }
+  .dashboard-grid .lms-card { min-height: 0; }
+  .dashboard-grid .lms-card__content { flex: 1 1 0; min-height: 0; }
+
+  /* Enrollment activity: the plot takes the free height. */
+  .dashboard-grid .enrollment .lms-card__header { flex-wrap: nowrap; }
+  .dashboard-grid .enrollment__total { white-space: nowrap; }
+  .dashboard-grid .bar-chart { flex: 1 1 0; min-height: 0; }
+  .dashboard-grid .bar-chart__body {
+    flex: 1 1 0;
+    min-height: calc(var(--spacing-24) + var(--leading-1) + var(--gap-2xs));
+    container-type: size;
+    --bar-chart-plot-height: calc(100cqh - var(--leading-1) - var(--gap-2xs));
+  }
+
+  /* Course completion: the ring is as big as the card allows, up to its Figma size (220). */
+  .dashboard-grid .course-completion__body { container-type: size; min-height: var(--space-32); }
+  .dashboard-grid .course-completion .lms-gauge__arc {
+    width: min(calc(var(--spacing-1) * 55), 100cqw, calc(100cqh - var(--leading-1) * 2 - var(--gap-sm) - var(--gap-lg)));
+  }
+
+  /* Header asides wrap under the title when the column is narrow (1280). */
+  .dashboard-grid .lms-card__header { flex-wrap: wrap; }
+  .dashboard-grid .lms-card__title { white-space: nowrap; }
+
+  /* Learner activity: rows share the free height; cells 16–32 tall (Figma md = 24). */
+  .dashboard-grid .activity-heatmap { flex: 1 1 0; min-height: calc(var(--leading-1) * 8 + var(--gap-2xs) * 8); container-type: size; }
+  .dashboard-grid .activity-heatmap__cell {
+    height: clamp(var(--leading-1), calc((100cqh - var(--leading-1) - var(--gap-2xs) * 8) / 7), var(--spacing-8));
+  }
+
+  /* Recent activity: as many full rows as fit (ActivityTable fitHeight). */
+  .dashboard-grid .lms-activity--fit .lms-activity__scroll { flex: 1 1 0; min-height: 0; overflow: hidden; }
+}
 
 /* ---------- Tips list ---------- */
 .tips { display: flex; flex-direction: column; }
@@ -167,6 +215,8 @@
 /* ---------- Responsive ---------- */
 @media (max-width: 1279px) {
   .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dashboard-grid { grid-template-columns: minmax(0, 1fr); }
+  .dashboard-grid .enrollment, .dashboard-grid .lms-activity { grid-column: auto; }
 }
 @media (max-width: 1023px) {
   .wizard-grid { grid-template-columns: minmax(0, 1fr); }
@@ -181,5 +231,4 @@
   .course-header .lms-course-cover--preview { width: 100%; }
   .course-header__title { font-size: var(--size-xl); line-height: var(--leading-5); }
   .success__actions { grid-template-columns: 1fr; }
-  .stats-grid .lms-card { padding: var(--padding-lg); }
 }

@@ -1,17 +1,20 @@
 import { GraduationCap, Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { ActionBar, ActivityTable, AppShell, CourseCard } from '../components/composite';
+import { ActionBar, ActivityTable, AppShell } from '../components/composite';
+import type { ActivityRow } from '../components/composite/ActivityTable/ActivityTable';
 import { Button, Card, EmptyState } from '../components/core';
 import { useStore } from '../data/store';
 import type { Course } from '../data/types';
-import { CourseGridError, CourseGridSkeleton } from '../features/courses/CourseGridStates';
-import { useCourseList } from '../features/courses/useCourseList';
 import { CourseCompletion } from '../features/dashboard/CourseCompletion';
 import { EnrollmentChart } from '../features/dashboard/EnrollmentChart';
 import { LearnerActivity } from '../features/dashboard/LearnerActivity';
 import './pages.css';
 
-/** 01 · Dashboard (Figma 250:1946) + State · Dashboard · New instructor */
+/**
+ * 01 · Dashboard (Figma 250:1946) + State · Dashboard · New instructor.
+ * Everything fits in the first view on desktop (1280 × 800 and up): stats, then a
+ * 3-column grid that fills the rest of the viewport. Courses live only on the Courses page.
+ */
 export function courseLink(c: Course) {
   return c.status === 'draft' ? `/courses/${c.id}/${c.lastStep}` : `/courses/${c.id}`;
 }
@@ -34,15 +37,22 @@ function Stat({ title, value, caption }: { title: string; value: string; caption
   );
 }
 
+const ACTIVITY: ActivityRow[] = [
+  { learner: 'Sara Ahmadi', course: 'Design Systems 101', progress: 100, lastActive: 'Nov 23', status: 'completed' },
+  { learner: 'Omid Rezaei', course: 'UX Research Basics', progress: 64, lastActive: 'Nov 23', status: 'in-progress' },
+  { learner: 'Lena Park', course: 'Design Systems 101', progress: 0, lastActive: 'Nov 22', status: 'enrolled' },
+  { learner: 'Arash Karimi', course: 'UX Research Basics', progress: 88, lastActive: 'Nov 22', status: 'in-progress' },
+  { learner: 'Mina Tehrani', course: 'Design Systems 101', progress: 42, lastActive: 'Nov 21', status: 'in-progress' },
+  { learner: 'Daniel Cho', course: 'UX Research Basics', progress: 100, lastActive: 'Nov 20', status: 'completed' },
+];
+
 export default function Dashboard() {
   const { courses } = useStore();
-  const { state, retry } = useCourseList();
   const start = useStartCourse();
   const published = courses.filter((c) => c.status === 'published').length;
   const drafts = courses.length - published;
   const students = courses.reduce((s, c) => s + c.students, 0);
   const isNew = courses.length === 0;
-  const recent = [...courses].sort((a, b) => b.updatedAt - a.updatedAt).slice(0, 3);
 
   const createButton = (full = false) => (
     <Button leadingIcon={<Plus />} onClick={start} fullWidth={full}>Create course</Button>
@@ -62,53 +72,23 @@ export default function Dashboard() {
         <Stat title="Earnings" value={isNew ? '—' : '$8,420'} caption={isNew ? 'No earnings yet' : '+12% vs last month'} />
       </section>
 
-      {!isNew && (
-        <div className="insights-row">
+      {isNew ? (
+        <Card className="dashboard-empty">
+          <EmptyState
+            icon={<GraduationCap />}
+            title="Create your first course"
+            description="Turn what you know into a course. It takes about 30 minutes to publish your first one."
+            action={createButton()}
+          />
+        </Card>
+      ) : (
+        <div className="dashboard-grid">
           <EnrollmentChart />
           <CourseCompletion />
-        </div>
-      )}
-      {!isNew && (
-        <div className="activity-row">
           <LearnerActivity />
-          <ActivityTable
-            rows={[
-              { learner: 'Sara Ahmadi', course: 'Design Systems 101', progress: 100, lastActive: 'Nov 23', status: 'completed' },
-              { learner: 'Omid Rezaei', course: 'UX Research Basics', progress: 64, lastActive: 'Nov 23', status: 'in-progress' },
-              { learner: 'Lena Park', course: 'Design Systems 101', progress: 0, lastActive: 'Nov 22', status: 'enrolled' },
-              { learner: 'Arash Karimi', course: 'UX Research Basics', progress: 88, lastActive: 'Nov 22', status: 'in-progress' },
-            ]}
-          />
+          <ActivityTable fitHeight rows={ACTIVITY} />
         </div>
       )}
-
-      <section className="stack gap-lg" aria-labelledby="your-courses">
-        <div className="section-header">
-          <div className="section-header__text">
-            <h2 className="section-header__title" id="your-courses">Your courses</h2>
-            <p className="section-header__subtitle">Pick up where you left off or start something new.</p>
-          </div>
-          {createButton()}
-        </div>
-
-        {state === 'loading' && <CourseGridSkeleton count={3} />}
-        {state === 'error' && <CourseGridError onRetry={retry} />}
-        {state === 'ready' && isNew && (
-          <Card>
-            <EmptyState
-              icon={<GraduationCap />}
-              title="Create your first course"
-              description="Turn what you know into a course. It takes about 30 minutes to publish your first one."
-              action={createButton()}
-            />
-          </Card>
-        )}
-        {state === 'ready' && !isNew && (
-          <div className="course-grid">
-            {recent.map((c) => <CourseCard key={c.id} course={c} to={courseLink(c)} />)}
-          </div>
-        )}
-      </section>
 
       <ActionBar className="only-mobile" end={createButton(true)} />
     </AppShell>
