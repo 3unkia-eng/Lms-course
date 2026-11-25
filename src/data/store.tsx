@@ -6,7 +6,7 @@ import { blankCourse, seedCourses, uid } from './seed';
  * Course store. In-memory + localStorage so a test participant can reload
  * and keep their draft (UX doc F6). Prototype only: no backend.
  */
-const STORAGE_KEY = 'lms-prototype:courses:v1';
+const STORAGE_KEY = 'lms-prototype:courses:v2';
 
 type Action =
   | { type: 'set'; courses: Course[] }

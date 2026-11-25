@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
-import { AlertCircle, CheckCircle2, Info, TriangleAlert, X } from 'lucide-react';
+import { AlertCircle, Info, TriangleAlert, X } from 'lucide-react';
+import { CheckCircle2 } from '../../icons';
 import { cx } from '../../../lib/cx';
 import './Alert.css';
 

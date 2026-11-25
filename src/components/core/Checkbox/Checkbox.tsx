@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Check } from 'lucide-react';
+import { Check } from '../../icons';
 import { cx } from '../../../lib/cx';
 import './Checkbox.css';
 

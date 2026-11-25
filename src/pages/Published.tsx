@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Check, ChevronRight, CircleCheck, Copy, Eye, Link2 } from 'lucide-react';
+import { CircleCheck, Copy } from 'lucide-react';
+import { Check, ChevronRight, Eye, Link2 } from '../components/icons';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { AppShell, CourseCard } from '../components/composite';
 import { Badge, Button, ButtonLink, Card, Input } from '../components/core';
@@ -28,7 +29,7 @@ export default function Published() {
   };
 
   return (
-    <AppShell title={course.title} subtitle="Published" mobileTitle="Course published" back="/courses" showSearch={false} narrow>
+    <AppShell title="Course published" subtitle={`${course.title} is now live`} mobileTitle="Course published" back="/courses" showSearch={false} narrow>
       <Card className="success">
         <span className="success__icon" aria-hidden><CircleCheck /></span>
         <div className="success__message" role="status">

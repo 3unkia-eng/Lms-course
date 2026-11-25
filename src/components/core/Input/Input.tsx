@@ -1,5 +1,5 @@
 import { forwardRef, useId, type ReactNode } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown } from '../../icons';
 import { cx } from '../../../lib/cx';
 import './Input.css';
 

@@ -3,12 +3,15 @@ import type { Course, CoverIcon, Session } from './types';
 let counter = 0;
 export const uid = (prefix = 'id') => `${prefix}-${Date.now().toString(36)}-${(counter++).toString(36)}`;
 
-function lessons(count: number): Session[] {
+/** `count` lessons whose durations add up to exactly `total` minutes (Figma card shows the total). */
+function lessons(count: number, total: number): Session[] {
+  const base = Math.floor(total / count);
+  const extra = total - base * count;
   return Array.from({ length: count }, (_, i) => ({
     id: uid('s'),
     title: `Lesson ${i + 1}`,
     type: 'video' as const,
-    duration: 10 + ((i * 3) % 7),
+    duration: base + (i < extra ? 1 : 0),
     freePreview: i === 0,
   }));
 }
@@ -17,7 +20,9 @@ function course(
   id: string,
   title: string,
   status: Course['status'],
+  category: string,
   count: number,
+  minutes: number,
   students: number,
   coverIcon: CoverIcon,
   daysAgo: number,
@@ -26,7 +31,7 @@ function course(
     id,
     title,
     subtitle: '',
-    category: 'Design',
+    category,
     level: 'Beginner',
     language: 'English',
     tags: '',
@@ -37,22 +42,22 @@ function course(
     coverIcon,
     isFree: true,
     price: '',
-    sessions: lessons(count),
+    sessions: lessons(count, minutes),
     status,
     students,
-    lastStep: status === 'draft' ? 'sessions' : 'preview',
+    lastStep: status === 'draft' ? (count ? 'sessions' : 'basic') : 'preview',
     updatedAt: Date.now() - daysAgo * 86_400_000,
   };
 }
 
-/** Sample data from the Figma screens (01 Dashboard, 02 Courses). */
+/** Sample data from the Figma "Courses" screen (250:2276), in its grid order (newest first). */
 export const seedCourses = (): Course[] => [
-  course('design-systems-101', 'Design Systems 101', 'published', 12, 486, 'layers', 1),
-  course('ux-research-basics', 'UX Research Basics', 'published', 9, 372, 'lightbulb', 3),
-  course('advanced-figma-prototyping', 'Advanced Figma Prototyping', 'draft', 6, 0, 'play', 2),
-  course('typography-for-screens', 'Typography for Screens', 'published', 8, 214, 'type', 9),
-  course('color-theory-in-ui', 'Color Theory in UI', 'published', 7, 176, 'palette', 12),
-  course('motion-design-essentials', 'Motion Design Essentials', 'draft', 2, 0, 'sparkles', 15),
+  course('advanced-figma-prototyping', 'Advanced Figma Prototyping', 'published', 'Design', 12, 550, 342, 'play', 1),
+  course('design-systems-101', 'Design Systems 101', 'published', 'Design', 10, 465, 518, 'layers', 2),
+  course('ux-research-basics', 'UX Research Basics', 'draft', 'Research', 6, 260, 0, 'lightbulb', 3),
+  course('typography-for-screens', 'Typography for Screens', 'published', 'Design', 8, 305, 211, 'type', 5),
+  course('motion-design-essentials', 'Motion Design Essentials', 'draft', 'Animation', 0, 0, 0, 'sparkles', 8),
+  course('color-theory-in-ui', 'Color Theory in UI', 'archived', 'Design', 7, 290, 177, 'palette', 12),
 ];
 
 export function blankCourse(): Course {

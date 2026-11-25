@@ -9,9 +9,10 @@
   border: var(--border-width-default) solid transparent;
   border-radius: var(--button-radius);
   font-family: var(--font-family);
-  font-size: var(--label-md-size);
-  line-height: var(--label-md-leading);
-  font-weight: var(--label-md-weight);
+  /* Figma Button 246:1816 label: sm/medium text style (size/sm, leading/2, weight/medium) */
+  font-size: var(--size-sm);
+  line-height: var(--leading-2);
+  font-weight: var(--weight-medium);
   white-space: nowrap;
   text-decoration: none;
   cursor: pointer;

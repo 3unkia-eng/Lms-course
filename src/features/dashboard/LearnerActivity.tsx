@@ -8,7 +8,7 @@ import './LearnerActivity.css';
  * Learner activity (Figma Step 01 · Dashboard, Card/Learner activity 399:5686 with
  * the Activity heatmap composite 400:5995): when learners study, days × time of day,
  * built from Heatmap cell. One use only, so it lives in features/ (agent.md rule 5).
- * The Less → More scale sits in the card header so the grid can fill the card height.
+ * The Less → More scale sits under the grid, as in Figma.
  * Entrance: cells grow and fade in column by column (Figma motion on 400:5995) once the
  * card scrolls into view; off under prefers-reduced-motion.
  */
@@ -32,19 +32,9 @@ const LEVELS: HeatmapLevel[][] = [
 export function LearnerActivity() {
   const [ref, inView] = useInView<HTMLDivElement>();
   return (
-    <Card
-      title="Learner activity"
-      className="learner-activity"
-      headingLevel={2}
-      headerAside={
-        <div className="activity-heatmap__scale" aria-hidden="true">
-          <span>Less</span>
-          {([0, 1, 2, 3, 4] as HeatmapLevel[]).map((l) => <HeatmapCell key={l} level={l} size="sm" />)}
-          <span>More</span>
-        </div>
-      }
-    >
+    <Card title="Learner activity" className="learner-activity" headingLevel={2}>
       <div ref={ref} className={`activity-heatmap${inView ? ' is-visible' : ''}`}>
+        <div className="activity-heatmap__grid">
         <table className="activity-heatmap__table">
           <caption className="visually-hidden">Learner activity by day and time of day, last 4 weeks</caption>
           <thead className="visually-hidden">
@@ -80,6 +70,12 @@ export function LearnerActivity() {
             </tr>
           </tfoot>
         </table>
+        </div>
+        <div className="activity-heatmap__scale" aria-hidden="true">
+          <span>Less</span>
+          {([0, 1, 2, 3, 4] as HeatmapLevel[]).map((l) => <HeatmapCell key={l} level={l} size="sm" />)}
+          <span>More</span>
+        </div>
       </div>
     </Card>
   );

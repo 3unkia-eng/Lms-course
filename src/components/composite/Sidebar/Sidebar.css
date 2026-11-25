@@ -8,7 +8,7 @@
   border-right: var(--border-width-default) solid var(--sidebar-border);
   background: var(--sidebar-background);
 }
-.lms-sidebar__logo { display: flex; align-items: center; gap: var(--gap-sm); padding: 0 var(--padding-sm); }
+.lms-sidebar__logo { display: flex; align-items: center; gap: var(--gap-sm); padding: 0 var(--padding-md); }
 .lms-sidebar__logo-mark {
   display: inline-flex;
   align-items: center;
@@ -27,11 +27,11 @@
   font-weight: var(--weight-semibold);
 }
 .lms-sidebar__nav { display: flex; flex-direction: column; gap: var(--gap-xs); flex: 1 1 auto; }
-.lms-sidebar__list { display: flex; flex-direction: column; gap: var(--gap-2xs); }
+.lms-sidebar__list { display: flex; flex-direction: column; gap: var(--gap-md); }
 .lms-sidebar__user {
   display: flex;
   align-items: center;
-  gap: var(--gap-sm);
+  gap: var(--gap-md);
   padding: var(--padding-md);
   border-radius: var(--radius-md);
   background: var(--sidebar-user-background);

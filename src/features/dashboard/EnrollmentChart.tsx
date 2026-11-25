@@ -3,11 +3,12 @@ import { Card, Input } from '../../components/core';
 import './EnrollmentChart.css';
 
 /**
- * Enrollment activity (Figma Step 01 · Dashboard 250:1946): stacked column chart,
- * new learners (Chart column/primary) on the bottom, returning learners
- * (Chart column/secondary) on top. Built from Card + Input (select).
- * Total and time range sit in the card header, legend beside the range, so the plot
- * can grow to fill the card on desktop (Dashboard first-view layout).
+ * Enrollment activity (Figma Step 01 · Dashboard, Card/Enrollment activity 399:5674):
+ * Header (title) › Summary (1,386 total + caption, Period select 168 wide) › Chart area
+ * (Legend, Y axis 28 wide, 12 Chart columns 32 wide spread with space-between, X axis).
+ * Stacked columns: new learners (Chart column/primary) at the bottom, returning
+ * (Chart column/secondary) on top. The active column (Nov by default, or the one under the
+ * pointer/focus) uses secondary/hover and shows the amber Tooltip with its pointer, centred above it.
  * One use only, so it lives in features/, not in components/composite (agent.md rule 5).
  */
 interface Month { label: string; newLearners: number; returning: number }
@@ -44,62 +45,66 @@ export function EnrollmentChart() {
   const rangeLabel = RANGES.find((r) => r.value === range)?.label.toLowerCase();
 
   return (
-    <Card
-      title="Enrollment activity"
-      description={<span className="enrollment__total"><strong className="enrollment__value">{total.toLocaleString('en-US')}</strong> enrollments · {rangeLabel}</span>}
-      className="enrollment"
-      headingLevel={2}
-      headerAside={
-        <div className="enrollment__controls">
-          <ul className="bar-chart__legend" aria-hidden>
-            <li className="legend-item"><span className="legend-item__swatch legend-item__swatch--primary" />New learners</li>
-            <li className="legend-item"><span className="legend-item__swatch legend-item__swatch--secondary" />Returning learners</li>
-          </ul>
-          <Input
-            label="Time range"
-            hideLabel
-            value={range}
-            onChange={(v) => { setRange(v); setActive(Number(v) - 1); }}
-            options={RANGES}
-            className="enrollment__range"
-          />
+    <Card title="Enrollment activity" className="enrollment" headingLevel={2}>
+      <div className="enrollment__summary">
+        <div className="enrollment__total">
+          <span className="enrollment__value">{total.toLocaleString('en-US')}</span>
+          <span className="enrollment__caption">Enrollments · {rangeLabel}</span>
         </div>
-      }
-    >
+        <Input
+          label="Time range"
+          hideLabel
+          value={range}
+          onChange={(v) => { setRange(v); setActive(Number(v) - 1); }}
+          options={RANGES}
+          className="enrollment__range"
+        />
+      </div>
       <figure className="bar-chart" aria-label={`Enrollments per month, ${rangeLabel}`}>
+        <ul className="bar-chart__legend" aria-hidden>
+          <li className="legend-item"><span className="legend-item__swatch legend-item__swatch--primary" />New learners</li>
+          <li className="legend-item"><span className="legend-item__swatch legend-item__swatch--secondary" />Returning learners</li>
+        </ul>
         <div className="bar-chart__body">
           <ol className="bar-chart__axis" aria-hidden>
             {TICKS.map((t) => <li key={t}>{t}</li>)}
           </ol>
-          <div className="bar-chart__plot">
-            {TICKS.map((t) => <span key={t} className="bar-chart__grid" style={{ top: `calc(var(--bar-chart-plot-height) * ${1 - t / MAX})` }} aria-hidden />)}
-            <ul className="bar-chart__columns">
-              {data.map((m, i) => (
-                <li key={m.label} className="chart-column">
-                  <button
-                    type="button"
-                    className="chart-column__hit"
-                    aria-label={`${m.label}: ${m.newLearners} new, ${m.returning} returning`}
-                    aria-pressed={i === active}
-                    onMouseEnter={() => setActive(i)}
-                    onFocus={() => setActive(i)}
-                    onClick={() => setActive(i)}
-                  >
-                    <span className="chart-column__stack" style={{ height: pct(m.newLearners + m.returning) }}>
-                      <span className="chart-column__bar chart-column__bar--secondary" style={{ flexGrow: m.returning }} />
-                      <span className="chart-column__bar chart-column__bar--primary" style={{ flexGrow: m.newLearners }} />
-                      {current === m && (
-                        <span className="chart-column__tooltip">
-                          <span><i className="chart-column__swatch chart-column__swatch--primary" />{m.newLearners} new</span>
-                          <span><i className="chart-column__swatch chart-column__swatch--secondary" />{m.returning} returning</span>
+          <div className="bar-chart__area">
+            <div className="bar-chart__plot">
+              {TICKS.map((t) => <span key={t} className="bar-chart__grid" style={{ top: `${(1 - t / MAX) * 100}%` }} aria-hidden />)}
+              <ul className="bar-chart__columns">
+                {data.map((m, i) => (
+                  <li key={m.label} className={current === m ? 'chart-column is-active' : 'chart-column'}>
+                    <button
+                      type="button"
+                      className="chart-column__hit"
+                      aria-label={`${m.label}: ${m.newLearners} new, ${m.returning} returning`}
+                      aria-pressed={i === active}
+                      onMouseEnter={() => setActive(i)}
+                      onFocus={() => setActive(i)}
+                      onClick={() => setActive(i)}
+                    >
+                      <span className="chart-column__bar-wrap" style={{ height: pct(m.newLearners + m.returning) }}>
+                        <span className="chart-column__stack">
+                          <span className="chart-column__bar chart-column__bar--secondary" style={{ flexGrow: m.returning }} />
+                          <span className="chart-column__bar chart-column__bar--primary" style={{ flexGrow: m.newLearners }} />
                         </span>
-                      )}
-                    </span>
-                  </button>
-                  <span className="chart-column__label" aria-hidden>{m.label}</span>
-                </li>
-              ))}
-            </ul>
+                        {current === m && (
+                          <span className="chart-column__tooltip">
+                            <span><i className="chart-column__swatch chart-column__swatch--primary" />{m.newLearners} new</span>
+                            <span><i className="chart-column__swatch chart-column__swatch--secondary" />{m.returning} returning</span>
+                            <i className="chart-column__pointer" />
+                          </span>
+                        )}
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <ol className="bar-chart__labels" aria-hidden>
+              {data.map((m) => <li key={m.label} className="chart-column__label">{m.label}</li>)}
+            </ol>
           </div>
         </div>
       </figure>

@@ -25,4 +25,4 @@
   font-size: var(--size-sm);
   line-height: var(--leading-2);
 }
-.lms-topbar__search { width: var(--space-72); }
+.lms-topbar__search { width: calc(var(--space-64) + var(--spacing-6)); } /* Figma 280 */

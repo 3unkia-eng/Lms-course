@@ -30,7 +30,8 @@ export function WizardFrame({ step, course, save, goTo, back, children }: Wizard
     );
   }
   const index = STEPS.findIndex((s) => s.key === step) + 1;
-  const isNew = !course.title;
+  // Figma step 03 titles the first step "Create new course" while a draft is being set up.
+  const isNew = !course.title || (step === 'basic' && course.status === 'draft');
   return (
     <AppShell
       title={isNew ? 'Create new course' : course.title}

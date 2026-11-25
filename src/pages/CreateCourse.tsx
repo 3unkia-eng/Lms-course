@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2 } from '../components/icons';
 import { useNavigate } from 'react-router-dom';
 import { ActionBar } from '../components/composite';
 import { Alert, Button, Card, Dialog, Input } from '../components/core';

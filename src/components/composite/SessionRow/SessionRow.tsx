@@ -1,4 +1,5 @@
-import { ArrowDown, ArrowUp, FileText, GripVertical, HelpCircle, Pencil, Radio, Trash2, Video } from 'lucide-react';
+import { ArrowDown, ArrowUp, FileText, HelpCircle, Radio } from 'lucide-react';
+import { GripVertical, Pencil, Trash2, Video } from '../../icons';
 import type { Session, SessionType } from '../../../data/types';
 import { SESSION_TYPES } from '../../../data/types';
 import { cx } from '../../../lib/cx';

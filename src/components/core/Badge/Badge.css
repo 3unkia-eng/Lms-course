@@ -13,7 +13,10 @@
   text-overflow: ellipsis;
   flex: none;
 }
+.lms-badge--dot { gap: var(--gap-xs); }
+.lms-badge__dot { width: var(--spacing-1-5); height: var(--spacing-1-5); border-radius: var(--radius-full); background: currentColor; flex: none; }
 .lms-badge--draft     { background: var(--badge-draft-background);     color: var(--badge-draft-text); }
 .lms-badge--published { background: var(--badge-published-background); color: var(--badge-published-text); }
+.lms-badge--archived  { background: var(--badge-archived-background);  color: var(--badge-archived-text); }
 .lms-badge--info      { background: var(--badge-info-background);      color: var(--badge-info-text); }
 .lms-badge--neutral   { background: var(--badge-neutral-background);   color: var(--badge-neutral-text); }

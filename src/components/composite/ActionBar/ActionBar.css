@@ -3,7 +3,6 @@
   align-items: center;
   gap: var(--gap-md);
   margin-top: auto;
-  padding-top: var(--layout-section-gap);
 }
 .lms-action-bar__start { display: flex; gap: var(--gap-md); }
 .lms-action-bar__note {

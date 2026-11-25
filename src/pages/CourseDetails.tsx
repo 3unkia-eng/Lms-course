@@ -1,6 +1,8 @@
 import { useRef, useState, type DragEvent } from 'react';
-import { ImageUp, Layers, Loader2, TriangleAlert } from 'lucide-react';
+import { Loader2, TriangleAlert } from 'lucide-react';
+import { ImageUp, Layers, ChevronLeft } from '../components/icons';
 import { ActionBar } from '../components/composite';
+import { coverImage } from '../components/composite/CourseCard/CourseCover';
 import { Button, Card, Input, Toggle } from '../components/core';
 import { usePrototype, wait } from '../data/prototype';
 import { COVER_MAX_MB, COVER_TYPES, DESCRIPTION_MAX, DESCRIPTION_MIN, validateDetails } from '../data/rules';
@@ -95,8 +97,8 @@ export default function CourseDetails() {
           <Card title="Course cover" description="Shown on the course page and cards.">
             {course.cover && upload.state === 'idle' ? (
               <div className="upload-preview">
-                {course.cover.url ? (
-                  <img src={course.cover.url} alt="Course cover preview" />
+                {coverImage(course) ? (
+                  <img src={coverImage(course)} alt="Course cover preview" />
                 ) : (
                   <div className="upload-preview__placeholder"><Layers aria-hidden /></div>
                 )}
@@ -185,7 +187,7 @@ export default function CourseDetails() {
       </div>
 
       <ActionBar
-        start={<Button appearance="outlined" intent="neutral" onClick={() => goTo('basic')} className="only-desktop">Back</Button>}
+        start={<Button appearance="outlined" intent="neutral" leadingIcon={<ChevronLeft />} onClick={() => goTo('basic')} className="only-desktop">Back</Button>}
         end={
           <>
             <Button

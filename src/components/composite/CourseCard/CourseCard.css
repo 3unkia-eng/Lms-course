@@ -14,18 +14,21 @@
 .lms-course-card--link:hover .lms-course-card__title { color: var(--text-brand); }
 .lms-course-card__cover { position: relative; border-bottom: var(--border-width-default) solid var(--course-card-border); }
 .lms-course-card__badge { position: absolute; top: var(--padding-md); left: var(--padding-md); }
-.lms-course-card__body { display: flex; flex-direction: column; gap: var(--gap-sm); padding: var(--padding-lg); }
+.lms-course-card__body { display: flex; flex-direction: column; gap: var(--gap-md); padding: var(--padding-sm) var(--padding-lg); flex: 1 0 auto; }
 .lms-course-card__category { color: var(--course-card-category-text); font-size: var(--size-xs); line-height: var(--leading-1); font-weight: var(--weight-semibold); }
-.lms-course-card__footer { display: flex; align-items: center; justify-content: space-between; gap: var(--gap-md); }
+.lms-course-card__footer { display: flex; align-items: center; justify-content: space-between; gap: var(--gap-sm); padding: var(--padding-sm) var(--padding-xl) var(--padding-xl) var(--padding-lg); }
 .lms-course-card__action {
   display: inline-flex;
-  padding: var(--padding-sm);
+  align-items: center;
+  justify-content: center;
+  width: var(--spacing-8);
+  height: var(--spacing-8);
   border: var(--border-width-default) solid var(--icon-button-border-default);
   border-radius: var(--icon-button-radius);
   background: var(--icon-button-background-default);
   color: var(--icon-button-icon);
 }
-.lms-course-card__action svg { width: var(--icon-size-sm); height: var(--icon-size-sm); }
+.lms-course-card__action svg { width: var(--icon-size-md); height: var(--icon-size-md); }
 .lms-course-card__title {
   color: var(--course-card-title-text);
   font-size: var(--size-base);
@@ -40,6 +43,7 @@
   color: var(--course-card-meta-text);
   font-size: var(--size-xs);
   line-height: var(--leading-1);
+  font-weight: var(--weight-medium);
 }
 .lms-course-card__meta-item svg { width: var(--icon-size-sm); height: var(--icon-size-sm); color: var(--course-card-meta-icon); }
 

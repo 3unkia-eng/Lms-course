@@ -1,4 +1,4 @@
-import { Pencil } from 'lucide-react';
+import { Pencil } from '../components/icons';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { AppShell } from '../components/composite';
 import { Button } from '../components/core';

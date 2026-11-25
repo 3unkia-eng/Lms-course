@@ -14,7 +14,7 @@
 }
 .lms-nav-item:hover { background: var(--nav-item-background-hover); }
 .lms-nav-item--active,
-.lms-nav-item--active:hover { background: var(--nav-item-background-active); color: var(--nav-item-foreground-active); }
+.lms-nav-item--active:hover { background: var(--nav-item-background-active); color: var(--nav-item-foreground-active); font-weight: var(--weight-semibold); }
 .lms-nav-item__icon { display: inline-flex; }
 .lms-nav-item__icon svg { width: var(--icon-size-md); height: var(--icon-size-md); }
 .lms-nav-item__label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }

@@ -1,4 +1,5 @@
-import { GraduationCap, Plus } from 'lucide-react';
+import type { ReactNode } from 'react';
+import { Banknote, BookOpen, GraduationCap, PlayCircle, Plus, Users } from '../components/icons';
 import { useNavigate } from 'react-router-dom';
 import { ActionBar, ActivityTable, AppShell } from '../components/composite';
 import type { ActivityRow } from '../components/composite/ActivityTable/ActivityTable';
@@ -12,8 +13,9 @@ import './pages.css';
 
 /**
  * 01 · Dashboard (Figma 250:1946) + State · Dashboard · New instructor.
- * Everything fits in the first view on desktop (1280 × 800 and up): stats, then a
- * 3-column grid that fills the rest of the viewport. Courses live only on the Courses page.
+ * Layout and sizes follow the Figma frame exactly (1440 × 1024: nothing scrolls). On shorter
+ * desktop screens every element stays and the charts scale down within their Figma maximums
+ * so the whole dashboard still fits the first view. Courses live only on the Courses page.
  */
 export function courseLink(c: Course) {
   return c.status === 'draft' ? `/courses/${c.id}/${c.lastStep}` : `/courses/${c.id}`;
@@ -28,30 +30,36 @@ export function useStartCourse() {
   };
 }
 
-function Stat({ title, value, caption }: { title: string; value: string; caption: string }) {
+/** Stat card (Figma Stat Card 144:147): Label + Icon box on top, Value 30/40 bold, Trend (+n success, "this month" tertiary). */
+function Stat({ title, value, icon, trend, caption }: { title: string; value: string; icon: ReactNode; trend?: string; caption: string }) {
   return (
-    <Card title={title} className="stat" headingLevel={3}>
+    <section className="stat" aria-label={title}>
+      <div className="stat__top">
+        <h3 className="stat__label">{title}</h3>
+        <span className="stat__icon" aria-hidden>{icon}</span>
+      </div>
       <span className="stat__value">{value}</span>
-      <span className="stat__caption">{caption}</span>
-    </Card>
+      <span className="stat__trend">
+        {trend && <strong className="stat__trend-value">{trend}</strong>}
+        <span className="stat__trend-caption">{caption}</span>
+      </span>
+    </section>
   );
 }
 
+// Figma Recent activity rows (Activity table 659:6120), names as written in the design.
 const ACTIVITY: ActivityRow[] = [
-  { learner: 'Sara Ahmadi', course: 'Design Systems 101', progress: 100, lastActive: 'Nov 23', status: 'completed' },
-  { learner: 'Omid Rezaei', course: 'UX Research Basics', progress: 64, lastActive: 'Nov 23', status: 'in-progress' },
-  { learner: 'Lena Park', course: 'Design Systems 101', progress: 0, lastActive: 'Nov 22', status: 'enrolled' },
-  { learner: 'Arash Karimi', course: 'UX Research Basics', progress: 88, lastActive: 'Nov 22', status: 'in-progress' },
-  { learner: 'Mina Tehrani', course: 'Design Systems 101', progress: 42, lastActive: 'Nov 21', status: 'in-progress' },
-  { learner: 'Daniel Cho', course: 'UX Research Basics', progress: 100, lastActive: 'Nov 20', status: 'completed' },
+  { learner: 'kimiya kalhor', course: 'Design Systems 101', progress: 100, lastActive: 'Nov 23', status: 'completed' },
+  { learner: 'sheida bakhshi', course: 'UX Research Basics', progress: 64, lastActive: 'Nov 23', status: 'in-progress' },
+  { learner: 'neda maleki', course: 'Design Systems 101', progress: 0, lastActive: 'Nov 22', status: 'enrolled' },
+  { learner: 'ali parsa', course: 'UX Research Basics', progress: 88, lastActive: 'Nov 22', status: 'in-progress' },
 ];
 
 export default function Dashboard() {
   const { courses } = useStore();
   const start = useStartCourse();
-  const published = courses.filter((c) => c.status === 'published').length;
-  const drafts = courses.length - published;
   const students = courses.reduce((s, c) => s + c.students, 0);
+  const sessions = courses.reduce((s, c) => s + c.sessions.length, 0);
   const isNew = courses.length === 0;
 
   const createButton = (full = false) => (
@@ -66,10 +74,10 @@ export default function Dashboard() {
     >
       <section className="stats-grid" aria-label="Overview">
         {/* Stats with no data show "—" and a caption, never "0 $" alone (UX doc §9) */}
-        <Stat title="Active courses" value={isNew ? '—' : String(courses.length)} caption={isNew ? 'No courses yet' : `${published} published · ${drafts} drafts`} />
-        <Stat title="Total students" value={isNew ? '—' : students.toLocaleString('en-US')} caption={isNew ? 'No data yet' : '+86 this month'} />
-        <Stat title="Average rating" value={isNew ? '—' : '4.8'} caption={isNew ? 'No reviews yet' : 'from 312 reviews'} />
-        <Stat title="Earnings" value={isNew ? '—' : '$8,420'} caption={isNew ? 'No earnings yet' : '+12% vs last month'} />
+        <Stat title="Total courses" icon={<BookOpen />} value={isNew ? '—' : String(courses.length)} trend={isNew ? undefined : '+2'} caption={isNew ? 'No courses yet' : 'this month'} />
+        <Stat title="Active students" icon={<Users />} value={isNew ? '—' : students.toLocaleString('en-US')} trend={isNew ? undefined : '+86'} caption={isNew ? 'No data yet' : 'this month'} />
+        <Stat title="Total sessions" icon={<PlayCircle />} value={isNew ? '—' : String(sessions)} trend={isNew ? undefined : '+14'} caption={isNew ? 'No sessions yet' : 'this month'} />
+        <Stat title="Earnings" icon={<Banknote />} value={isNew ? '—' : '$8,420'} trend={isNew ? undefined : '+12%'} caption={isNew ? 'No earnings yet' : 'this month'} />
       </section>
 
       {isNew ? (
@@ -83,10 +91,15 @@ export default function Dashboard() {
         </Card>
       ) : (
         <div className="dashboard-grid">
-          <EnrollmentChart />
-          <CourseCompletion />
-          <LearnerActivity />
-          <ActivityTable fitHeight rows={ACTIVITY} />
+          {/* Figma: Insights row (Enrollment fills, Course completion 360) and Activity row (Learner activity 360, table fills) */}
+          <div className="dashboard-row dashboard-row--insights">
+            <EnrollmentChart />
+            <CourseCompletion />
+          </div>
+          <div className="dashboard-row dashboard-row--activity">
+            <LearnerActivity />
+            <ActivityTable rows={ACTIVITY} />
+          </div>
         </div>
       )}
 
