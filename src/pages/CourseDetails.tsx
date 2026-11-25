@@ -3,6 +3,7 @@ import { Loader2, TriangleAlert } from 'lucide-react';
 import { ImageUp, Layers, ChevronLeft } from '../components/icons';
 import { ActionBar } from '../components/composite';
 import { coverImage } from '../components/composite/CourseCard/CourseCover';
+import { coverToDataUrl } from '../lib/coverImage';
 import { Button, Card, Input, Toggle } from '../components/core';
 import { usePrototype, wait } from '../data/prototype';
 import { COVER_MAX_MB, COVER_TYPES, DESCRIPTION_MAX, DESCRIPTION_MIN, validateDetails } from '../data/rules';
@@ -43,7 +44,7 @@ export default function CourseDetails() {
       setUpload({ state: 'error', reason: settings.offline ? 'You’re offline. Connect to upload your cover.' : 'Check your connection and try again.' });
       return;
     }
-    update({ cover: { fileName: file.name, url: URL.createObjectURL(file) } });
+    update({ cover: { fileName: file.name, url: await coverToDataUrl(file) } });
     setUpload({ state: 'idle' });
   };
 
