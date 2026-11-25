@@ -94,7 +94,7 @@ export default function AddSessions() {
               icon={<ListVideo />}
               title="No sessions yet"
               description={`Add at least ${MIN_SESSIONS} sessions so students know what to expect.`}
-              action={<Button leadingIcon={<Plus />} variant="outlined" onClick={focusForm}>Add your first session</Button>}
+              action={<Button leadingIcon={<Plus />} appearance="outlined" onClick={focusForm}>Add your first session</Button>}
             />
           ) : (
             <>
@@ -113,7 +113,7 @@ export default function AddSessions() {
                   />
                 ))}
               </ol>
-              <Button variant="outlined" leadingIcon={<Plus />} fullWidth className="add-session" onClick={() => { setEditing(null); setDraft(EMPTY); focusForm(); }}>
+              <Button appearance="outlined" leadingIcon={<Plus />} fullWidth className="add-session" onClick={() => { setEditing(null); setDraft(EMPTY); focusForm(); }}>
                 Add session
               </Button>
             </>
@@ -146,11 +146,11 @@ export default function AddSessions() {
               </div>
               <Toggle label="Free preview" describedBy="preview-hint" checked={draft.freePreview} onChange={(v) => setDraft({ ...draft, freePreview: v })} />
             </div>
-            <Button type="submit" fullWidth variant={count === 0 ? 'filled' : 'outlined'}>
+            <Button type="submit" fullWidth appearance={count === 0 ? 'filled' : 'outlined'}>
               {editing ? 'Save changes' : 'Save session'}
             </Button>
             {editing && (
-              <Button variant="outlined" appearance="secondary" fullWidth onClick={() => { setEditing(null); setDraft(EMPTY); setErrors({}); }}>
+              <Button appearance="outlined" intent="neutral" fullWidth onClick={() => { setEditing(null); setDraft(EMPTY); setErrors({}); }}>
                 Cancel editing
               </Button>
             )}
@@ -159,11 +159,11 @@ export default function AddSessions() {
       </div>
 
       <ActionBar
-        start={<Button variant="outlined" appearance="secondary" onClick={() => goTo('details')} className="only-desktop">Back</Button>}
+        start={<Button appearance="outlined" intent="neutral" onClick={() => goTo('details')} className="only-desktop">Back</Button>}
         note={count === 0 ? 'Add at least 1 session to continue' : missing > 0 ? `${missing} more ${missing === 1 ? 'session' : 'sessions'} needed to publish` : undefined}
         end={
           <>
-            <Button variant="outlined" onClick={() => toast.show({ tone: settings.offline ? 'info' : 'success', message: settings.offline ? 'Saved on this device' : 'Draft saved' })}>
+            <Button appearance="outlined" onClick={() => toast.show({ tone: settings.offline ? 'info' : 'success', message: settings.offline ? 'Saved on this device' : 'Draft saved' })}>
               Save as draft
             </Button>
             <Button disabled={count === 0} onClick={() => goTo('preview')}>Continue to preview</Button>

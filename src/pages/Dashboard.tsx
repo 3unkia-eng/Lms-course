@@ -1,11 +1,12 @@
 import { GraduationCap, Plus } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { ActionBar, AppShell, CourseCard } from '../components/composite';
+import { ActionBar, ActivityTable, AppShell, CourseCard } from '../components/composite';
 import { Button, Card, EmptyState } from '../components/core';
 import { useStore } from '../data/store';
 import type { Course } from '../data/types';
 import { CourseGridError, CourseGridSkeleton } from '../features/courses/CourseGridStates';
 import { useCourseList } from '../features/courses/useCourseList';
+import { EnrollmentChart } from '../features/dashboard/EnrollmentChart';
 import './pages.css';
 
 /** 01 · Dashboard (Figma 250:1946) + State · Dashboard · New instructor */
@@ -58,6 +59,18 @@ export default function Dashboard() {
         <Stat title="Average rating" value={isNew ? '—' : '4.8'} caption={isNew ? 'No reviews yet' : 'from 312 reviews'} />
         <Stat title="Earnings" value={isNew ? '—' : '$8,420'} caption={isNew ? 'No earnings yet' : '+12% vs last month'} />
       </section>
+
+      {!isNew && <EnrollmentChart />}
+      {!isNew && (
+        <ActivityTable
+          rows={[
+            { learner: 'Sara Ahmadi', course: 'Design Systems 101', progress: 100, lastActive: 'Nov 23', status: 'completed' },
+            { learner: 'Omid Rezaei', course: 'UX Research Basics', progress: 64, lastActive: 'Nov 23', status: 'in-progress' },
+            { learner: 'Lena Park', course: 'Design Systems 101', progress: 0, lastActive: 'Nov 22', status: 'enrolled' },
+            { learner: 'Arash Karimi', course: 'UX Research Basics', progress: 88, lastActive: 'Nov 22', status: 'in-progress' },
+          ]}
+        />
+      )}
 
       <section className="stack gap-lg" aria-labelledby="your-courses">
         <div className="section-header">

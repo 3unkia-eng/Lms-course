@@ -125,10 +125,10 @@ export default function CreateCourse() {
 
       <ActionBar
         hideStartOnMobile
-        start={<Button variant="outlined" appearance="secondary" onClick={onCancel}>Cancel</Button>}
+        start={<Button appearance="outlined" intent="neutral" onClick={onCancel}>Cancel</Button>}
         end={
           <>
-            <Button variant="outlined" onClick={onSaveDraft}>Save as draft</Button>
+            <Button appearance="outlined" onClick={onSaveDraft}>Save as draft</Button>
             <Button onClick={onContinue}>Continue</Button>
           </>
         }
@@ -142,8 +142,8 @@ export default function CreateCourse() {
         actions={
           <>
             <Button fullWidth onClick={() => { setLeaving(false); toast.show({ tone: 'success', message: 'Draft saved. Find it under Courses → Drafts.' }); navigate('/courses?tab=draft'); }}>Save draft and leave</Button>
-            <Button fullWidth variant="outlined" appearance="secondary" onClick={() => { removeCourse(course.id); setLeaving(false); navigate('/courses'); }}>Discard course</Button>
-            <Button fullWidth variant="outlined" appearance="secondary" onClick={() => setLeaving(false)}>Stay</Button>
+            <Button fullWidth appearance="outlined" intent="neutral" onClick={() => { removeCourse(course.id); setLeaving(false); navigate('/courses'); }}>Discard course</Button>
+            <Button fullWidth appearance="outlined" intent="neutral" onClick={() => setLeaving(false)}>Stay</Button>
           </>
         }
       >

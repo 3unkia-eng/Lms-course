@@ -19,7 +19,7 @@ export default function CourseView() {
         <div className="section-header__text">
           <p className="section-header__subtitle">This is how students see your course.</p>
         </div>
-        <Button variant="outlined" appearance="secondary" leadingIcon={<Pencil />} onClick={() => navigate(`/courses/${course.id}/basic`)}>
+        <Button appearance="outlined" intent="neutral" leadingIcon={<Pencil />} onClick={() => navigate(`/courses/${course.id}/basic`)}>
           Edit course
         </Button>
       </div>

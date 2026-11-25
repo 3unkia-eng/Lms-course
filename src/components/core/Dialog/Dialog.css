@@ -2,7 +2,7 @@
   width: min(var(--layout-dialog-width), calc(100vw - var(--spacing-8)));
   padding: var(--padding-xl);
   border: var(--border-width-default) solid var(--border-secondary);
-  border-radius: var(--lg);
+  border-radius: var(--radius-lg);
   background: var(--surface-primary-default);
   color: var(--text-primary);
   box-shadow: var(--shadow-overlay);

@@ -1,67 +1,175 @@
 .lms-button {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--gap-xs);
   height: var(--control-height);
-  padding: var(--padding-md) var(--padding-lg);
+  padding: var(--button-md-padding-vertical) var(--button-md-padding-horizontal);
   border: var(--border-width-default) solid transparent;
   border-radius: var(--button-radius);
-  font-size: var(--size-sm);
-  line-height: var(--leading-2);
+  font-family: var(--font-family);
+  font-size: var(--label-md-size);
+  line-height: var(--label-md-leading);
   font-weight: var(--label-md-weight);
   white-space: nowrap;
+  text-decoration: none;
   cursor: pointer;
   transition: background-color var(--motion-duration-fast) var(--motion-easing),
     border-color var(--motion-duration-fast) var(--motion-easing);
 }
+.lms-button--sm {
+  height: var(--control-height-sm);
+  padding: var(--button-sm-padding-vertical) var(--button-sm-padding-horizontal);
+}
 .lms-button__label { overflow: hidden; text-overflow: ellipsis; }
 .lms-button__icon { display: inline-flex; }
-.lms-button__icon svg,
-svg.lms-button__icon { width: var(--icon-size-md); height: var(--icon-size-md); }
+.lms-button__icon svg { width: var(--icon-size-md); height: var(--icon-size-md); }
 .lms-button--full { width: 100%; }
 
-/* filled / primary */
-.lms-button--filled-primary {
-  background: var(--button-filled-primary-background-default);
-  color: var(--button-filled-primary-text-icon);
+/* Focus ring (Figma State=focus): soft ring in the intent colour at 50% opacity,
+   gap = ring width, radius/lg. Tokens: Button/focus/<intent>/border, opacity, radius, width */
+.lms-button:focus-visible { outline: none; }
+.lms-button::after {
+  content: "";
+  position: absolute;
+  inset: calc(var(--button-focus-width) * -2);
+  border: var(--button-focus-width) solid var(--lms-button-ring);
+  border-radius: var(--button-focus-radius);
+  opacity: 0;
+  pointer-events: none;
 }
-.lms-button--filled-primary:hover:not(:disabled) { background: var(--button-filled-primary-background-hover); }
+.lms-button:focus-visible::after { opacity: var(--button-focus-opacity); }
 
-/* filled / secondary */
-.lms-button--filled-secondary {
-  background: var(--button-filled-secondary-background-default);
-  color: var(--button-filled-secondary-text-icon);
+/* Appearance × Intent. Tokens: Button/<appearance>/<intent>/<property>/<state> */
+.lms-button--filled-brand,
+.lms-button--outlined-brand { --lms-button-ring: var(--button-focus-brand-border); }
+.lms-button--filled-brand {
+  background: var(--button-filled-brand-background-default);
+  color: var(--button-filled-brand-foreground);
 }
-.lms-button--filled-secondary:hover:not(:disabled) { background: var(--button-filled-secondary-background-hover); }
-
-/* outlined / primary */
-.lms-button--outlined-primary {
-  background: transparent;
-  border-color: var(--button-outlined-primary-border-default);
-  color: var(--button-outlined-primary-text);
+.lms-button--filled-brand:hover:not(:disabled) { background: var(--button-filled-brand-background-hover); }
+.lms-button--filled-brand:active:not(:disabled) { background: var(--button-filled-brand-background-pressed); }
+.lms-button--filled-neutral,
+.lms-button--outlined-neutral { --lms-button-ring: var(--button-focus-neutral-border); }
+.lms-button--filled-neutral {
+  background: var(--button-filled-neutral-background-default);
+  color: var(--button-filled-neutral-foreground);
 }
-.lms-button--outlined-primary:hover:not(:disabled) { background: var(--button-outlined-primary-background-hover); }
-
-/* outlined / secondary */
-.lms-button--outlined-secondary {
+.lms-button--filled-neutral:hover:not(:disabled) { background: var(--button-filled-neutral-background-hover); }
+.lms-button--filled-neutral:active:not(:disabled) { background: var(--button-filled-neutral-background-pressed); }
+.lms-button--filled-danger,
+.lms-button--outlined-danger { --lms-button-ring: var(--button-focus-danger-border); }
+.lms-button--filled-danger {
+  background: var(--button-filled-danger-background-default);
+  color: var(--button-filled-danger-foreground);
+}
+.lms-button--filled-danger:hover:not(:disabled) { background: var(--button-filled-danger-background-hover); }
+.lms-button--filled-danger:active:not(:disabled) { background: var(--button-filled-danger-background-pressed); }
+.lms-button--filled-warning,
+.lms-button--outlined-warning { --lms-button-ring: var(--button-focus-warning-border); }
+.lms-button--filled-warning {
+  background: var(--button-filled-warning-background-default);
+  color: var(--button-filled-warning-foreground);
+}
+.lms-button--filled-warning:hover:not(:disabled) { background: var(--button-filled-warning-background-hover); }
+.lms-button--filled-warning:active:not(:disabled) { background: var(--button-filled-warning-background-pressed); }
+.lms-button--filled-info,
+.lms-button--outlined-info { --lms-button-ring: var(--button-focus-info-border); }
+.lms-button--filled-info {
+  background: var(--button-filled-info-background-default);
+  color: var(--button-filled-info-foreground);
+}
+.lms-button--filled-info:hover:not(:disabled) { background: var(--button-filled-info-background-hover); }
+.lms-button--filled-info:active:not(:disabled) { background: var(--button-filled-info-background-pressed); }
+.lms-button--filled-success,
+.lms-button--outlined-success { --lms-button-ring: var(--button-focus-success-border); }
+.lms-button--filled-success {
+  background: var(--button-filled-success-background-default);
+  color: var(--button-filled-success-foreground);
+}
+.lms-button--filled-success:hover:not(:disabled) { background: var(--button-filled-success-background-hover); }
+.lms-button--filled-success:active:not(:disabled) { background: var(--button-filled-success-background-pressed); }
+.lms-button--outlined-brand {
   background: var(--background-primary);
-  border-color: var(--button-outlined-secondary-border-default);
-  color: var(--button-outlined-secondary-text-icon);
+  border-color: var(--button-outlined-brand-border-default);
+  color: var(--button-outlined-brand-foreground);
 }
-.lms-button--outlined-secondary:hover:not(:disabled) {
-  background: var(--button-outlined-secondary-background-hover);
-  border-color: var(--button-outlined-secondary-border-hover);
+.lms-button--outlined-brand:hover:not(:disabled) {
+  background: var(--button-outlined-brand-background-hover);
+  border-color: var(--button-outlined-brand-border-hover);
 }
+.lms-button--outlined-brand:active:not(:disabled) { background: var(--button-outlined-brand-background-pressed); }
+.lms-button--outlined-neutral {
+  background: var(--background-primary);
+  border-color: var(--button-outlined-neutral-border-default);
+  color: var(--button-outlined-neutral-foreground);
+}
+.lms-button--outlined-neutral:hover:not(:disabled) {
+  background: var(--button-outlined-neutral-background-hover);
+  border-color: var(--button-outlined-neutral-border-hover);
+}
+.lms-button--outlined-neutral:active:not(:disabled) { background: var(--button-outlined-neutral-background-pressed); }
+.lms-button--outlined-danger {
+  background: var(--background-primary);
+  border-color: var(--button-outlined-danger-border-default);
+  color: var(--button-outlined-danger-foreground);
+}
+.lms-button--outlined-danger:hover:not(:disabled) {
+  background: var(--button-outlined-danger-background-hover);
+  border-color: var(--button-outlined-danger-border-hover);
+}
+.lms-button--outlined-danger:active:not(:disabled) { background: var(--button-outlined-danger-background-pressed); }
+.lms-button--outlined-warning {
+  background: var(--background-primary);
+  border-color: var(--button-outlined-warning-border-default);
+  color: var(--button-outlined-warning-foreground);
+}
+.lms-button--outlined-warning:hover:not(:disabled) {
+  background: var(--button-outlined-warning-background-hover);
+  border-color: var(--button-outlined-warning-border-hover);
+}
+.lms-button--outlined-warning:active:not(:disabled) { background: var(--button-outlined-warning-background-pressed); }
+.lms-button--outlined-info {
+  background: var(--background-primary);
+  border-color: var(--button-outlined-info-border-default);
+  color: var(--button-outlined-info-foreground);
+}
+.lms-button--outlined-info:hover:not(:disabled) {
+  background: var(--button-outlined-info-background-hover);
+  border-color: var(--button-outlined-info-border-hover);
+}
+.lms-button--outlined-info:active:not(:disabled) { background: var(--button-outlined-info-background-pressed); }
+.lms-button--outlined-success {
+  background: var(--background-primary);
+  border-color: var(--button-outlined-success-border-default);
+  color: var(--button-outlined-success-foreground);
+}
+.lms-button--outlined-success:hover:not(:disabled) {
+  background: var(--button-outlined-success-background-hover);
+  border-color: var(--button-outlined-success-border-hover);
+}
+.lms-button--outlined-success:active:not(:disabled) { background: var(--button-outlined-success-background-pressed); }
 
-/* functional state: disabled (all types) */
+/* Functional state: disabled (all appearances and intents) */
 .lms-button:disabled {
   background: var(--button-disabled-background);
-  border-color: transparent;
-  color: var(--button-disabled-text-icon);
+  border-color: var(--button-disabled-border);
+  color: var(--button-disabled-foreground);
   cursor: not-allowed;
 }
+
+/* Functional state: loading. Label stays (keeps width, read by screen readers) but is hidden; Spinner is centered. */
 .lms-button--loading:disabled { cursor: progress; }
-.lms-button__spinner { animation: lms-spin 0.9s linear infinite; }
+.lms-button--loading .lms-button__label,
+.lms-button--loading .lms-button__icon { opacity: 0; }
+.lms-button__spinner {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
+  color: var(--spinner-foreground);
+  animation: lms-spin 0.9s linear infinite;
+}
 @keyframes lms-spin { to { transform: rotate(360deg); } }
-.lms-button { text-decoration: none; }

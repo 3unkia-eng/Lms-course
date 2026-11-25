@@ -14,3 +14,4 @@ export { EmptyState } from './EmptyState/EmptyState';
 export { Alert } from './Alert/Alert';
 export { Toast } from './Toast/Toast';
 export { Dialog } from './Dialog/Dialog';
+export { ProgressBar } from './ProgressBar/ProgressBar';

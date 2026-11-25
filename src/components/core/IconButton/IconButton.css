@@ -12,14 +12,28 @@
   cursor: pointer;
   transition: background-color var(--motion-duration-fast) var(--motion-easing);
 }
-.lms-icon-button:hover:not(:disabled) { background: var(--icon-button-background-hover); }
+.lms-icon-button:hover:not(:disabled) { background: var(--icon-button-background-hover); border-color: var(--icon-button-border-hover); }
+.lms-icon-button:active:not(:disabled) { background: var(--icon-button-background-pressed); }
+/* Focus ring (Figma boolean Focus ring): Icon button/focus/border at 50%, 2px gap, radius/lg */
+.lms-icon-button:focus-visible { outline: none; }
+.lms-icon-button::after {
+  content: "";
+  position: absolute;
+  inset: calc(var(--icon-button-focus-width) * -2);
+  border: var(--icon-button-focus-width) solid var(--icon-button-focus-border);
+  border-radius: var(--icon-button-focus-radius);
+  opacity: 0;
+  pointer-events: none;
+}
+.lms-icon-button:focus-visible::after { opacity: var(--icon-button-focus-opacity); }
 .lms-icon-button--ghost {
   padding: var(--padding-sm);
   border-color: transparent;
   background: transparent;
   color: var(--session-row-icon);
 }
-.lms-icon-button:disabled { color: var(--text-disabled); cursor: not-allowed; }
+.lms-icon-button:disabled { background: var(--icon-button-background-disabled); color: var(--icon-button-icon-disabled); cursor: not-allowed; }
+.lms-icon-button--ghost:disabled { background: transparent; }
 .lms-icon-button__icon { display: inline-flex; }
 .lms-icon-button__icon svg { width: var(--icon-size-md); height: var(--icon-size-md); }
 .lms-icon-button__indicator {
@@ -28,6 +42,6 @@
   right: var(--spacing-2-5);
   width: var(--spacing-2);
   height: var(--spacing-2);
-  border-radius: var(--full);
+  border-radius: var(--radius-full);
   background: var(--border-error);
 }

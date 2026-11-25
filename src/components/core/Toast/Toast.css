@@ -1,11 +1,11 @@
 .lms-toast {
   display: flex;
   align-items: center;
-  gap: var(--gap-md);
+  gap: var(--gap-sm);
   max-width: var(--layout-success-width);
-  padding: var(--padding-md) var(--padding-lg);
-  border: var(--border-width-default) solid var(--border-secondary);
-  border-radius: var(--md);
+  padding: var(--padding-sm) var(--padding-md);
+  border: var(--border-width-default) solid var(--border-primary-default);
+  border-radius: var(--radius-md);
   background: var(--surface-primary-default);
   box-shadow: var(--shadow-overlay);
   color: var(--text-primary);
@@ -15,7 +15,8 @@
 .lms-toast--success .lms-toast__icon { color: var(--icon-success); }
 .lms-toast--error   .lms-toast__icon { color: var(--icon-error); }
 .lms-toast--info    .lms-toast__icon { color: var(--icon-info); }
-.lms-toast__message { flex: 1 1 auto; font-size: var(--size-sm); line-height: var(--leading-2); }
+.lms-toast--warning .lms-toast__icon { color: var(--icon-warning); }
+.lms-toast__message { flex: 1 1 auto; font-size: var(--size-sm); line-height: var(--leading-2); font-weight: var(--weight-medium); }
 .lms-toast__action {
   padding: 0; border: 0; background: none; cursor: pointer;
   color: var(--text-brand); font-size: var(--size-sm); line-height: var(--leading-2); font-weight: var(--weight-semibold);

@@ -5,7 +5,7 @@ import './Skeleton.css';
 /** Skeleton (Core · Figma 263:1946). Shape: text / block / circle. Decorative. */
 export interface SkeletonProps {
   shape?: 'text' | 'block' | 'circle';
-  /** Width as a token-based CSS value, e.g. "var(--spacing-40)" or "60%" */
+  /** Width as a token-based CSS value, e.g. "var(--space-40)" or "60%" */
   width?: string;
   height?: string;
   className?: string;

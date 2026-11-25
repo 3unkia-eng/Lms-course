@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   gap: var(--gap-md);
-  min-height: calc(var(--spacing-16) + var(--spacing-0-5));
+  min-height: calc(var(--space-16) + var(--spacing-0-5));
   padding: var(--padding-md) var(--padding-lg);
   border: var(--border-width-default) solid var(--session-row-border);
   border-radius: var(--session-row-radius);
@@ -17,7 +17,7 @@
   flex: none;
   width: var(--spacing-8);
   height: var(--spacing-8);
-  border-radius: var(--md);
+  border-radius: var(--radius-md);
   background: var(--session-row-index-background);
   color: var(--session-row-index-text);
   font-size: var(--size-sm);

@@ -1,0 +1,19 @@
+.lms-progress { display: inline-flex; align-items: center; gap: var(--gap-sm); width: 100%; }
+.lms-progress__track {
+  flex: 1 1 auto;
+  height: var(--spacing-1-5);
+  overflow: hidden;
+  border-radius: var(--progress-bar-radius);
+  background: var(--progress-bar-track-background);
+}
+.lms-progress__indicator { display: block; height: 100%; border-radius: var(--progress-bar-radius); background: var(--progress-bar-indicator-background); }
+/* Label is fixed width and right-aligned so tracks line up whatever the % (Figma). */
+.lms-progress__label {
+  flex: none;
+  width: var(--spacing-8);
+  text-align: right;
+  color: var(--progress-bar-label-text);
+  font-size: var(--size-xs);
+  line-height: var(--leading-1);
+  font-variant-numeric: tabular-nums;
+}

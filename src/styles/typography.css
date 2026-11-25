@@ -1,7 +1,7 @@
 /*
  * Text styles used by the Figma components (agent.md 3.4).
- * Figma has only one semantic text token (Label/MD), so these classes are
- * the code-side text styles. They compose Type Global tokens in ONE place;
+ * Figma has only one semantic text style token (label/md), so these classes are
+ * the code-side text styles. They compose Type tokens in ONE place;
  * components use the classes or the same token pairs, never raw sizes.
  */
 .text-page-title   { font-size: var(--size-xl);   line-height: var(--leading-5); font-weight: var(--weight-semibold); }
@@ -15,7 +15,8 @@
 .text-overline     { font-size: var(--size-xs);   line-height: var(--leading-1); font-weight: var(--weight-medium); }
 
 .color-primary   { color: var(--text-primary); }
-.color-secondary { color: var(--text-secondary); }
+.color-secondary { color: var(--text-secondary); } /* subtitles, descriptions, labels, helper text */
+.color-tertiary  { color: var(--text-tertiary); }  /* captions, meta, axis, placeholders: only on white or card surfaces */
 .color-brand     { color: var(--text-brand); }
 .color-error     { color: var(--text-error); }
 .color-success   { color: var(--text-success); }

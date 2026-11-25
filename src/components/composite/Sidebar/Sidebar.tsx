@@ -1,19 +1,25 @@
 import { BarChart3, BookOpen, Banknote, GraduationCap, LayoutGrid, MessageCircle, Settings, Users } from 'lucide-react';
+import type { ReactNode } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Avatar, NavItem } from '../../core';
 import './Sidebar.css';
 
 /**
- * Sidebar (Composite · Figma 248:1770). Built from Nav item + Avatar.
+ * Sidebar (Composite · Figma 497:7995). Built from Nav item + Avatar.
+ * Figma variant `Active item` = the active Nav item; by default it follows the route.
  * Desktop ≥ 1024 only; below that AppShell shows it as a drawer.
  */
 export interface SidebarProps {
   userName?: string;
   userRole?: string;
   onNavigate?: () => void;
+  /** Figma `Active item`. Defaults to the page that matches the route. */
+  activeItem?: SidebarItem;
 }
 
-const NAV = [
+export type SidebarItem = 'Dashboard' | 'Courses' | 'Students' | 'Messages' | 'Analytics' | 'Earnings';
+
+const NAV: { to: string; label: SidebarItem; icon: ReactNode; end?: boolean }[] = [
   { to: '/', label: 'Dashboard', icon: <LayoutGrid />, end: true },
   { to: '/courses', label: 'Courses', icon: <BookOpen /> },
   { to: '/students', label: 'Students', icon: <Users /> },
@@ -22,8 +28,9 @@ const NAV = [
   { to: '/earnings', label: 'Earnings', icon: <Banknote /> },
 ];
 
-export function Sidebar({ userName = 'Sanaz Kiani', userRole = 'Instructor', onNavigate }: SidebarProps) {
+export function Sidebar({ userName = 'Sanaz Kiani', userRole = 'Instructor', onNavigate, activeItem }: SidebarProps) {
   const { pathname } = useLocation();
+  const fromRoute = (to: string) => (to === '/' ? pathname === '/' : pathname.startsWith(to));
   return (
     <aside className="lms-sidebar">
       <div className="lms-sidebar__logo">
@@ -31,13 +38,12 @@ export function Sidebar({ userName = 'Sanaz Kiani', userRole = 'Instructor', onN
         <span className="lms-sidebar__logo-text">Academy</span>
       </div>
       <nav className="lms-sidebar__nav" aria-label="Main" onClick={onNavigate}>
-        <p className="lms-sidebar__section" id="nav-menu">Menu</p>
-        <ul aria-labelledby="nav-menu" className="lms-sidebar__list">
+        <ul className="lms-sidebar__list">
           {NAV.map((item) => (
             <li key={item.to}>
               <NavItem
                 {...item}
-                active={item.to === '/courses' ? pathname.startsWith('/courses') : undefined}
+                active={activeItem ? activeItem === item.label : fromRoute(item.to)}
               />
             </li>
           ))}

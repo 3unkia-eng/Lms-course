@@ -24,7 +24,7 @@ export function WizardFrame({ step, course, save, goTo, back, children }: Wizard
           icon={<FileQuestion />}
           title="We couldn't find this course"
           description="It may have been deleted, or the link is wrong."
-          action={<ButtonLink to="/courses" variant="outlined" appearance="secondary">Back to courses</ButtonLink>}
+          action={<ButtonLink to="/courses" appearance="outlined" intent="neutral">Back to courses</ButtonLink>}
         />
       </AppShell>
     );

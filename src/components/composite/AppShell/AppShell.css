@@ -59,11 +59,11 @@
   .app-shell__drawer-close {
     position: absolute;
     top: var(--padding-lg);
-    right: calc(var(--spacing-12) * -1);
+    right: calc(var(--space-12) * -1);
     display: inline-flex;
     padding: var(--padding-sm);
     border: 0;
-    border-radius: var(--full);
+    border-radius: var(--radius-full);
     background: var(--surface-primary-default);
     color: var(--icon-primary);
     cursor: pointer;
@@ -80,7 +80,7 @@
   height: var(--control-height);
   margin-left: calc(var(--padding-md) * -1);
   border: 0;
-  border-radius: var(--md);
+  border-radius: var(--radius-md);
   background: none;
   color: var(--icon-primary);
   cursor: pointer;

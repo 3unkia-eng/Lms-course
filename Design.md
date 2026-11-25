@@ -1,6 +1,6 @@
 # Design.md — visual rules for the LMS prototype
 
-> Reference for every style in this repo. Source of truth: Figma file Foundation (`fkI3mGHWAToov6nhyWUZx5`), design system v1.4.0, live docs: https://claude.ai/artifact/BCRVXNa78nxreWzCaPn5YM
+> Reference for every style in this repo. Source of truth: Figma file Foundation (`fkI3mGHWAToov6nhyWUZx5`), design system v2.1.0, live docs: https://lms-course-rho.vercel.app/docs/
 > Status: AI draft, awaiting owner review.
 
 ## 1. Token architecture
@@ -11,7 +11,7 @@ Tokens are CSS custom properties. They come in four levels; a level may only ref
 |---|---|---|---|
 | Primitive | Global tokens, Type Global | `--colors-indigo-600`, `--spacing-4`, `--size-sm`, `--leading-2` | Colors: never. Spacing/type scale: only for fixed sizes and text styles with no semantic token |
 | Theme palette | Brand tokens, Neutral tokens | `--brand-600`, `--neutral-200` | No |
-| Semantic | ✨ Semantic color / spacing / radius / typography | `--surface-primary-default`, `--text-secondary`, `--gap-md`, `--padding-lg`, `--md` | Yes |
+| Semantic | ✨ Semantic color / spacing / radius / typography | `--surface-primary-default`, `--text-secondary`, `--gap-md`, `--padding-lg`, `--radius-md`, `--border-width-default` | Yes |
 | Component | 🧩 Components token | `--button-filled-primary-background-hover`, `--input-border-error` | Yes, first choice |
 
 **Naming formula.** CSS name = `--` + Figma name in lowercase with `/`, spaces and `_` turned into `-`.
@@ -27,7 +27,7 @@ Tokens are CSS custom properties. They come in four levels; a level may only ref
 ## 2. Hard rules
 
 - No literal colors (`#…`, `rgb()`, `hsl()`) and no `px` values in `src/` outside the token files. Checked by `npm run lint:tokens`.
-- Allowed raw values: border width (`--border-width-default` 1px, `--border-width-focus` 2px, defined once in `tokens.ext.css`), motion durations, unitless numbers (opacity, z-index via `--layer-*`, line clamp), percentages, and breakpoints inside `@media` (CSS cannot read variables there).
+- Border widths come from Figma: `--border-width-default` (1) and `--border-width-thick` (2). Allowed raw values: motion durations, unitless numbers (opacity, z-index via `--layer-*`, line clamp), percentages, and breakpoints inside `@media` (CSS cannot read variables there).
 - Hover, focus and dark mode come from the semantic layer. Components never contain `[data-theme]` rules.
 - Pick the most specific token: component > semantic > prototype extension.
 
@@ -44,7 +44,7 @@ Light / dark values with the default brand (indigo) and neutral (gray).
 | Subtle surface | `--surface-secondary-default` | gray-100 | gray-800 | Status row, disabled |
 | Brand soft | `--surface-brand-soft-default` | indigo-50 | indigo-900 | Active nav, tips, cover, upload |
 | Brand strong | `--surface-brand-medium-default` | indigo-600 | indigo-400 | Primary button, checked, toggle on |
-| Text | `--text-primary` / `--text-secondary` | black / gray-700 | white / gray-400 | Titles / descriptions |
+| Text | `--text-primary` / `--text-secondary` / `--text-tertiary` | black / gray-600 / gray-500 | white / gray-300 / gray-400 | Titles / subtitles, labels, helper / captions, meta, axis (white or card surfaces only) |
 | Brand text | `--text-brand` | indigo-600 | indigo-300 | Links, active states |
 | Disabled text | `--text-disabled` | gray-400 | gray-500 | Disabled controls |
 | Border | `--border-secondary` | gray-200 | gray-800 | Cards, dividers |
@@ -144,7 +144,7 @@ State mapping:
 | State | Kind | How |
 |---|---|---|
 | Hover | Interactive | `:hover` + `*-hover` token |
-| Focus | Interactive | `:focus-visible` outline 2px `--border-focus`, offset 2px; inputs use `--input-border-focus` |
+| Focus | Interactive | Button / Icon button: soft ring (`--button-focus-<intent>-border` / `--icon-button-focus-border` at `--button-focus-opacity`, width `--button-focus-width`, radius `--button-focus-radius`, gap = width). Others: outline 2px `--border-focus`, offset 2px; inputs use `--input-border-focus` |
 | Active / selected | Interactive | `*-active` token (nav, tab), `aria-current` / `aria-selected` |
 | Disabled | Functional | `disabled` attribute + `--button-disabled-*`, `--input-background-disabled`, `--text-disabled` |
 | Error | Functional | `--input-border-error`, `--input-text-error`, `role="alert"` |

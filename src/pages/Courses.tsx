@@ -43,7 +43,7 @@ export default function Courses() {
           icon={<SearchX />}
           title={`No courses match “${params.get('q')}”`}
           description="Check the spelling or try a shorter search."
-          action={<Button variant="outlined" appearance="secondary" onClick={() => setParams({}, { replace: true })}>Clear search</Button>}
+          action={<Button appearance="outlined" intent="neutral" onClick={() => setParams({}, { replace: true })}>Clear search</Button>}
         />
       );
     }
@@ -63,7 +63,7 @@ export default function Courses() {
           icon={<Send />}
           title="Nothing published yet"
           description="Publish a draft to make it visible to students."
-          action={<Button variant="outlined" appearance="secondary" onClick={() => setTab('draft')}>See drafts</Button>}
+          action={<Button appearance="outlined" intent="neutral" onClick={() => setTab('draft')}>See drafts</Button>}
         />
       );
     }
@@ -86,9 +86,9 @@ export default function Courses() {
           onChange={setTab}
           panelId="courses-panel"
           items={[
-            { value: 'all', label: 'All', count: counts.all },
             { value: 'published', label: 'Published', count: counts.published },
             { value: 'draft', label: 'Drafts', count: counts.draft },
+            { value: 'all', label: 'All', count: counts.all },
           ]}
         />
         <Button leadingIcon={<Plus />} onClick={start}>New course</Button>

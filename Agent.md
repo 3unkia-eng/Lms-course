@@ -92,10 +92,10 @@ src/
 
 | Code | Level | Figma node | Notes |
 |---|---|---|---|
-| `Button`, `ButtonLink` | Core | 246:1816 | `variant` = Type, `appearance` = Appearance; `loading` is a proposal |
+| `Button`, `ButtonLink` | Core | 246:1816 | `appearance` filled/outlined, `intent` brand/neutral/danger/warning/info/success, `size` md/sm, `loading`, `leadingIcon`/`trailingIcon`; soft focus ring per intent |
 | `Badge` | Core | 246:1825 | `status`: draft / published / info / neutral |
 | `Avatar` | Core | 246:1830 | sm 32 / md 40 |
-| `IconButton` | Core | 246:1837 | `label` required (aria-label); `ghost` appearance for row actions |
+| `IconButton` | Core | 246:1837 | `label` required (aria-label); `ghost` appearance for row actions; pressed/disabled + soft focus ring |
 | `Input` | Core | 247:1844 | single line, `multiline`, `options` (= Select), error, disabled |
 | `Toggle` | Core | 247:1849 | `role="switch"`; disabled is a proposal |
 | `Checkbox` | Core | 247:1854 | native input; `readOnly` for the publish checklist |
@@ -106,26 +106,28 @@ src/
 | `Skeleton` | Core | 263:1946 | text / block / circle |
 | `EmptyState` | Core | 263:1947 | `tone="error"` for load errors |
 | `Alert` | Core | 263:2027 | info / success / warning / error |
-| `Toast` | Core | 263:2057 | success / error / info, action, close |
+| `Toast` | Core | 263:2057 | success / error / warning / info, action, close |
+| `ProgressBar` | Core | 398:2011 | track + indicator + fixed % label; `role="progressbar"` |
 | `Dialog` | Core (structural) | – | proposal; native `<dialog>` |
-| `Sidebar` | Composite | 248:1770 | desktop only; drawer below 1024 |
+| `Sidebar` | Composite | 497:7995 | `activeItem` = Figma `Active item` (defaults to route); desktop only; drawer below 1024 |
 | `Topbar` | Composite | 248:1857 | title is the page `<h1>` |
 | `Stepper` | Composite | 248:2023 | `current` 1–4 |
-| `CourseCard` + `CourseCover` | Composite | 248:2024 | whole card is one link |
+| `CourseCard` + `CourseCover` | Composite | 144:160 | cover (badge + icon), category, meta, footer; whole card is one link |
+| `ActivityTable` | Composite | 659:6120 | Card + table header + rows (Avatar, ProgressBar, Badge) |
 | `SessionRow` | Composite | 248:2052 | Move up/down = keyboard alternative to drag |
 | `ActionBar` | Composite | – | proposal: footer actions on desktop, sticky bar on mobile |
 | `AppShell` | Layout | – | Sidebar + Topbar / mobile header, offline banner, session-expired dialog |
 
 ## 5. Hard rules (MUST)
 
-1. **Tokens only.** Every color, spacing, radius, size and type value comes from a CSS variable. No hex, `rgb()`, `hsl()` or `px` in `src/` outside the two token files. `npm run lint:tokens` enforces this. Exceptions are listed in Design.md §2 (border width, motion timing, media queries).
+1. **Tokens only.** Every color, spacing, radius, size and type value comes from a CSS variable. No hex, `rgb()`, `hsl()` or `px` in `src/` outside the two token files. `npm run lint:tokens` enforces this. Exceptions are listed in Design.md §2 (motion timing, media queries). Border widths come from Figma (`--border-width-default`, `--border-width-thick`).
 2. **Most specific token wins:** component token (`--button-…`) > semantic token (`--surface-…`, `--text-…`, `--gap-…`, `--padding-…`) > prototype token (`tokens.ext.css`). Never use color primitives (`--colors-*`) or palette tokens (`--brand-*`, `--neutral-*`) in UI code. The raw spacing and type scales (`--spacing-*`, `--size-*`, `--leading-*`, `--weight-*`) are allowed only where no semantic token exists (fixed sizes like a 32px indicator, text styles), because Figma has no semantic size or text tokens yet.
 3. **Never edit `src/styles/tokens.css`.** It is generated from Figma. To change a token, change it in Figma and re-export, or propose it in `tokens.ext.css` with a comment, and list it in the PR.
 4. **Dark mode must work** for every change. Check light and dark (Prototype panel → Theme) before you commit. Dark values come from the semantic layer; never add `[data-theme="dark"]` rules in component CSS.
 5. **Reuse before you build.** Use the components in `src/components`. A new Composite needs 3+ uses. Name components by what they are, never by screen or look.
 6. **Component API = Figma properties.** Variants become union props, Booleans become boolean props, Instance swaps become `ReactNode` props, Slots become `children`. Interactive states (hover, focus) are CSS; functional states (disabled, error, loading) are props.
 7. **One filled primary Button per view.**
-8. **Accessibility:** semantic HTML first; every icon-only control has a label; visible focus ring (`:focus-visible`, 2px `--border-focus`); text contrast ≥ 4.5:1; touch targets ≥ 44px on mobile; errors announced (`role="alert"`) and focus moves to the first invalid field.
+8. **Accessibility:** semantic HTML first; every icon-only control has a label; visible focus ring (`:focus-visible`: Button and Icon button use their soft ring tokens `--button-focus-*` / `--icon-button-focus-*`; everything else 2px `--border-focus`); text contrast ≥ 4.5:1; touch targets ≥ 44px on mobile; errors announced (`role="alert"`) and focus moves to the first invalid field.
 9. **English UI, left to right.** Copy is sentence case, no trailing periods on buttons.
 10. **No new dependencies** without asking. No backend calls; simulate with `data/prototype.tsx`.
 
