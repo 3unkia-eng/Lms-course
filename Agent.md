@@ -14,7 +14,7 @@ Flow (Figma frame `📱 Create & publish a course`, 250:1945):
 
 | # | Screen | Route | File | Figma |
 |---|---|---|---|---|
-| 01 | Dashboard | `#/` | `src/pages/Dashboard.tsx` | 250:1946 |
+| 01 | Dashboard (fits the first view on desktop, no course list) | `#/` | `src/pages/Dashboard.tsx` | 250:1946 |
 | 02 | Courses | `#/courses` | `src/pages/Courses.tsx` | 250:2185 |
 | 03 | Create course (step 1, Basic info) | `#/courses/:id/basic` | `src/pages/CreateCourse.tsx` | 251:2371 |
 | 04 | Course details (step 2) | `#/courses/:id/details` | `src/pages/CourseDetails.tsx` | 251:2638 |
@@ -115,7 +115,7 @@ src/
 | `Topbar` | Composite | 248:1857 | title is the page `<h1>` |
 | `Stepper` | Composite | 248:2023 | `current` 1–4 |
 | `CourseCard` + `CourseCover` | Composite | 144:160 | cover (badge + icon), category, meta, footer; whole card is one link |
-| `ActivityTable` | Composite | 659:6120 | Card + table header + rows (Avatar, ProgressBar, Badge) |
+| `ActivityTable` | Composite | 659:6120 | Card + table header + rows (Avatar, ProgressBar, Badge); `fitHeight` (code-only) shows only the rows that fit when the page fixes its height |
 | `SessionRow` | Composite | 248:2052 | Move up/down = keyboard alternative to drag |
 | `ActionBar` | Composite | – | proposal: footer actions on desktop, sticky bar on mobile |
 | `AppShell` | Layout | – | Sidebar + Topbar / mobile header, offline banner, session-expired dialog |
@@ -132,6 +132,13 @@ src/
 8. **Accessibility:** semantic HTML first; every icon-only control has a label; visible focus ring (`:focus-visible`: Button and Icon button use their soft ring tokens `--button-focus-*` / `--icon-button-focus-*`; everything else 2px `--border-focus`); text contrast ≥ 4.5:1; touch targets ≥ 44px on mobile; errors announced (`role="alert"`) and focus moves to the first invalid field.
 9. **English UI, left to right.** Copy is sentence case, no trailing periods on buttons.
 10. **No new dependencies** without asking. No backend calls; simulate with `data/prototype.tsx`.
+
+### Dashboard first view
+
+The Dashboard must show everything without scrolling on desktop (checked at 1280 × 800, 1366 × 768, 1440 × 900 and 1440 × 1024).
+Courses are not listed on the Dashboard; they live on the Courses page (sidebar). From 1280 wide, `.dashboard-grid`
+fills the viewport under the stats and the charts, heatmap and table size themselves with container query units
+(`pages.css`). Below a minimum row height (232) the page scrolls instead of shrinking text. Do not add sections under the grid.
 
 ## 6. States and edge cases (where they live)
 

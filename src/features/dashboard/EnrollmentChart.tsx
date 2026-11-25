@@ -6,6 +6,8 @@ import './EnrollmentChart.css';
  * Enrollment activity (Figma Step 01 · Dashboard 250:1946): stacked column chart,
  * new learners (Chart column/primary) on the bottom, returning learners
  * (Chart column/secondary) on top. Built from Card + Input (select).
+ * Total and time range sit in the card header, legend beside the range, so the plot
+ * can grow to fill the card on desktop (Dashboard first-view layout).
  * One use only, so it lives in features/, not in components/composite (agent.md rule 5).
  */
 interface Month { label: string; newLearners: number; returning: number }
@@ -42,27 +44,29 @@ export function EnrollmentChart() {
   const rangeLabel = RANGES.find((r) => r.value === range)?.label.toLowerCase();
 
   return (
-    <Card title="Enrollment activity" className="enrollment" headingLevel={2}>
-      <div className="enrollment__summary">
-        <div className="enrollment__total">
-          <span className="enrollment__value">{total.toLocaleString('en-US')}</span>
-          <span className="enrollment__caption">Enrollments · {rangeLabel}</span>
+    <Card
+      title="Enrollment activity"
+      description={<span className="enrollment__total"><strong className="enrollment__value">{total.toLocaleString('en-US')}</strong> enrollments · {rangeLabel}</span>}
+      className="enrollment"
+      headingLevel={2}
+      headerAside={
+        <div className="enrollment__controls">
+          <ul className="bar-chart__legend" aria-hidden>
+            <li className="legend-item"><span className="legend-item__swatch legend-item__swatch--primary" />New learners</li>
+            <li className="legend-item"><span className="legend-item__swatch legend-item__swatch--secondary" />Returning learners</li>
+          </ul>
+          <Input
+            label="Time range"
+            hideLabel
+            value={range}
+            onChange={(v) => { setRange(v); setActive(Number(v) - 1); }}
+            options={RANGES}
+            className="enrollment__range"
+          />
         </div>
-        <Input
-          label="Time range"
-          hideLabel
-          value={range}
-          onChange={(v) => { setRange(v); setActive(Number(v) - 1); }}
-          options={RANGES}
-          className="enrollment__range"
-        />
-      </div>
-
+      }
+    >
       <figure className="bar-chart" aria-label={`Enrollments per month, ${rangeLabel}`}>
-        <ul className="bar-chart__legend" aria-hidden>
-          <li className="legend-item"><span className="legend-item__swatch legend-item__swatch--primary" />New learners</li>
-          <li className="legend-item"><span className="legend-item__swatch legend-item__swatch--secondary" />Returning learners</li>
-        </ul>
         <div className="bar-chart__body">
           <ol className="bar-chart__axis" aria-hidden>
             {TICKS.map((t) => <li key={t}>{t}</li>)}

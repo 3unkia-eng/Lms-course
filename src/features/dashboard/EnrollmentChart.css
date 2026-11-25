@@ -1,8 +1,10 @@
 /* Enrollment activity: Bar chart, Chart column and Legend item component tokens (design system 2.0.0). */
-.enrollment__summary { display: flex; align-items: flex-end; gap: var(--gap-lg); }
-.enrollment__total { display: flex; flex-direction: column; gap: var(--gap-2xs); flex: 1 1 auto; }
-.enrollment__value { font-size: var(--size-2xl); line-height: var(--leading-5); font-weight: var(--weight-bold); color: var(--text-primary); }
-.enrollment__caption { font-size: var(--size-xs); line-height: var(--leading-1); color: var(--bar-chart-caption-text); }
+.enrollment__value { font-weight: var(--weight-semibold); color: var(--text-primary); }
+.enrollment__controls { display: flex; align-items: center; gap: var(--gap-lg); flex: none; }
+/* Narrower than 1440: legend items stack (2 × 16 fits beside the 44 tall select, no extra height). */
+@media (max-width: 1439px) {
+  .enrollment__controls .bar-chart__legend { flex-direction: column; gap: var(--gap-2xs); }
+}
 .enrollment__range { width: auto; min-width: calc(var(--spacing-36) + var(--spacing-6)); }
 
 /* Bar chart (container) */
@@ -120,7 +122,8 @@
 .chart-column__swatch--secondary { background: var(--chart-column-secondary-background-default); }
 
 @media (max-width: 767px) {
-  .enrollment__summary { flex-direction: column; align-items: stretch; }
+  .enrollment .lms-card__header { flex-wrap: wrap; }
+  .enrollment__controls { flex: 1 1 100%; justify-content: space-between; flex-wrap: wrap; }
   .chart-column__label { font-size: var(--size-xs); }
   .chart-column:nth-child(even) .chart-column__label { visibility: hidden; }
 }
