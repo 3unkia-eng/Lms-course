@@ -349,7 +349,7 @@
   --nav-item-radius: var(--radius-md);
   --icon-button-background-default: var(--background-primary);
   --icon-button-background-hover: var(--surface-primary-hover);
-  --icon-button-border-default: var(--border-secondary);
+  --icon-button-border-default: var(--border-primary-default);
   --icon-button-icon: var(--icon-primary);
   --icon-button-radius: var(--radius-md);
   --toggle-track-background-on: var(--surface-brand-medium-default);
