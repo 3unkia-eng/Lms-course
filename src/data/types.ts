@@ -14,7 +14,7 @@ export interface Session {
 
 export interface Cover {
   fileName: string;
-  /** Object URL for an uploaded image (prototype only, not persisted) */
+  /** Uploaded image as a data URL (prototype only, kept in localStorage) */
   url?: string;
 }
 
