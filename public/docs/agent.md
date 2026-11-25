@@ -212,6 +212,9 @@ Styles used by components: 20/32 semibold (page title), 16/24 semibold (card/cou
 | Table header/text on Table header/background | 17.04 | 11.42 |
 | Table row/title/text on Table row/background | 21.0 | 17.74 |
 | Table row/meta/text on Table row/background | 4.83 | 6.99 |
+| Heatmap cell/level 4/background on Card/background | 6.29 | 5.95 |
+| Heatmap cell/level 2/background on Card/background | 1.49 | 11.89 |
+| Bar chart/axis/text on Card/background | 4.83 | 6.99 |
 
 ## 5. Components
 
@@ -514,6 +517,37 @@ Recent learner activity: who, which course, progress, last active and status. Us
 - **must**: Use a real <table> with <th scope="col">. Progress bar has role="progressbar" with aria-valuenow, or the % text next to it. Status is a Badge with a word, not colour only.
 - **never**: Don't add a column to one row only.
 - **limits**: Below 768px the table scrolls horizontally inside the card.
+
+### Heatmap cell (Core, Figma 398:2026, 5 variants)
+
+One square of activity intensity, from Level 0 (none) to Level 4 (highest). Use for: Building block for activity heatmaps and their Less → More scale. Not for: Showing exact numbers or more than five steps (use a chart with an axis).
+
+- **size**: md 32×24 (fills its column in a heatmap) · sm 16×12 (scale swatch)
+- **padding**: none
+- **gap**: set by the parent (gap/2xs 4)
+- **radius**: Heatmap cell/radius → radius/xs = 4
+- **type**: none
+- **properties**: `Level` Variant = 0 (0 / 1 / 2 / 3 / 4)
+- **anatomy**: Container → Heatmap cell/level 0–4/background, Heatmap cell/radius
+- **tokens** (light / dark): `--heatmap-cell-level-0-background` #f3f4f6/#1f2937; `--heatmap-cell-level-1-background` #e0e7ff/#312e81; `--heatmap-cell-level-2-background` #c7d2fe/#c7d2fe; `--heatmap-cell-level-3-background` #a5b4fc/#a5b4fc; `--heatmap-cell-level-4-background` #4f46e5/#818cf8; `--heatmap-cell-radius` 4px
+- **must**: Colour alone carries no meaning for screen readers: the parent table gives each cell its level as text ("Monday 6 PM: High"). The cell itself is aria-hidden. Neighbouring levels must stay distinguishable; the Less → More scale explains the order.
+- **never**: Don't add a sixth level or a custom colour; use the five Level variants.
+- **limits**: Levels 2 and 3 alias colors/indigo directly, so they don't change in dark mode or with the red brand. In dark mode the scale reads out of order (see File audit).
+
+### Activity heatmap (Composite, Figma 400:5995, 1 variant)
+
+When learners study: 7 days × 6 times of day, built from Heatmap cell, with a Less → More scale. Use for: Dashboard, card 'Learner activity' (Figma Card/Learner activity 399:5686), next to Recent activity. Not for: Exact counts or trends over months (use the Enrollment bar chart). Built from: Heatmap cell.
+
+- **size**: 312×244 inside a 360-wide Card (fills the card)
+- **padding**: none (Card padding/xl 24 around it)
+- **gap**: gap/2xs 4 between rows and cells · gap/lg 16 to the scale
+- **radius**: cells: Heatmap cell/radius
+- **type**: Day, time and scale labels 12/16 Regular, Bar chart/axis/text
+- **properties**: `Levels` Instances = 7 × 6 (Level 0–4 per cell)
+- **anatomy**: Rows ×7 → Bar chart/axis/text, Heatmap cell/*; X axis → Bar chart/axis/text; Scale → Heatmap cell/*, Bar chart/axis/text; Motion → 
+- **must**: Use a real <table>: days are row headers, times are column headers, each cell has its level as text. Add a caption such as 'Learner activity by day and time of day, last 4 weeks'. Respect prefers-reduced-motion: no entrance animation.
+- **never**: Don't drop the scale or the axis labels.
+- **limits**: Below 1280 px the card stacks above Recent activity and cells stretch to the card width. Used in one place, so in code it lives in features/dashboard (agent.md rule 5).
 
 ### 3.5 Stroke, opacity, layout
 

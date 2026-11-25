@@ -1,0 +1,35 @@
+/* Activity heatmap (Figma 400:5995): rows and columns on gap/2xs, block gap/lg, labels use Bar chart/axis/text. */
+.activity-heatmap { display: flex; flex-direction: column; gap: var(--gap-lg); }
+.activity-heatmap__table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: var(--gap-2xs);
+  margin: calc(var(--gap-2xs) * -1);
+  table-layout: fixed;
+}
+.activity-heatmap__table th, .activity-heatmap__table td { padding: 0; font-weight: var(--weight-normal); }
+.activity-heatmap__table tbody th:first-child, .activity-heatmap__table thead td:first-child, .activity-heatmap__table tfoot td:first-child { width: var(--spacing-8); }
+.activity-heatmap__day, .activity-heatmap__time, .activity-heatmap__scale {
+  font-size: var(--size-xs);
+  line-height: var(--leading-1);
+  color: var(--bar-chart-axis-text);
+}
+.activity-heatmap__day { text-align: left; }
+.activity-heatmap__time { text-align: center; }
+.activity-heatmap__scale { display: flex; align-items: center; gap: var(--gap-2xs); }
+
+/* Entrance: fill up column by column, rows offset (Figma: stagger 0.14 s per column, 0.07 s per row). */
+.activity-heatmap__cell {
+  transform-origin: center bottom;
+  animation: heatmap-fill 600ms var(--motion-easing) both;
+  animation-delay: calc(var(--hm-col) * 140ms + var(--hm-row) * 70ms);
+}
+@keyframes heatmap-fill {
+  from { opacity: 0; transform: scale(0.2); }
+  to { opacity: 1; transform: scale(1); }
+}
+@media (prefers-reduced-motion: reduce) { .activity-heatmap__cell { animation: none; } }
+
+/* Dashboard row: Learner activity beside Recent activity (Figma frame "Activity", 360 + 752). */
+.activity-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: var(--gap-xl); align-items: stretch; }
+@media (max-width: 1279px) { .activity-row { grid-template-columns: minmax(0, 1fr); } }

@@ -1,0 +1,8 @@
+/* Heatmap cell (Figma 398:2026). md fills its grid track at 24 tall; sm is the 16 × 12 legend swatch. */
+.lms-heatmap-cell { display: block; border-radius: var(--heatmap-cell-radius); background: var(--heatmap-cell-level-0-background); }
+.lms-heatmap-cell--md { width: 100%; height: var(--spacing-6); }
+.lms-heatmap-cell--sm { width: var(--spacing-4); height: var(--spacing-3); flex: none; }
+.lms-heatmap-cell--1 { background: var(--heatmap-cell-level-1-background); }
+.lms-heatmap-cell--2 { background: var(--heatmap-cell-level-2-background); }
+.lms-heatmap-cell--3 { background: var(--heatmap-cell-level-3-background); }
+.lms-heatmap-cell--4 { background: var(--heatmap-cell-level-4-background); }
